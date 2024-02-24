@@ -21,6 +21,6 @@ const createPlayerSlice: StateCreator<
 
 export const usePlayerStore = create<PlayerState>()(
     devtools((...args) => ({ ...createPlayerSlice(...args) }), {
-        name: 'Club',
+        name: 'player',
     }),
 );

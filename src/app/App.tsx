@@ -4,6 +4,9 @@ import './reset.css';
 import styles from './settings.module.scss';
 import { Icons, Popup } from '@ui/index';
 import { useLanguage } from '@/shared/hooks/useLanguage';
+import { ShopItem } from '@/components';
+import { characters } from '@settings/characters';
+
 function App() {
     const [isLoading, setIsLoading] = useState(true);
 
@@ -28,8 +31,19 @@ function App() {
                 onClick={() => {
                     setIsPopupOpen(true);
                 }}
-            ></button>
+            >
+                Открыть попап
+            </button>
             <img src={Icons.moneyWhite} alt="" />
+            {characters &&
+                characters.map((character) => (
+                    <ShopItem
+                        image={character.image}
+                        isSelected
+                        isActive={false}
+                    />
+                ))}
+
             {useLanguage('store')}
         </div>
     );
