@@ -1,1 +1,1 @@
-export { Icons } from '@settings/icons';
+export { Icons } from '@settings/index';

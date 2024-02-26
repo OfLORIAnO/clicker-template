@@ -1,9 +1,8 @@
 import { usePlayerStore } from '@stores/player';
-import { texts } from '@settings/texts';
+import { texts } from '@settings/index';
 
 export const useLanguage = (text: string) => {
-    const { getLanguage } = usePlayerStore();
-    const language = getLanguage();
+    const { language } = usePlayerStore();
 
     let textReturn = 'Invalid key';
     try {

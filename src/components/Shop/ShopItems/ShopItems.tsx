@@ -1,13 +1,19 @@
-import { characters } from '@settings/characters';
+import { characters } from '@settings/index';
 import { ShopItem } from '../ShopItem';
 import styles from './ShopItems.module.scss';
-import { useState } from 'react';
+import { CharacterType } from '@settings/characters';
+import { useCharacterStore } from '@/shared/stores/character';
+interface IProps {
+    selectedItem: CharacterType | null;
+    handleClick: (id: number) => void;
+}
+export const ShopItems = ({ selectedItem, handleClick }: IProps) => {
+    const { activeCharacter, myCharacters } = useCharacterStore();
 
-export const ShopItems = () => {
-    const [isSelected, setIsSelected] = useState<number | null>(null);
-    const handleClick = (id: number) => {
-        setIsSelected(id);
+    const checkIsLocked = (id: number): boolean => {
+        return !myCharacters.map((c) => c.id).includes(id);
     };
+
     return (
         <div className={styles.wrapper}>
             {characters.map((character) => {
@@ -17,9 +23,12 @@ export const ShopItems = () => {
                         key={character.id}
                         itemId={character.id}
                         image={character.image}
-                        isActive={character.id === 0}
-                        isSelected={isSelected === character.id}
-                        isLocked={character.id === 1}
+                        isActive={
+                            !!activeCharacter &&
+                            character.id === activeCharacter.id
+                        }
+                        isSelected={selectedItem?.id === character.id}
+                        isLocked={checkIsLocked(character.id)}
                     />
                 );
             })}

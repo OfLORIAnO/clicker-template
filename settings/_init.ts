@@ -1,4 +1,4 @@
-import { colors } from './colors';
+import { colors } from './index';
 
 function InitColors() {
     for (const [key, color] of Object.entries(colors)) {

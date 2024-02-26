@@ -2,8 +2,11 @@ import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 interface PlayerState {
     language: number;
+    setLanguage: (language: number) => void;
+
     balance: number;
-    getLanguage: () => number;
+    setBalance: (balance: number) => void;
+
     click: () => void;
 }
 
@@ -14,9 +17,16 @@ const createPlayerSlice: StateCreator<
     PlayerState
 > = (set, get) => ({
     language: 0,
-    getLanguage: () => get().language,
-    click: () => set({ balance: get().balance + 1 }),
+    setLanguage: (language: number) => {
+        set({ language });
+    },
+
     balance: 0,
+    setBalance: (balance: number) => {
+        set({ balance });
+    },
+
+    click: () => set({ balance: get().balance + 1 }),
 });
 
 // export const usePlayerStore

@@ -22,6 +22,8 @@ export const ShopItem = ({
             {...props}
         >
             <div className={styles.content}>
+                <p>{`Активный: ${isActive}`}</p>
+                <p>{`Купленный: ${!isLocked}`}</p>
                 {isLocked && <div className={styles.lock} />}
                 <img src={image} className={styles.image} />
             </div>

@@ -1,0 +1,1 @@
+export { ShopDescription } from './ShopDescription';

@@ -35,11 +35,11 @@
         transform: scale(1.05);
     }
 
-    &.active {
-        @include outline(var(--active));
-    }
     &.selected {
         @include outline(var(--primaryEffect));
+    }
+    &.active {
+        @include outline(var(--active));
     }
 }
 .lock {
