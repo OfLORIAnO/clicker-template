@@ -1,37 +1,61 @@
 import './reset.css';
-import styles from './settings.module.scss';
+import './settings.module.scss';
+import styles from './App.module.scss';
 import { useLanguage } from '@/shared/hooks/useLanguage';
 import { Shop } from '@/components';
 import { Balance } from '@/components/Balance';
 import { usePlayerStore } from '@/shared/stores/player';
-import { Process } from './Process/Process';
+import { InitProcess } from './Prosecc/InitProcess';
 import { useState } from 'react';
+import { useShopStore } from '@/shared/stores/shop';
+import { Button } from '@/shared/ui';
+import { Wrapper } from './Wrapper/Wrapper';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
     const [isShopOpen, setIsShopOpen] = useState(false);
 
+    const { activeCharacter } = useShopStore();
+
     const { click } = usePlayerStore();
 
+    if (!activeCharacter) return null;
+
     return (
-        <Process isLoading={isLoading} setIsLoading={setIsLoading}>
-            <div className={styles.wrapper} style={{ background: 'green' }}>
-                <button
-                    style={{ height: '150px' }}
-                    onClick={() => {
-                        setIsShopOpen(true);
-                    }}
-                >
-                    Открыть Магазин
-                </button>
-                <Balance />
+        <InitProcess isLoading={isLoading} setIsLoading={setIsLoading}>
+            <Wrapper>
+                <div className={styles.shopContainer}>
+                    <Button
+                        onClick={() => {
+                            setIsShopOpen(true);
+                        }}
+                    >
+                        {useLanguage('store')}
+                    </Button>
+                </div>
+                <div className={styles.moneyContainer}>
+                    <Balance />
+                    <Button>Advert</Button>
+                </div>
+                <div className={styles.scalesContainer}>
+                    <Button> {useLanguage('scaleClick')}</Button>
+                    <Button>{useLanguage('scaleMoneyPerSecond')}</Button>
+                    <Button>{useLanguage('scaleLucky')}</Button>
+                </div>
                 <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
-                <button style={{ height: '150px' }} onClick={click}>
-                    Допустим игрок
-                </button>
-                {useLanguage('store')}
-            </div>
-        </Process>
+                <div className={styles.characterContainer}>
+                    <button onClick={click} className={styles.characterButton}>
+                        <img
+                            src={activeCharacter.image}
+                            className={styles.characterImage}
+                        />
+                    </button>
+                </div>
+                <div className={styles.settingsContainer}>
+                    <Button>Настройки</Button>
+                </div>
+            </Wrapper>
+        </InitProcess>
     );
 }
 

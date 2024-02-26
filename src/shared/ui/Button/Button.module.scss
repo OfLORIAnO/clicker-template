@@ -4,11 +4,20 @@
     background: var(--primary);
     padding: 12px 16px;
     transition-duration: 0.2s;
+
+    &:hover {
+        transition-duration: 0.2s;
+        filter: brightness(1.1);
+    }
+    &:disabled {
+        opacity: 0.6;
+        cursor: default;
+        &:hover {
+            filter: none;
+        }
+    }
 }
-.button:hover {
-    transition-duration: 0.2s;
-    filter: brightness(1.1);
-}
+
 // Modifications
 .bordered {
     border: 5px solid var(--primaryEffect);

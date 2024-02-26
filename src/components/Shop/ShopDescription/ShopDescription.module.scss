@@ -1,0 +1,85 @@
+@import '../../../app/mixins.scss';
+
+.wrapper {
+    @include innerBoxShadow(20px);
+    @include borderRad(10px);
+
+    padding: 10px;
+    width: 600px;
+
+    background: var(--secondaryEffect);
+
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    max-height: 200px;
+
+    .imageContainer {
+        @include borderRad(10px);
+        @include innerBoxShadow(15px);
+        background: var(--white);
+        width: 200px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        overflow: hidden;
+
+        img {
+            object-fit: cover;
+            width: 90%;
+        }
+    }
+
+    .stats {
+        @include innerBoxShadow(15px);
+        @include borderRad(10px);
+        background: var(--secondary);
+        padding: 15px;
+        width: 220px;
+
+        & > div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            & > b {
+                font-weight: 500;
+                font-size: 20px;
+            }
+        }
+    }
+}
+.description {
+    flex: 0 0 auto;
+    height: 283px;
+    padding: 17px 0 17px 17px;
+    overflow: hidden;
+    p {
+        padding-right: 17px;
+        color: var(--black);
+        font-size: 18px;
+        @include scrollType(var(--secondary), #9faaff, 12px);
+        height: 100%;
+        overflow-y: auto;
+    }
+}
+.actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 22px;
+        img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+}

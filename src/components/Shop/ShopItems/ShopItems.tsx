@@ -2,13 +2,13 @@ import { characters } from '@settings/index';
 import { ShopItem } from '../ShopItem';
 import styles from './ShopItems.module.scss';
 import { CharacterType } from '@settings/characters';
-import { useCharacterStore } from '@/shared/stores/character';
+import { useShopStore } from '@/shared/stores/shop';
 interface IProps {
     selectedItem: CharacterType | null;
     handleClick: (id: number) => void;
 }
 export const ShopItems = ({ selectedItem, handleClick }: IProps) => {
-    const { activeCharacter, myCharacters } = useCharacterStore();
+    const { activeCharacter, myCharacters } = useShopStore();
 
     const checkIsLocked = (id: number): boolean => {
         return !myCharacters.map((c) => c.id).includes(id);

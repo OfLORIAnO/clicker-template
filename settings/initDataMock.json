@@ -1,6 +1,9 @@
 {
-    "myBalance": 1000,
+    "myBalance": 100,
     "language": 0,
     "myCharactersId": [0, 5],
-    "activeCharacterId": 0
+    "activeCharacterId": 5,
+
+    "myBackgroundsId": [0, 5],
+    "activeBackgroundsId": 0
 }

@@ -26,7 +26,7 @@ const createPlayerSlice: StateCreator<
         set({ balance });
     },
 
-    click: () => set({ balance: get().balance + 1 }),
+    click: () => set({ balance: get().balance + 100 }),
 });
 
 // export const usePlayerStore

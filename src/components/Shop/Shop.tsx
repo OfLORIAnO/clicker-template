@@ -6,16 +6,38 @@ import { Balance } from '../Balance';
 import { ShopDescription } from './ShopDescription';
 import { characters } from '@settings/index';
 import { useState } from 'react';
-import { CharacterType } from '@settings/characters';
+import { useShopStore } from '@/shared/stores/shop';
+import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 
 export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
+    const { activeCharacter, activeBackground } = useShopStore();
+
     const [selectedCharacter, setSelectedCharacter] =
-        useState<CharacterType | null>(characters.find((c) => c.id === 0)!);
-    const handleClick = (id: number) => {
+        useState<CharacterType | null>(activeCharacter);
+    const [selectedBackground, setSelectedBackground] =
+        useState<BackgroundType | null>(activeBackground);
+
+    const [activeCategory, setActiveCategory] = useState<ItemType>(
+        ItemType.character,
+    );
+
+    const handleOnItemClick = (id: number) => {
         setSelectedCharacter(
             characters.find((character) => character.id === id)!,
         );
     };
+
+    const handleOnChangeCategory = (category: ItemType) => {
+        setActiveCategory(category);
+        switch (category) {
+            case ItemType.character:
+                setSelectedCharacter(activeCharacter);
+                break;
+            case ItemType.background:
+                setSelectedBackground(activeBackground);
+        }
+    };
+
     return (
         <Popup isOpened={isShopOpen} close={() => setIsShopOpen(false)}>
             <div className={styles.wrapper} {...props}>
@@ -33,9 +55,9 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                     </nav>
                     <ShopItems
                         selectedItem={selectedCharacter}
-                        handleClick={handleClick}
+                        handleClick={handleOnItemClick}
                     />
-                    <ShopDescription character={selectedCharacter} />
+                    <ShopDescription item={selectedCharacter} />
                 </div>
             </div>
         </Popup>

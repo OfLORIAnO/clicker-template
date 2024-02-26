@@ -1,7 +1,7 @@
 import { usePlayerStore } from '@stores/player';
 import { texts } from '@settings/index';
 
-export const useLanguage = (text: string) => {
+export const useLanguage = (text: keyof typeof texts) => {
     const { language } = usePlayerStore();
 
     let textReturn = 'Invalid key';

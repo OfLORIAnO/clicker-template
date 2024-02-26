@@ -9,3 +9,22 @@
 @mixin outline($color) {
     outline: 5px solid $color;
 }
+
+@mixin innerBoxShadow($smooth) {
+    box-shadow: inset 0 0 $smooth rgba(0, 0, 0, 0.25);
+}
+
+@mixin scrollType($backColor, $buttonColor, $width) {
+    &::-webkit-scrollbar {
+        width: $width;
+        background: $backColor;
+        @include innerBoxShadow(7px);
+        @include borderRad(10px);
+        overflow: hidden;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $buttonColor;
+        @include borderRad(10px);
+        width: $width;
+    }
+}
