@@ -2,48 +2,39 @@ import { useEffect, useState } from 'react';
 import InitSettings from '@settings/_init';
 import './reset.css';
 import styles from './settings.module.scss';
-import { Icons, Popup } from '@ui/index';
 import { useLanguage } from '@/shared/hooks/useLanguage';
-import { ShopItem } from '@/components';
-import { characters } from '@settings/characters';
+import { Shop } from '@/components';
+import { Balance } from '@/components/Balance';
+import { usePlayerStore } from '@/shared/stores/player';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
-
+    const [isShopOpen, setIsShopOpen] = useState(false);
     const init = async () => {
         setIsLoading(true);
         InitSettings();
         setIsLoading(false);
     };
-
-    const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+    const { click } = usePlayerStore();
     useEffect(() => {
         init();
     }, []);
 
     return (
-        <div className={styles.wrapper} style={{ background: 'red' }}>
-            <Popup isOpened={isPopupOpen} close={() => setIsPopupOpen(false)}>
-                ку
-            </Popup>
+        <div className={styles.wrapper} style={{ background: 'green' }}>
             <button
+                style={{ height: '150px' }}
                 onClick={() => {
-                    setIsPopupOpen(true);
+                    setIsShopOpen(true);
                 }}
             >
-                Открыть попап
+                Открыть Магазин
             </button>
-            <img src={Icons.moneyWhite} alt="" />
-            {characters &&
-                characters.map((character) => (
-                    <ShopItem
-                        image={character.image}
-                        isSelected
-                        isActive={false}
-                    />
-                ))}
-
+            <Balance />
+            <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
+            <button style={{ height: '150px' }} onClick={click}>
+                Допустим игрок
+            </button>
             {useLanguage('store')}
         </div>
     );

@@ -1,9 +1,0 @@
-@import '/src/app/mixins.scss';
-
-.isSelected {
-    border: 5px solid var(--active);
-}
-
-.image {
-    @include boxShadow(var(--black));
-}

@@ -4,6 +4,7 @@ interface PlayerState {
     language: number;
     balance: number;
     getLanguage: () => number;
+    click: () => void;
 }
 
 const createPlayerSlice: StateCreator<
@@ -14,6 +15,7 @@ const createPlayerSlice: StateCreator<
 > = (set, get) => ({
     language: 0,
     getLanguage: () => get().language,
+    click: () => set({ balance: get().balance + 1 }),
     balance: 0,
 });
 

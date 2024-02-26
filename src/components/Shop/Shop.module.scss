@@ -1,0 +1,47 @@
+@import '../../app/mixins.scss';
+
+.wrapper {
+    background: var(--secondary);
+    @include borderRad(20px);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 13px;
+    width: 100%;
+    position: relative;
+
+    h1 {
+        font-size: 25px;
+    }
+    button {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        background: var(--primary);
+        border: none;
+        color: var(--white);
+        width: 26px;
+        height: 26px;
+        @include borderRad(10px);
+    }
+    img {
+        width: 22px;
+        height: 22px;
+    }
+}
+.content {
+    padding: 0 34px 34px;
+    display: flex;
+    gap: 26px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}

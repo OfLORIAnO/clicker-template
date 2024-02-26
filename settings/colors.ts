@@ -1,16 +1,22 @@
-export const primary = '#FD5555';
-export const primaryEffect = '#CA4040';
-export const primaryDisabled = '#993030';
+const primary = '#FD5555';
+const primaryEffect = '#CA4040';
+const primaryDisabled = '#993030';
 
-export const active = '#CA4040';
+const secondary = '#CCD1FB';
+const secondaryEffect = '#B4BCFF';
 
-export const white = '#FAFAFA';
-export const black = '#1E1E1E';
+const active = '#A0FF74';
+
+const white = '#FAFAFA';
+const black = '#1E1E1E';
 
 export const colors = {
     primary,
     primaryEffect,
     primaryDisabled,
+
+    secondary,
+    secondaryEffect,
 
     active,
 

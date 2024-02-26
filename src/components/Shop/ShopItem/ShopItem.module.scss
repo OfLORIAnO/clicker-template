@@ -1,0 +1,63 @@
+@import '/src/app/mixins.scss';
+
+.wrapper {
+    border: none;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    height: 100%;
+    width: 100%;
+
+    position: relative;
+    overflow: hidden;
+
+    @include boxShadow(var(--black));
+    @include borderRad(10px);
+    transition-duration: 0.1s;
+    cursor: pointer;
+    &::after {
+        background: var(--white);
+        z-index: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        transition-duration: 0.2s;
+    }
+
+    &:hover {
+        &::after {
+            filter: brightness(0.9);
+        }
+    }
+    &:hover .image {
+        transform: scale(1.05);
+    }
+
+    &.active {
+        @include outline(var(--active));
+    }
+    &.selected {
+        @include outline(var(--primaryEffect));
+    }
+}
+.lock {
+    z-index: 5;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: 0.8);
+    pointer-events: none;
+}
+.content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+}
+
+.image {
+    width: 100%;
+    transition-duration: 0.2s;
+}

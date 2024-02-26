@@ -1,0 +1,21 @@
+@import '../../app/mixins.scss';
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--primary);
+    @include borderRad(10px);
+    border-radius: 10px;
+    border: 5px solid var(--primaryEffect);
+    padding: 8px 12px;
+    span {
+        font-size: 24px;
+        font-weight: 500;
+        color: var(--white);
+    }
+    img {
+        height: 32px;
+        width: 32px;
+    }
+}
