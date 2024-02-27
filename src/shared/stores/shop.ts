@@ -19,6 +19,8 @@ interface ShopState {
 
     buyCharacterItem: (character: CharacterType) => void;
 
+    getActiveDamage: () => number;
+
     initShopData: (
         myCharacters: CharacterType[],
         activeCharacter: CharacterType,
@@ -58,6 +60,11 @@ const createShopSlice: StateCreator<
         set({ activeBackground: background });
     },
 
+    getActiveDamage: () => {
+        const damage = get().activeCharacter?.damage;
+        return damage ?? 1;
+    },
+
     initShopData: (
         myCharacters: CharacterType[],
         activeCharacter: CharacterType,
@@ -73,7 +80,6 @@ const createShopSlice: StateCreator<
         setActiveBackground(activeBackground);
     },
 });
-
 export const useShopStore = create<ShopState>()(
     devtools((...args) => ({ ...createShopSlice(...args) }), {
         name: 'shop',

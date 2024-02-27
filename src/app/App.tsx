@@ -19,6 +19,10 @@ function App() {
 
     const { click } = usePlayerStore();
 
+    const handleClick = () => {
+        activeCharacter?.damage ? click(activeCharacter.damage) :  click(1)
+    }
+
     if (!activeCharacter) return null;
 
     return (
@@ -44,7 +48,7 @@ function App() {
                 </div>
                 <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
                 <div className={styles.characterContainer}>
-                    <button onClick={click} className={styles.characterButton}>
+                    <button onClick={handleClick} className={styles.characterButton}>
                         <img
                             src={activeCharacter.image}
                             className={styles.characterImage}

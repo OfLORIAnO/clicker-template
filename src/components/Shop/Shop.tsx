@@ -4,13 +4,14 @@ import { Button, Icons, Popup } from '@/shared/ui';
 import { ShopProps } from './Shop.props';
 import { Balance } from '../Balance';
 import { ShopDescription } from './ShopDescription';
-import { characters } from '@settings/index';
+
 import { useState } from 'react';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 
 export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
-    const { activeCharacter, activeBackground } = useShopStore();
+    const { activeCharacter, activeBackground, characters, backgrounds } =
+        useShopStore();
 
     const [selectedCharacter, setSelectedCharacter] =
         useState<CharacterType | null>(activeCharacter);
@@ -22,9 +23,14 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
     );
 
     const handleOnItemClick = (id: number) => {
-        setSelectedCharacter(
-            characters.find((character) => character.id === id)!,
-        );
+        activeCategory === ItemType.character &&
+            setSelectedCharacter(
+                characters.find((character) => character.id === id)!,
+            );
+        activeCategory === ItemType.background &&
+            setSelectedBackground(
+                backgrounds.find((background) => background.id === id)!,
+            );
     };
 
     const handleOnChangeCategory = (category: ItemType) => {
@@ -35,6 +41,7 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                 break;
             case ItemType.background:
                 setSelectedBackground(activeBackground);
+                break;
         }
     };
 
@@ -49,15 +56,39 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                 <div className={styles.content}>
                     <nav className={styles.nav}>
                         <Balance />
-                        <Button>Персонажи</Button>
-                        <Button>Фоны</Button>
+                        <Button
+                            onClick={() =>
+                                handleOnChangeCategory(ItemType.character)
+                            }
+                        >
+                            Персонажи
+                        </Button>
+                        <Button
+                            onClick={() =>
+                                handleOnChangeCategory(ItemType.background)
+                            }
+                        >
+                            Фоны
+                        </Button>
                         <Button>Плюшки</Button>
                     </nav>
                     <ShopItems
-                        selectedItem={selectedCharacter}
+                        category={activeCategory}
+                        selectedItem={
+                            activeCategory === ItemType.character
+                                ? selectedCharacter
+                                : selectedBackground
+                        }
                         handleClick={handleOnItemClick}
                     />
-                    <ShopDescription item={selectedCharacter} />
+                    <ShopDescription
+                        category={activeCategory}
+                        item={
+                            activeCategory === ItemType.character
+                                ? selectedCharacter
+                                : selectedBackground
+                        }
+                    />
                 </div>
             </div>
         </Popup>

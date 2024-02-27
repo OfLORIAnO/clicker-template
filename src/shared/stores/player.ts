@@ -7,7 +7,7 @@ interface PlayerState {
     balance: number;
     setBalance: (balance: number) => void;
 
-    click: () => void;
+    click: (damage: number) => void;
 }
 
 const createPlayerSlice: StateCreator<
@@ -26,7 +26,9 @@ const createPlayerSlice: StateCreator<
         set({ balance });
     },
 
-    click: () => set({ balance: get().balance + 100 }),
+    click: (damage: number) => {
+        set({ balance: get().balance + damage }, false, 'setBalanceByClick');
+    },
 });
 
 // export const usePlayerStore

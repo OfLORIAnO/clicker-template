@@ -3,13 +3,14 @@ import { useLanguage } from '@/shared/hooks/useLanguage';
 import { usePlayerStore } from '@/shared/stores/player';
 import { Button, Icons } from '@/shared/ui';
 import { useShopStore } from '@/shared/stores/shop';
-import { CharacterType } from '@settings/types';
+import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 
 interface IProps {
-    item: CharacterType | null;
+    item: CharacterType | BackgroundType | null;
+    category: ItemType;
 }
 
-export const ShopDescription = ({ item }: IProps) => {
+export const ShopDescription = ({ item, category }: IProps) => {
     if (!item) return null;
 
     const { language, balance, setBalance } = usePlayerStore();
@@ -31,7 +32,7 @@ export const ShopDescription = ({ item }: IProps) => {
         setActiveCharacter(item);
     };
 
-    const handlebuyCharacterItem = () => {
+    const handleCharacterItem = () => {
         buyCharacterItem(item);
         setBalance(balance - item.price);
     };
@@ -64,7 +65,7 @@ export const ShopDescription = ({ item }: IProps) => {
                 ) : (
                     <Button
                         disabled={balance < item.price}
-                        onClick={handlebuyCharacterItem}
+                        onClick={handleCharacterItem}
                     >
                         Купить за {item.price}
                         <img src={Icons.balanceWhite} />

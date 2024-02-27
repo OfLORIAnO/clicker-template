@@ -4,6 +4,7 @@ interface ICharacter {
     name: string[];
     description: string[];
     price: number;
+    damage: number;
 }
 export interface CharacterType extends ICharacter {
     id: number;
