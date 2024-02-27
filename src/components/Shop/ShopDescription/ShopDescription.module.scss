@@ -4,10 +4,13 @@
     @include innerBoxShadow(20px);
     @include borderRad(10px);
 
-    padding: 10px;
-    width: 600px;
+    flex: 0 0 50%;
+
+    padding: 10px 10px 0 10px;
 
     background: var(--secondaryEffect);
+
+    height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -16,22 +19,33 @@
 .header {
     width: 100%;
     display: flex;
+    gap: 20px;
     justify-content: space-between;
-    max-height: 200px;
 
     .imageContainer {
         @include borderRad(10px);
         @include innerBoxShadow(15px);
         background: var(--white);
-        width: 200px;
         display: flex;
         align-items: flex-start;
         justify-content: center;
         overflow: hidden;
 
-        img {
-            object-fit: cover;
-            width: 90%;
+        &.characterImage {
+            max-width: 200px;
+            max-height: 200px;
+            img {
+                width: 90%;
+                object-fit: cover;
+            }
+        }
+        &.backgroundImage {
+            width: 340px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
         }
     }
 
@@ -53,23 +67,30 @@
         }
     }
 }
+
 .description {
-    flex: 0 0 auto;
-    height: 283px;
-    padding: 17px 0 17px 17px;
+    margin: 5px 0px 0px 0px;
     overflow: hidden;
+    padding: 10px 0;
+    flex: 1 1 auto;
+    height: 100%;
     p {
-        padding-right: 17px;
+        overflow-y: auto;
+        height: 100%;
+        padding: 15px;
+        @include scrollType(var(--secondary), #9faaff, 12px);
+        @include borderRad(10px);
+        @include innerBoxShadow(20px);
+        background: var(--secondary);
         color: var(--black);
         font-size: 18px;
-        @include scrollType(var(--secondary), #9faaff, 12px);
-        height: 100%;
-        overflow-y: auto;
     }
 }
 .actions {
+    padding: 7px 0;
     width: 100%;
     display: flex;
+    flex: 0 0 50px;
     justify-content: center;
 
     button {
@@ -80,6 +101,63 @@
         img {
             width: 24px;
             height: 24px;
+        }
+    }
+}
+
+@media screen and (max-height: 768px) {
+    .actions {
+        max-height: 100px;
+        button {
+            font-size: 20px;
+            padding: 6px 8px;
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+    .description {
+        padding: 0;
+        p {
+            padding: 10px;
+        }
+    }
+    .header {
+        .imageContainer {
+            &.characterImage {
+                max-width: 150px;
+                max-height: 150px;
+            }
+        }
+    }
+}
+@media screen and (max-height: 568px) {
+    .header {
+        .imageContainer {
+            &.characterImage {
+                max-width: 100px;
+                max-height: 100px;
+            }
+        }
+    }
+}
+
+@media screen and (max-height: 408px) {
+    .description {
+        p {
+            padding: 10px;
+        }
+    }
+    .header {
+        .stats {
+            & > div {
+                font-size: 16px;
+                & > b {
+                    font-weight: 500;
+                    font-size: 14px;
+                }
+            }
         }
     }
 }

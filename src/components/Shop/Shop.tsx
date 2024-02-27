@@ -8,6 +8,7 @@ import { ShopDescription } from './ShopDescription';
 import { useState } from 'react';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
+import { useLanguage } from '@/shared/hooks/useLanguage';
 
 export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
     const { activeCharacter, activeBackground, characters, backgrounds } =
@@ -18,24 +19,24 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
     const [selectedBackground, setSelectedBackground] =
         useState<BackgroundType | null>(activeBackground);
 
-    const [activeCategory, setActiveCategory] = useState<ItemType>(
+    const [activeItemType, setActiveItemType] = useState<ItemType>(
         ItemType.character,
     );
 
     const handleOnItemClick = (id: number) => {
-        activeCategory === ItemType.character &&
+        activeItemType === ItemType.character &&
             setSelectedCharacter(
                 characters.find((character) => character.id === id)!,
             );
-        activeCategory === ItemType.background &&
+        activeItemType === ItemType.background &&
             setSelectedBackground(
                 backgrounds.find((background) => background.id === id)!,
             );
     };
 
-    const handleOnChangeCategory = (category: ItemType) => {
-        setActiveCategory(category);
-        switch (category) {
+    const handleOnChangeItemType = (itemType: ItemType) => {
+        setActiveItemType(itemType);
+        switch (itemType) {
             case ItemType.character:
                 setSelectedCharacter(activeCharacter);
                 break;
@@ -49,7 +50,7 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
         <Popup isOpened={isShopOpen} close={() => setIsShopOpen(false)}>
             <div className={styles.wrapper} {...props}>
                 <div className={styles.header}>
-                    <h1>Магазин</h1>
+                    <h1>{useLanguage('store')}</h1>
                     <img src={Icons.shopBlack} alt="" />
                     <button onClick={() => setIsShopOpen(false)}>с</button>
                 </div>
@@ -57,38 +58,42 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                     <nav className={styles.nav}>
                         <Balance />
                         <Button
+                            disabled={activeItemType === ItemType.character}
                             onClick={() =>
-                                handleOnChangeCategory(ItemType.character)
+                                handleOnChangeItemType(ItemType.character)
                             }
                         >
                             Персонажи
                         </Button>
                         <Button
+                            disabled={activeItemType === ItemType.background}
                             onClick={() =>
-                                handleOnChangeCategory(ItemType.background)
+                                handleOnChangeItemType(ItemType.background)
                             }
                         >
                             Фоны
                         </Button>
                         <Button>Плюшки</Button>
                     </nav>
-                    <ShopItems
-                        category={activeCategory}
-                        selectedItem={
-                            activeCategory === ItemType.character
-                                ? selectedCharacter
-                                : selectedBackground
-                        }
-                        handleClick={handleOnItemClick}
-                    />
-                    <ShopDescription
-                        category={activeCategory}
-                        item={
-                            activeCategory === ItemType.character
-                                ? selectedCharacter
-                                : selectedBackground
-                        }
-                    />
+                    <div className={styles.shopContent}>
+                        <ShopItems
+                            itemType={activeItemType}
+                            selectedItem={
+                                activeItemType === ItemType.character
+                                    ? selectedCharacter
+                                    : selectedBackground
+                            }
+                            handleClick={handleOnItemClick}
+                        />
+                        <ShopDescription
+                            itemType={activeItemType}
+                            item={
+                                activeItemType === ItemType.character
+                                    ? selectedCharacter
+                                    : selectedBackground
+                            }
+                        />
+                    </div>
                 </div>
             </div>
         </Popup>

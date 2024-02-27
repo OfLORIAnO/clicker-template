@@ -5,46 +5,83 @@ import { Button, Icons } from '@/shared/ui';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 
+import classNames from 'classnames';
+
 interface IProps {
     item: CharacterType | BackgroundType | null;
-    category: ItemType;
+    itemType: ItemType;
 }
 
-export const ShopDescription = ({ item, category }: IProps) => {
+export const ShopDescription = ({ item, itemType }: IProps) => {
     if (!item) return null;
 
     const { language, balance, setBalance } = usePlayerStore();
     const {
         myCharacters,
         setActiveCharacter,
-        buyCharacterItem,
         activeCharacter,
+
+        myBackgrounds,
+        setActiveBackground,
+        activeBackground,
+
+        buyItem,
     } = useShopStore();
 
     const checkIsHave = (): boolean => {
-        return myCharacters.map((c) => c.id).includes(item.id);
+        if (itemType === ItemType.character) {
+            return myCharacters.map((c) => c.id).includes(item.id);
+        } else if (itemType === ItemType.background) {
+            return myBackgrounds.map((c) => c.id).includes(item.id);
+        }
+        return false;
     };
     const isActive = (): boolean => {
-        return activeCharacter ? activeCharacter.id === item.id : false;
+        if (itemType === ItemType.character) {
+            return activeCharacter ? activeCharacter.id === item.id : false;
+        } else if (itemType === ItemType.background) {
+            return activeBackground ? activeBackground.id === item.id : false;
+        }
+        return false;
     };
 
-    const handleSetActiveCharacter = () => {
-        setActiveCharacter(item);
+    const handleSetActiveItem = () => {
+        itemType === ItemType.character &&
+            setActiveCharacter(item as CharacterType);
+        itemType === ItemType.background &&
+            setActiveBackground(item as BackgroundType);
     };
 
-    const handleCharacterItem = () => {
-        buyCharacterItem(item);
+    const handleBuyItem = () => {
+        itemType === ItemType.character && buyItem(item, ItemType.character);
+        itemType === ItemType.background && buyItem(item, ItemType.background);
         setBalance(balance - item.price);
     };
 
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <div className={styles.imageContainer}>
+                <div
+                    className={classNames(styles.imageContainer, {
+                        [styles.characterImage]:
+                            itemType === ItemType.character,
+                        [styles.backgroundImage]:
+                            itemType === ItemType.background,
+                    })}
+                >
                     <img src={item.image} />
                 </div>
 
                 <div className={styles.stats}>
+                    <div className={styles.name}>
+                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                    </div>
+                    <div className={styles.name}>
+                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                    </div>
+                    <div className={styles.name}>
+                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                    </div>
                     <div className={styles.name}>
                         {useLanguage('name')}: <b>{item.name[language]}</b>
                     </div>
@@ -58,16 +95,14 @@ export const ShopDescription = ({ item, category }: IProps) => {
                     isActive() ? (
                         <Button disabled>Выбран</Button>
                     ) : (
-                        <Button onClick={handleSetActiveCharacter}>
-                            Выбрать
-                        </Button>
+                        <Button onClick={handleSetActiveItem}>Выбрать</Button>
                     )
                 ) : (
                     <Button
                         disabled={balance < item.price}
-                        onClick={handleCharacterItem}
+                        onClick={handleBuyItem}
                     >
-                        Купить за {item.price}
+                        {item.price}
                         <img src={Icons.balanceWhite} />
                     </Button>
                 )}

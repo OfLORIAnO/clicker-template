@@ -8,7 +8,7 @@ import { usePlayerStore } from '@/shared/stores/player';
 import { InitProcess } from './Prosecc/InitProcess';
 import { useState } from 'react';
 import { useShopStore } from '@/shared/stores/shop';
-import { Button } from '@/shared/ui';
+import { Button, Icons } from '@/shared/ui';
 import { Wrapper } from './Wrapper/Wrapper';
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
     const { click } = usePlayerStore();
 
     const handleClick = () => {
-        activeCharacter?.damage ? click(activeCharacter.damage) :  click(1)
-    }
+        activeCharacter?.damage ? click(activeCharacter.damage) : click(1);
+    };
 
     if (!activeCharacter) return null;
 
@@ -33,13 +33,20 @@ function App() {
                         onClick={() => {
                             setIsShopOpen(true);
                         }}
+                        className={styles.shopButton}
                     >
                         {useLanguage('store')}
+                        <img src={Icons.shopWhite} />
                     </Button>
                 </div>
                 <div className={styles.moneyContainer}>
                     <Balance />
-                    <Button>Advert</Button>
+                    <Button className={styles.advertButton}>
+                        <img
+                            src={Icons.advertWhite}
+                            className={styles.advertImage}
+                        />
+                    </Button>
                 </div>
                 <div className={styles.scalesContainer}>
                     <Button> {useLanguage('scaleClick')}</Button>
@@ -48,7 +55,10 @@ function App() {
                 </div>
                 <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
                 <div className={styles.characterContainer}>
-                    <button onClick={handleClick} className={styles.characterButton}>
+                    <button
+                        onClick={handleClick}
+                        className={styles.characterButton}
+                    >
                         <img
                             src={activeCharacter.image}
                             className={styles.characterImage}
@@ -56,7 +66,12 @@ function App() {
                     </button>
                 </div>
                 <div className={styles.settingsContainer}>
-                    <Button>Настройки</Button>
+                    <Button className={styles.settingsButton}>
+                        <img
+                            src={Icons.settingsWhite}
+                            className={styles.settingsImage}
+                        />
+                    </Button>
                 </div>
             </Wrapper>
         </InitProcess>

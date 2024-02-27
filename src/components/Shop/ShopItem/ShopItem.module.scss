@@ -35,11 +35,11 @@
         transform: scale(1.05);
     }
 
-    &.selected {
-        @include outline(var(--primaryEffect));
-    }
     &.active {
         @include outline(var(--active));
+    }
+    &.selected {
+        @include outline(var(--primaryEffect));
     }
 }
 .lock {
@@ -58,6 +58,15 @@
 }
 
 .image {
-    width: 100%;
     transition-duration: 0.2s;
+}
+
+.characterImage {
+    object-fit: contain;
+    width: 100%;
+}
+.backgroundImage {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }

@@ -1,10 +1,12 @@
 import { ShopItemProps } from './ShopItem.props';
 import styles from './ShopItem.module.scss';
 import classNames from 'classnames';
+import { ItemType } from '@settings/types';
 export const ShopItem = ({
     itemId,
     image,
     className,
+    itemType,
     isSelected = false,
     isActive = false,
     isLocked = true,
@@ -22,10 +24,18 @@ export const ShopItem = ({
             {...props}
         >
             <div className={styles.content}>
-                <p>{`Активный: ${isActive}`}</p>
-                <p>{`Купленный: ${!isLocked}`}</p>
+                {/* <p>{`Активный: ${isActive}`}</p> */}
+                {/* <p>{`Купленный: ${!isLocked}`}</p> */}
                 {isLocked && <div className={styles.lock} />}
-                <img src={image} className={styles.image} />
+                <img
+                    src={image}
+                    className={classNames(styles.image, {
+                        [styles.characterImage]:
+                            itemType === ItemType.character,
+                        [styles.backgroundImage]:
+                            itemType === ItemType.background,
+                    })}
+                />
             </div>
         </button>
     );

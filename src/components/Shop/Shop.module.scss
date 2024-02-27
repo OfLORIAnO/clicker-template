@@ -2,6 +2,7 @@
 
 .wrapper {
     background: var(--secondary);
+    height: 700px;
     @include borderRad(20px);
 }
 
@@ -11,6 +12,7 @@
     justify-content: center;
     gap: 8px;
 
+    flex: 0 1 45%;
     padding: 13px;
     width: 100%;
     position: relative;
@@ -41,7 +43,79 @@
 }
 
 .nav {
+    flex: 0 1 10%;
     display: flex;
     flex-direction: column;
     gap: 14px;
+}
+
+.shopContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    max-height: 600px;
+    overflow: hidden;
+
+    & > * {
+        flex: 0 1 45%;
+    }
+}
+
+@media screen and (max-height: 768px) {
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        flex: 0 1 45%;
+        padding: 13px;
+        width: 100%;
+        position: relative;
+
+        h1 {
+            font-size: 22px;
+        }
+        button {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: var(--primary);
+            border: none;
+            color: var(--white);
+            width: 26px;
+            height: 26px;
+            @include borderRad(10px);
+        }
+        img {
+            width: 22px;
+            height: 22px;
+        }
+    }
+    .wrapper {
+        height: 100%;
+    }
+    .content {
+        padding: 0 20px 20px;
+    }
+    .shopContent {
+        max-height: 450px;
+    }
+}
+@media screen and (max-height: 568px) {
+    .wrapper {
+        height: 100%;
+    }
+    .content {
+        padding: 0 10px 10px;
+    }
+    .shopContent {
+        max-height: 350px;
+    }
+}
+@media screen and (max-height: 410px) {
+    .shopContent {
+        max-height: 300px;
+    }
 }

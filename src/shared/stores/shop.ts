@@ -1,6 +1,6 @@
 import { characters } from '@settings/characters';
 import { backgrounds } from '@settings/backgrounds';
-import { BackgroundType, CharacterType } from '@settings/types';
+import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
@@ -17,9 +17,9 @@ interface ShopState {
     activeBackground: BackgroundType | null;
     setActiveBackground: (background: BackgroundType) => void;
 
-    buyCharacterItem: (character: CharacterType) => void;
-
     getActiveDamage: () => number;
+
+    buyItem: (item: CharacterType | BackgroundType, type: ItemType) => void;
 
     initShopData: (
         myCharacters: CharacterType[],
@@ -43,14 +43,6 @@ const createShopSlice: StateCreator<
         set({ activeCharacter: character });
     },
 
-    buyCharacterItem: (character: CharacterType) => {
-        const myCharacters = get().myCharacters;
-        const setActiveCharacter = get().setActiveCharacter;
-
-        set({ myCharacters: [...myCharacters, character] });
-        setActiveCharacter(character);
-    },
-
     backgrounds: backgrounds,
     myBackgrounds: [backgrounds[0]],
 
@@ -58,6 +50,22 @@ const createShopSlice: StateCreator<
 
     setActiveBackground: (background: BackgroundType) => {
         set({ activeBackground: background });
+    },
+
+    buyItem: (item: CharacterType | BackgroundType, type: ItemType) => {
+        if (type === ItemType.character) {
+            const myCharacters = get().myCharacters;
+            const setActiveCharacter = get().setActiveCharacter;
+
+            set({ myCharacters: [...myCharacters, item as CharacterType] });
+            setActiveCharacter(item as CharacterType);
+        } else if (type === ItemType.background) {
+            const myBackgrounds = get().myBackgrounds;
+            const setActiveBackground = get().setActiveBackground;
+
+            set({ myBackgrounds: [...myBackgrounds, item as BackgroundType] });
+            setActiveBackground(item as BackgroundType);
+        }
     },
 
     getActiveDamage: () => {

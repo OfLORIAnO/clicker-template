@@ -1,9 +1,9 @@
 {
-    "myBalance": 100,
+    "myBalance": 500,
     "language": 1,
     "myCharactersId": [0],
     "activeCharacterId": 0,
 
-    "myBackgroundsId": [0, 5],
-    "activeBackgroundsId": 5
+    "myBackgroundsId": [0],
+    "activeBackgroundsId": 0
 }
