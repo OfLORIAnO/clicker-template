@@ -11,6 +11,10 @@
     grid-template-rows: repeat(3, 1fr);
 
     padding: 30px;
+
+    @media screen and (max-height: 600px) {
+        grid-template-rows: repeat(2, 1fr);
+    }
 }
 
 @media screen and (max-width: 768px) {

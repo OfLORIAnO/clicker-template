@@ -2,18 +2,24 @@ import './reset.css';
 import './settings.module.scss';
 import styles from './App.module.scss';
 import { useLanguage } from '@/shared/hooks/useLanguage';
-import { Shop } from '@/components';
+import { Settings, Shop } from '@/components';
 import { Balance } from '@/components/Balance';
 import { usePlayerStore } from '@/shared/stores/player';
 import { InitProcess } from './Prosecc/InitProcess';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useShopStore } from '@/shared/stores/shop';
-import { Button, Icons } from '@/shared/ui';
+import { Button, Icons, Img } from '@/shared/ui';
 import { Wrapper } from './Wrapper/Wrapper';
+import Particles from 'react-particles';
+import type { Container, Engine } from 'tsparticles-engine';
+import { loadSlim } from 'tsparticles-slim';
+import { particleOptions, defaultOptions } from '@settings/index';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
+
     const [isShopOpen, setIsShopOpen] = useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     const { activeCharacter } = useShopStore();
 
@@ -24,10 +30,29 @@ function App() {
     };
 
     if (!activeCharacter) return null;
+    const particlesInit = useCallback(async (engine: Engine) => {
+        console.log(engine);
 
+        await loadSlim(engine);
+    }, []);
+
+    const particlesLoaded = useCallback(
+        async (container: Container | undefined) => {
+            await console.log(container);
+        },
+        [],
+    );
+    const getRandomHexColor = () => {
+        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    };
     return (
         <InitProcess isLoading={isLoading} setIsLoading={setIsLoading}>
             <Wrapper>
+                <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
+                <Settings
+                    setIsSettingsOpen={setIsSettingsOpen}
+                    isSettingsOpen={isSettingsOpen}
+                />
                 <div className={styles.shopContainer}>
                     <Button
                         onClick={() => {
@@ -36,13 +61,13 @@ function App() {
                         className={styles.shopButton}
                     >
                         {useLanguage('store')}
-                        <img src={Icons.shopWhite} />
+                        <Img src={Icons.shopWhite} />
                     </Button>
                 </div>
                 <div className={styles.moneyContainer}>
-                    <Balance />
+                    <Balance className={styles.moneyBalance} />
                     <Button className={styles.advertButton}>
-                        <img
+                        <Img
                             src={Icons.advertWhite}
                             className={styles.advertImage}
                         />
@@ -53,21 +78,86 @@ function App() {
                     <Button>{useLanguage('scaleMoneyPerSecond')}</Button>
                     <Button>{useLanguage('scaleLucky')}</Button>
                 </div>
-                <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
+
                 <div className={styles.characterContainer}>
                     <button
                         onClick={handleClick}
                         className={styles.characterButton}
                     >
-                        <img
+                        <Particles
+                            id="tsparticles"
+                            init={particlesInit}
+                            loaded={particlesLoaded}
+                            options={{
+                                fpsLimit: 60,
+                                interactivity: {
+                                    events: {
+                                        onClick: {
+                                            enable: true,
+                                            mode: 'repulse',
+                                        },
+                                    },
+                                    modes: {
+                                        push: {
+                                            quantity: 4,
+                                        },
+                                        repulse: {
+                                            distance: 500,
+                                            duration: 0.4,
+                                        },
+                                    },
+                                },
+                                particles: {
+                                    bounce: {
+                                        vertical: {
+                                            random: true,
+                                        },
+                                    },
+                                    color: {
+                                        value: ['#00fafa'],
+                                    },
+                                    move: {
+                                        direction: 'outside',
+                                        enable: true,
+                                        outModes: {
+                                            default: 'bounce',
+                                        },
+                                        random: true,
+                                        speed: 5,
+                                        straight: false,
+                                    },
+                                    number: {
+                                        density: {
+                                            enable: true,
+                                            area: 100,
+                                        },
+                                        value: 10,
+                                    },
+                                    opacity: {
+                                        value: 1,
+                                    },
+                                    shape: {
+                                        type: 'circle',
+                                    },
+                                    size: {
+                                        value: { min: 1, max: 10 },
+                                    },
+                                },
+                                detectRetina: true,
+                            }}
+                        />
+                        <Img
                             src={activeCharacter.image}
                             className={styles.characterImage}
                         />
                     </button>
                 </div>
                 <div className={styles.settingsContainer}>
-                    <Button className={styles.settingsButton}>
-                        <img
+                    <Button
+                        className={styles.settingsButton}
+                        onClick={() => setIsSettingsOpen(true)}
+                    >
+                        <Img
                             src={Icons.settingsWhite}
                             className={styles.settingsImage}
                         />

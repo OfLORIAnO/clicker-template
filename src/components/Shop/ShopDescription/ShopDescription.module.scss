@@ -4,7 +4,9 @@
     @include innerBoxShadow(20px);
     @include borderRad(10px);
 
-    flex: 0 0 50%;
+    flex: 0 1 auto;
+
+    width: 700px;
 
     padding: 10px 10px 0 10px;
 
@@ -14,6 +16,15 @@
 
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 800px) {
+        .wrapper {
+            width: 100%;
+        }
+    }
+    @media screen and (max-height: 568px) {
+        width: 100%;
+    }
 }
 
 .header {
@@ -24,15 +35,16 @@
 
     .imageContainer {
         @include borderRad(10px);
-        @include innerBoxShadow(15px);
-        background: var(--white);
         display: flex;
         align-items: flex-start;
         justify-content: center;
         overflow: hidden;
 
         &.characterImage {
+            @include innerBoxShadow(15px);
+            background: var(--white);
             max-width: 200px;
+            flex: 0 0 auto;
             max-height: 200px;
             img {
                 width: 90%;
@@ -42,8 +54,9 @@
         &.backgroundImage {
             width: 340px;
             img {
-                width: 100%;
+                @include borderRad(10px);
                 height: 100%;
+                width: 100%;
                 object-fit: contain;
             }
         }
@@ -54,8 +67,9 @@
         @include borderRad(10px);
         background: var(--secondary);
         padding: 15px;
-        width: 220px;
-
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         & > div {
             display: flex;
             align-items: center;
@@ -75,6 +89,7 @@
     flex: 1 1 auto;
     height: 100%;
     p {
+        line-height: 140%;
         overflow-y: auto;
         height: 100%;
         padding: 15px;
@@ -159,5 +174,77 @@
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .description {
+        p {
+            font-size: 16px;
+        }
+    }
+}
+@media screen and (max-width: 1200px) {
+    .backgroundImage {
+        width: 250px !important;
+    }
+    .desktop {
+        display: none;
+    }
+}
+@media screen and (max-width: 900px) {
+    .header {
+        height: 100px;
+        .characterImage {
+            width: 100px;
+            height: 100px;
+        }
+    }
+    .actions {
+        max-height: 100px;
+        button {
+            font-size: 20px;
+            padding: 6px 8px;
+            img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+    }
+    .description {
+        padding: 0;
+        p {
+            padding: 10px;
+        }
+    }
+    .characterImage {
+        max-width: 100px;
+        max-height: 100px;
+    }
+    .backgroundImage {
+        flex: 1 0 auto;
+        width: 200px !important;
+        img {
+            height: 100% !important;
+            width: initial !important;
+            object-fit: cover;
+        }
+    }
+    .stats {
+        width: 100%;
+        & > div {
+            font-size: 16px !important;
+            & > b {
+                font-weight: 500;
+                font-size: 18px !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .backgroundImage {
+        flex: 1 0 auto;
+        width: 120px !important;
     }
 }

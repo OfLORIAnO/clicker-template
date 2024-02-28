@@ -1,0 +1,52 @@
+@import '../../app/mixins.scss';
+
+.wrapper {
+    background: var(--secondary);
+    height: 100%;
+    @include borderRad(20px);
+    overflow: hidden;
+}
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    flex: 0 1 45%;
+    padding: 13px;
+    width: 500px;
+    position: relative;
+
+    h1 {
+        font-size: 25px;
+    }
+    button {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        background: var(--primary);
+        border: none;
+        color: var(--white);
+        width: 26px;
+        height: 26px;
+        @include borderRad(10px);
+    }
+    img {
+        width: 22px;
+        height: 22px;
+    }
+
+    @media screen and (max-height: 768px) and (min-width: 550px) {
+        h1 {
+            font-size: 22px;
+        }
+    }
+}
+.content {
+    padding: 0 34px 34px;
+}
+
+.sound {
+    display: flex;
+    gap: 24px;
+}

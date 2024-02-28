@@ -5,6 +5,9 @@ import ShopWhiteIcon from '@assets/icons/shop-white.svg';
 import BalanceWhiteIcon from '@assets/icons/balance-white.svg';
 import AdvertWhiteIcon from '@assets/icons/ad-white.svg';
 
+import SoundBlackIcon from '@assets/icons/sound-black.svg';
+import MusicBlackIcon from '@assets/icons/music-black.svg';
+
 export const Icons = {
     moneyWhite: MoneyWhiteIcon,
     settingsWhite: SettingsWhiteIcon,
@@ -12,4 +15,7 @@ export const Icons = {
     shopWhite: ShopWhiteIcon,
     balanceWhite: BalanceWhiteIcon,
     advertWhite: AdvertWhiteIcon,
+
+    soundBlack: SoundBlackIcon,
+    musicBlack: MusicBlackIcon,
 };

@@ -27,4 +27,9 @@
         @include borderRad(10px);
         width: $width;
     }
+    @media screen and (max-width: 768px) {
+        &::-webkit-scrollbar {
+            width: 7px;
+        }
+    }
 }

@@ -1,7 +1,7 @@
 import styles from './ShopDescription.module.scss';
 import { useLanguage } from '@/shared/hooks/useLanguage';
 import { usePlayerStore } from '@/shared/stores/player';
-import { Button, Icons } from '@/shared/ui';
+import { Button, Icons, Img } from '@/shared/ui';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 
@@ -69,21 +69,35 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                             itemType === ItemType.background,
                     })}
                 >
-                    <img src={item.image} />
+                    <Img src={item.image} />
                 </div>
 
                 <div className={styles.stats}>
                     <div className={styles.name}>
-                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                        <span className={styles.desktop}>
+                            {useLanguage('name')}:
+                        </span>{' '}
+                        <b>{item.name[language]}</b>
+                        <b>{item.name[language]}</b>
+                        <b>{item.name[language]}</b>
                     </div>
                     <div className={styles.name}>
-                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                        <span className={styles.desktop}>
+                            {useLanguage('name')}:
+                        </span>{' '}
+                        <b>{item.name[language]}</b>
                     </div>
                     <div className={styles.name}>
-                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                        <span className={styles.desktop}>
+                            {useLanguage('name')}:
+                        </span>{' '}
+                        <b>{item.name[language]}</b>
                     </div>
                     <div className={styles.name}>
-                        {useLanguage('name')}: <b>{item.name[language]}</b>
+                        <span className={styles.desktop}>
+                            {useLanguage('name')}:
+                        </span>{' '}
+                        <b>{item.name[language]}</b>
                     </div>
                 </div>
             </div>
@@ -103,7 +117,7 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                         onClick={handleBuyItem}
                     >
                         {item.price}
-                        <img src={Icons.balanceWhite} />
+                        <Img src={Icons.balanceWhite} />
                     </Button>
                 )}
             </div>

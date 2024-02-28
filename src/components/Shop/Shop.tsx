@@ -1,6 +1,6 @@
 import { ShopItems } from './ShopItems';
 import styles from './Shop.module.scss';
-import { Button, Icons, Popup } from '@/shared/ui';
+import { Button, Icons, Img, Popup } from '@/shared/ui';
 import { ShopProps } from './Shop.props';
 import { Balance } from '../Balance';
 import { ShopDescription } from './ShopDescription';
@@ -51,40 +51,48 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
             <div className={styles.wrapper} {...props}>
                 <div className={styles.header}>
                     <h1>{useLanguage('store')}</h1>
-                    <img src={Icons.shopBlack} alt="" />
+                    <Img src={Icons.shopBlack} />
                     <button onClick={() => setIsShopOpen(false)}>с</button>
                 </div>
                 <div className={styles.content}>
                     <nav className={styles.nav}>
-                        <Balance />
-                        <Button
-                            disabled={activeItemType === ItemType.character}
-                            onClick={() =>
-                                handleOnChangeItemType(ItemType.character)
-                            }
-                        >
-                            Персонажи
-                        </Button>
-                        <Button
-                            disabled={activeItemType === ItemType.background}
-                            onClick={() =>
-                                handleOnChangeItemType(ItemType.background)
-                            }
-                        >
-                            Фоны
-                        </Button>
-                        <Button>Плюшки</Button>
+                        <Balance className={styles.balance} />
+                        <div className={styles.choose}>
+                            <Button
+                                disabled={activeItemType === ItemType.character}
+                                onClick={() =>
+                                    handleOnChangeItemType(ItemType.character)
+                                }
+                                className={styles.chooseButton}
+                            >
+                                Персонажи
+                            </Button>
+                            <Button
+                                disabled={
+                                    activeItemType === ItemType.background
+                                }
+                                className={styles.chooseButton}
+                                onClick={() =>
+                                    handleOnChangeItemType(ItemType.background)
+                                }
+                            >
+                                Фоны
+                            </Button>
+                        </div>
+                        {/* <Button>Плюшки</Button> */}
                     </nav>
                     <div className={styles.shopContent}>
-                        <ShopItems
-                            itemType={activeItemType}
-                            selectedItem={
-                                activeItemType === ItemType.character
-                                    ? selectedCharacter
-                                    : selectedBackground
-                            }
-                            handleClick={handleOnItemClick}
-                        />
+                        <div className={styles.shopItemsContent}>
+                            <ShopItems
+                                itemType={activeItemType}
+                                selectedItem={
+                                    activeItemType === ItemType.character
+                                        ? selectedCharacter
+                                        : selectedBackground
+                                }
+                                handleClick={handleOnItemClick}
+                            />
+                        </div>
                         <ShopDescription
                             itemType={activeItemType}
                             item={

@@ -2,6 +2,7 @@ import { ShopItemProps } from './ShopItem.props';
 import styles from './ShopItem.module.scss';
 import classNames from 'classnames';
 import { ItemType } from '@settings/types';
+import { Img } from '@/shared/ui';
 export const ShopItem = ({
     itemId,
     image,
@@ -27,7 +28,7 @@ export const ShopItem = ({
                 {/* <p>{`Активный: ${isActive}`}</p> */}
                 {/* <p>{`Купленный: ${!isLocked}`}</p> */}
                 {isLocked && <div className={styles.lock} />}
-                <img
+                <Img
                     src={image}
                     className={classNames(styles.image, {
                         [styles.characterImage]:
