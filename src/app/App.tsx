@@ -13,7 +13,7 @@ import { Wrapper } from './Wrapper/Wrapper';
 import Particles from 'react-particles';
 import type { Container, Engine } from 'tsparticles-engine';
 import { loadSlim } from 'tsparticles-slim';
-import { particleOptions, defaultOptions } from '@settings/index';
+import { particleOptions } from '@settings/index';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -23,28 +23,39 @@ function App() {
 
     const { activeCharacter } = useShopStore();
 
-    const { click } = usePlayerStore();
-
-    const handleClick = () => {
-        activeCharacter?.damage ? click(activeCharacter.damage) : click(1);
-    };
+    const {
+        click,
+        priceCoinsPerClick,
+        upgradeCoinsPerClick,
+        coinsPerClick,
+        setBalance,
+        balance,
+    } = usePlayerStore();
 
     if (!activeCharacter) return null;
-    const particlesInit = useCallback(async (engine: Engine) => {
-        console.log(engine);
 
+    const handleClick = () => {
+        activeCharacter
+            ? click(
+                  activeCharacter.damageBonus,
+                  activeCharacter.luckyBonusX5,
+                  coinsPerClick,
+              )
+            : click(1, 0, 1);
+    };
+
+    const handleUpgradeCoinsPerClick = () => {
+        setBalance(balance - priceCoinsPerClick);
+        upgradeCoinsPerClick();
+    };
+
+    const particlesInit = useCallback(async (engine: Engine) => {
         await loadSlim(engine);
     }, []);
 
-    const particlesLoaded = useCallback(
-        async (container: Container | undefined) => {
-            await console.log(container);
-        },
-        [],
-    );
-    const getRandomHexColor = () => {
-        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    };
+    // const particlesLoaded = useCallback((container: Container | undefined) => {
+    //     console.log(container);
+    // }, []);
 
     return (
         <InitProcess isLoading={isLoading} setIsLoading={setIsLoading}>
@@ -64,6 +75,7 @@ function App() {
                         {useLanguage('store')}
                         <Img src={Icons.shopWhite} />
                     </Button>
+                    {coinsPerClick}
                 </div>
                 <div className={styles.moneyContainer}>
                     <Balance className={styles.moneyBalance} />
@@ -75,7 +87,9 @@ function App() {
                     </Button>
                 </div>
                 <div className={styles.scalesContainer}>
-                    <Button> {useLanguage('scaleClick')}</Button>
+                    <Button onClick={handleUpgradeCoinsPerClick} disabled={balance <  priceCoinsPerClick}>
+                        {useLanguage('scaleClick')} {priceCoinsPerClick}
+                    </Button>
                     <Button>{useLanguage('scaleMoneyPerSecond')}</Button>
                     <Button>{useLanguage('scaleLucky')}</Button>
                 </div>
@@ -89,7 +103,7 @@ function App() {
                         <Particles
                             id="tsparticles"
                             init={particlesInit}
-                            loaded={particlesLoaded}
+                            // loaded={particlesLoaded}
                             options={particleOptions}
                         />
                         <Img

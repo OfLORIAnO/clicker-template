@@ -80,7 +80,7 @@ export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
         setIsLoading(true);
 
         InitSettings();
-        if (InitDataMock) {
+        if (InitDataMock.ready) {
             InitUserData();
         }
         await new Promise((resolve) => setTimeout(resolve, 1000));

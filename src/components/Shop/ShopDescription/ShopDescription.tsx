@@ -78,8 +78,6 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                             {useLanguage('name')}:
                         </span>{' '}
                         <b>{item.name[language]}</b>
-                        <b>{item.name[language]}</b>
-                        <b>{item.name[language]}</b>
                     </div>
                     <div className={styles.name}>
                         <span className={styles.desktop}>

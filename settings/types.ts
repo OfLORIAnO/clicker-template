@@ -4,7 +4,9 @@ interface ICharacter {
     name: string[];
     description: string[];
     price: number;
-    damage: number;
+    damageBonus: number;
+    luckyBonusX5: number;
+    coinsPerSecondBonus: number;
 }
 export interface CharacterType extends ICharacter {
     id: number;
