@@ -2,14 +2,22 @@ import { Icons, Img, Popup, SoundController } from '@/shared/ui';
 import { SettingsProps } from './props';
 import styles from './Settings.module.scss';
 import { useLanguage } from '@/shared/hooks/useLanguage';
-import { useState } from 'react';
+import classNames from 'classnames';
+import { usePlayerStore } from '@/shared/stores/player';
+import { useSoundController } from '@/shared/stores/sound';
 
 export const Settings = ({
     isSettingsOpen,
     setIsSettingsOpen,
 }: SettingsProps) => {
-    const [soundValue, setSoundValue] = useState<number>(50);
-    const [musicValue, setMusicValue] = useState<number>(50);
+    const { setLanguage } = usePlayerStore();
+
+    const chooseLanguage = (value: number) => {
+        setLanguage(value);
+    };
+
+    const { soundVolume, musicVolume, setSoundVolume, setMusicVolume } =
+        useSoundController();
 
     return (
         <Popup close={() => setIsSettingsOpen(false)} isOpened={isSettingsOpen}>
@@ -23,14 +31,43 @@ export const Settings = ({
                     <div className={styles.sound}>
                         <SoundController
                             icon={Icons.soundBlack}
-                            setSoundValue={setSoundValue}
-                            soundValue={soundValue}
+                            setSoundValue={setSoundVolume}
+                            soundValue={soundVolume}
                         />
                         <SoundController
                             icon={Icons.musicBlack}
-                            setSoundValue={setMusicValue}
-                            soundValue={musicValue}
+                            setSoundValue={setMusicVolume}
+                            soundValue={musicVolume}
                         />
+                    </div>
+                    <div className={styles.flagsContainer}>
+                        <button
+                            onClick={() => chooseLanguage(0)}
+                            className={styles.flagButton}
+                        >
+                            <span className={styles.flagName}>Русский</span>
+                            <span
+                                className={classNames('fi-ru', styles.flag)}
+                            />
+                        </button>
+                        <button
+                            onClick={() => chooseLanguage(1)}
+                            className={styles.flagButton}
+                        >
+                            <span className={styles.flagName}>English</span>
+                            <span
+                                className={classNames('fi-us', styles.flag)}
+                            />
+                        </button>
+                        <button
+                            onClick={() => chooseLanguage(2)}
+                            className={styles.flagButton}
+                        >
+                            <span className={styles.flagName}>Türk dili</span>
+                            <span
+                                className={classNames('fi-tr', styles.flag)}
+                            />
+                        </button>
                     </div>
                 </div>
             </div>
