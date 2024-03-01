@@ -2,6 +2,9 @@ import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { clickCalc, upgradeCoinsPerClickCalc } from '../helper/index';
 interface PlayerState {
+    isParticlesOn: boolean;
+    setIsParticlesOn: (isParticlesOn: boolean) => void;
+
     language: number;
     setLanguage: (language: number) => void;
 
@@ -29,6 +32,11 @@ const createPlayerSlice: StateCreator<
     [],
     PlayerState
 > = (set, get) => ({
+    isParticlesOn: false,
+    setIsParticlesOn: (isParticlesOn: boolean) => {
+        set({ isParticlesOn });
+    },
+
     language: 0,
     setLanguage: (language: number) => {
         set({ language });

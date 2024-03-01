@@ -4,6 +4,7 @@ import InitDataMock from '@settings/initDataMock.json';
 import { usePlayerStore } from '@/shared/stores/player';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType } from '@settings/types';
+import { useSoundController } from '@/shared/stores/sound';
 interface IProps {
     children: React.ReactNode;
     setIsLoading: (value: boolean) => void;
@@ -13,7 +14,7 @@ interface IProps {
 export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
     const { setBalance, setLanguage } = usePlayerStore();
     const { initShopData, characters, backgrounds } = useShopStore();
-
+    const { turnOnMusic } = useSoundController();
     const getMyBackgrounds = (myBackgroundsId: number[]): BackgroundType[] => {
         return backgrounds
             ? backgrounds.filter((background) =>
@@ -90,6 +91,7 @@ export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
 
     useEffect(() => {
         InitGameData();
+        document.addEventListener('click', turnOnMusic);
     }, []);
 
     if (isLoading) return null;

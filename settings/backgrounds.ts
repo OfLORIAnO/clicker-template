@@ -15,6 +15,9 @@ export const backgrounds: BackgroundType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 0,
+        coinsPerSecondBonus: 1.2,
+        luckyBonusX5: 0.05,
+        damageBonus: 0.05,
     },
     {
         id: 5,
@@ -27,6 +30,10 @@ export const backgrounds: BackgroundType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 100,
+
+        coinsPerSecondBonus: 1.2,
+        luckyBonusX5: 0.05,
+        damageBonus: 0.05,
     },
     {
         id: 10,
@@ -39,5 +46,9 @@ export const backgrounds: BackgroundType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
+
+        coinsPerSecondBonus: 1.2,
+        luckyBonusX5: 0.05,
+        damageBonus: 0.05,
     },
 ];

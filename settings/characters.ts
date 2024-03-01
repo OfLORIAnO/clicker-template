@@ -59,8 +59,8 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damageBonus: 0.05,
-        luckyBonusX5: 0.05,
+        damageBonus: 0.1,
+        luckyBonusX5: 0.1,
         coinsPerSecondBonus: 1.5,
     },
 ];

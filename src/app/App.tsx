@@ -14,6 +14,8 @@ import Particles from 'react-particles';
 import type { Container, Engine } from 'tsparticles-engine';
 import { loadSlim } from 'tsparticles-slim';
 import { particleOptions } from '@settings/index';
+import { shortNumber } from '@/shared/helper';
+import { useSoundController } from '@/shared/stores/sound';
 
 function App() {
     const [isLoading, setIsLoading] = useState(true);
@@ -23,6 +25,8 @@ function App() {
 
     const { activeCharacter } = useShopStore();
 
+    const { playSoundOfClick } = useSoundController();
+
     const {
         click,
         priceCoinsPerClick,
@@ -30,11 +34,13 @@ function App() {
         coinsPerClick,
         setBalance,
         balance,
+        isParticlesOn,
     } = usePlayerStore();
 
     if (!activeCharacter) return null;
 
     const handleClick = () => {
+        playSoundOfClick();
         activeCharacter
             ? click(
                   activeCharacter.damageBonus,
@@ -52,10 +58,6 @@ function App() {
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadSlim(engine);
     }, []);
-
-    // const particlesLoaded = useCallback((container: Container | undefined) => {
-    //     console.log(container);
-    // }, []);
 
     return (
         <InitProcess isLoading={isLoading} setIsLoading={setIsLoading}>
@@ -75,7 +77,7 @@ function App() {
                         {useLanguage('store')}
                         <Img src={Icons.shopWhite} />
                     </Button>
-                    {coinsPerClick}
+                    {/* {coinsPerClick} */}
                 </div>
                 <div className={styles.moneyContainer}>
                     <Balance className={styles.moneyBalance} />
@@ -84,14 +86,24 @@ function App() {
                             src={Icons.advertWhite}
                             className={styles.advertImage}
                         />
+                        {useLanguage('x2For')}
                     </Button>
                 </div>
                 <div className={styles.scalesContainer}>
-                    <Button onClick={handleUpgradeCoinsPerClick} disabled={balance <  priceCoinsPerClick}>
-                        {useLanguage('scaleClick')} {priceCoinsPerClick}
+                    <Button
+                        onClick={handleUpgradeCoinsPerClick}
+                        className={styles.scalesButton}
+                        disabled={balance < priceCoinsPerClick}
+                    >
+                        {useLanguage('scaleClick')}
+                        <span className={styles.scalesPrice}>
+                            {shortNumber(priceCoinsPerClick)}
+                            <Img src={Icons.balanceWhite} />
+                        </span>
                     </Button>
-                    <Button>{useLanguage('scaleMoneyPerSecond')}</Button>
-                    <Button>{useLanguage('scaleLucky')}</Button>
+                    <Button className={styles.scalesButton}>
+                        {useLanguage('scaleMoneyPerSecond')}
+                    </Button>
                 </div>
 
                 <div className={styles.characterContainer}>
@@ -100,12 +112,15 @@ function App() {
                         onClick={handleClick}
                         className={styles.characterButton}
                     >
-                        <Particles
-                            id="tsparticles"
-                            init={particlesInit}
-                            // loaded={particlesLoaded}
-                            options={particleOptions}
-                        />
+                        {isParticlesOn && (
+                            <Particles
+                                id="tsparticles"
+                                init={particlesInit}
+                                // loaded={particlesLoaded}
+                                options={particleOptions}
+                            />
+                        )}
+
                         <Img
                             src={activeCharacter.image}
                             className={styles.characterImage}

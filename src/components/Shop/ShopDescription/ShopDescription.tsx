@@ -4,7 +4,6 @@ import { usePlayerStore } from '@/shared/stores/player';
 import { Button, Icons, Img } from '@/shared/ui';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
-
 import classNames from 'classnames';
 
 interface IProps {
@@ -13,7 +12,7 @@ interface IProps {
 }
 
 export const ShopDescription = ({ item, itemType }: IProps) => {
-    if (!item) return null;
+    if (!item || !itemType) return null;
 
     const { language, balance, setBalance } = usePlayerStore();
     const {
@@ -72,30 +71,28 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                     <Img src={item.image} />
                 </div>
 
-                <div className={styles.stats}>
-                    <div className={styles.name}>
-                        <span className={styles.desktop}>
-                            {useLanguage('name')}:
-                        </span>{' '}
-                        <b>{item.name[language]}</b>
-                    </div>
-                    <div className={styles.name}>
-                        <span className={styles.desktop}>
-                            {useLanguage('name')}:
-                        </span>{' '}
-                        <b>{item.name[language]}</b>
-                    </div>
-                    <div className={styles.name}>
-                        <span className={styles.desktop}>
-                            {useLanguage('name')}:
-                        </span>{' '}
-                        <b>{item.name[language]}</b>
-                    </div>
-                    <div className={styles.name}>
-                        <span className={styles.desktop}>
-                            {useLanguage('name')}:
-                        </span>{' '}
-                        <b>{item.name[language]}</b>
+                <div className={styles.topInfo}>
+                    <h4>{item.name[language]}</h4>
+                    <div className={styles.stats}>
+                        <div className={styles.name}>
+                            <span className={styles.desktop}>
+                                {useLanguage('damageBonus')}:
+                            </span>
+                            <span className={styles.mobileOnly}>
+                                <Img src={Icons.scaleClickBlack} />
+                            </span>
+                            <b>+{item.damageBonus * 100}%</b>
+                        </div>
+
+                        <div className={styles.name}>
+                            <span className={styles.desktop}>
+                                {useLanguage('changeX5')}:
+                            </span>
+                            <span className={styles.mobileOnly}>
+                                <Img src={Icons.luckyBlack} />
+                            </span>
+                            <b>+{item.luckyBonusX5 * 100}%</b>
+                        </div>
                     </div>
                 </div>
             </div>

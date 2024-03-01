@@ -1,6 +1,6 @@
 {
-    "ready": false,
-    "myBalance": 123500,
+    "ready": true,
+    "myBalance": 1211111133,
     "language": 0,
     "myCharactersId": [0, 10],
     "activeCharacterId": 10,

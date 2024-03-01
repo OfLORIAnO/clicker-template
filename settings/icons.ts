@@ -8,6 +8,10 @@ import AdvertWhiteIcon from '@assets/icons/ad-white.svg';
 import SoundBlackIcon from '@assets/icons/sound-black.svg';
 import MusicBlackIcon from '@assets/icons/music-black.svg';
 
+import scaleClickBlackIcon from '@assets/icons/scale-click-black.svg';
+import LuckyWhiteIcon from '@assets/icons/lucky-white.svg';
+import LuckyBlackIcon from '@assets/icons/lucky-black.svg';
+
 export const Icons = {
     moneyWhite: MoneyWhiteIcon,
     settingsWhite: SettingsWhiteIcon,
@@ -18,4 +22,8 @@ export const Icons = {
 
     soundBlack: SoundBlackIcon,
     musicBlack: MusicBlackIcon,
+
+    scaleClickBlack: scaleClickBlackIcon,
+    luckyWhite: LuckyWhiteIcon,
+    luckyBlack: LuckyBlackIcon,
 };

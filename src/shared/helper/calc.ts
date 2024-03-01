@@ -13,6 +13,30 @@ const testIndexes = (minIndex: number, maxIndex: number) => {
     console.log('------------------------');
 };
 
+const addSpace = (number: string): string => {
+    if (number.length === 7) {
+        return number[0] + ' ' + number.slice(1);
+    }
+    return number;
+};
+
+export const shortNumber = (number: number): string => {
+    if (number < 1e3 * 10) return addSpace(number.toString());
+
+    if (number >= 1e3 * 10 && number < 1e6 * 10)
+        return addSpace(+(number / 1e3).toFixed(1) + 'K');
+
+    if (number >= 1e6 * 10 && number < 1e9 * 10)
+        return addSpace(+(number / 1e6).toFixed(1) + 'M');
+
+    if (number >= 1e9 * 10 && number < 1e12 * 10)
+        return addSpace(+(number / 1e9).toFixed(1) + 'B');
+
+    if (number >= 1e12 * 10) return addSpace(+(number / 1e12).toFixed(1) + 'T');
+
+    return addSpace(number.toString());
+};
+
 // ?
 
 export const clickCalc = (
@@ -38,7 +62,7 @@ export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
     //! returns: [newPrice, newCoinsPerSecond]
 
     const minIndexClick = 1.2;
-    const maxIndexClick = 2.2;
+    const maxIndexClick = 1.8;
 
     testIndexes(minIndexClick, maxIndexClick);
 
@@ -46,7 +70,7 @@ export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
         generateRandomNumber(current * minIndexClick, current * maxIndexClick),
     );
     const newPrice = ciel(
-        generateRandomNumber(newCoinsPerClick * 100, newCoinsPerClick * 150),
+        generateRandomNumber(newCoinsPerClick * 60, newCoinsPerClick * 90),
     );
 
     return [newPrice, newCoinsPerClick];

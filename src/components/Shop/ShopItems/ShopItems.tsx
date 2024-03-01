@@ -9,6 +9,7 @@ interface IProps {
     handleClick: (id: number) => void;
     itemType: ItemType;
 }
+
 export const ShopItems = ({ selectedItem, handleClick, itemType }: IProps) => {
     const {
         activeCharacter,

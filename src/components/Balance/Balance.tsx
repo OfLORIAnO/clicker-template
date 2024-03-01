@@ -1,18 +1,19 @@
-import { Icons, Img } from '@/shared/ui';
+import { Button, Icons, Img } from '@/shared/ui';
 import styles from './Balance.module.scss';
 import { usePlayerStore } from '@/shared/stores/player';
 import classNames from 'classnames';
+import { shortNumber } from '@/shared/helper';
 
-interface IProps extends React.HTMLAttributes<HTMLDivElement> {
+interface IProps {
     className?: string;
 }
 
 export const Balance = ({ className, ...props }: IProps) => {
     const { balance } = usePlayerStore();
     return (
-        <div className={classNames(styles.wrapper, className)} {...props}>
+        <Button className={classNames(styles.wrapper, className)} {...props}>
             <Img src={Icons.balanceWhite} />
-            <span>{balance}</span>
-        </div>
+            <span>{shortNumber(balance)}</span>
+        </Button>
     );
 };

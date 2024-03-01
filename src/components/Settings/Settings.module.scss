@@ -2,9 +2,9 @@
 
 .wrapper {
     background: var(--secondary);
-    height: 100%;
     @include borderRad(20px);
-    overflow: hidden;
+    overflow-y: scroll;
+    max-height: calc(100vh - 20px);
 }
 .header {
     display: flex;
@@ -47,10 +47,38 @@
     gap: 50px;
     padding: 0 34px 34px;
 }
+.settingsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.settingsContainer > div {
+    h2 {
+        font-weight: 500;
+        text-align: center;
+        font-size: 24px;
+        margin: 0px 0px 10px 0px;
+    }
+}
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.settings,
+.flagsContainer {
+    @include innerBoxShadow(10px);
+    @include borderRad(10px);
+    padding: 10px;
+}
 .flagsContainer {
     display: flex;
     align-items: flex-start;
     gap: 20px;
+    @media screen and (max-width: 400px) {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .flagButton {
     display: flex;
@@ -65,7 +93,8 @@
     text-align: center;
     width: 100%;
 }
-.flag {
+
+.flagIcon {
     width: 160px;
     height: 120px;
     display: block;
@@ -77,13 +106,14 @@
     background-position: center center;
     background-repeat: no-repeat;
 }
-@media screen and (max-width: 768px) {
-    .flag {
+@media screen and (max-width: 768px) and (min-height: 768px) {
+    .flagIcon {
         width: 120px;
         height: 90px;
     }
     .flagsContainer {
         gap: 10px;
+        align-items: center;
         flex-direction: column;
     }
     .flagButton {
@@ -93,4 +123,40 @@
 .sound {
     display: flex;
     gap: 24px;
+}
+.otherSettings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+@media screen and (max-width: 768px) {
+    .flagIcon {
+        width: 80px;
+        height: 60px;
+    }
+    .flagName {
+        font-size: 16px;
+    }
+}
+@media screen and (max-height: 1000px) and (max-width: 768px) {
+    .header {
+        top: 0;
+        background: var(--secondary);
+        position: sticky;
+        z-index: 600;
+    }
+
+    .wrapper {
+        overflow-y: scroll;
+        height: calc(100vh - 20px);
+    }
+    .content {
+        gap: 20px;
+        flex-direction: column;
+    }
+    .sound {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
 }

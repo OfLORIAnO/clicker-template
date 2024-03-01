@@ -1,4 +1,9 @@
-interface ICharacter {
+export enum ItemType {
+    character = 'character',
+    background = 'background',
+}
+
+interface IBasic {
     type: string;
     image: string;
     name: string[];
@@ -8,21 +13,18 @@ interface ICharacter {
     luckyBonusX5: number;
     coinsPerSecondBonus: number;
 }
+
+interface ICharacter extends IBasic {
+    type: ItemType.character;
+}
+
 export interface CharacterType extends ICharacter {
     id: number;
 }
 
-export enum ItemType {
-    character = 'character',
-    background = 'background',
-}
-
-interface IBackground {
+interface IBackground extends IBasic{
     type: ItemType.background;
-    image: string;
-    name: string[];
-    description: string[];
-    price: number;
+    
 }
 
 export interface BackgroundType extends IBackground {
