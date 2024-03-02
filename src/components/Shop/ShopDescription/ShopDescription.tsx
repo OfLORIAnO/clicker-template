@@ -1,8 +1,7 @@
 import styles from './ShopDescription.module.scss';
 import { useLanguage } from '@/shared/hooks/useLanguage';
-import { usePlayerStore } from '@/shared/stores/player';
 import { Button, Icons, Img } from '@/shared/ui';
-import { useShopStore } from '@/shared/stores/shop';
+import { usePlayerStore, useShopStore } from '@/stores';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 import classNames from 'classnames';
 
@@ -37,9 +36,9 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
     };
     const isActive = (): boolean => {
         if (itemType === ItemType.character) {
-            return activeCharacter ? activeCharacter.id === item.id : false;
+            return activeCharacter.id === item.id;
         } else if (itemType === ItemType.background) {
-            return activeBackground ? activeBackground.id === item.id : false;
+            return activeBackground.id === item.id;
         }
         return false;
     };

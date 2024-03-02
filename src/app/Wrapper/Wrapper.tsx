@@ -1,5 +1,4 @@
-import { useShopStore } from '@/shared/stores/shop';
-
+import { useShopStore } from '@/stores';
 import styles from './Wrapper.module.scss';
 
 interface IProps {
@@ -8,10 +7,11 @@ interface IProps {
 
 export const Wrapper = ({ children }: IProps) => {
     const { activeBackground } = useShopStore();
+
     return (
         <div
             className={styles.wrapper}
-            style={{ backgroundImage: `url(${activeBackground?.image})` }}
+            style={{ backgroundImage: `url(${activeBackground.image})` }}
         >
             {children}
         </div>

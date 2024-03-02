@@ -1,14 +1,14 @@
 import { ShopItems } from './ShopItems';
 import styles from './Shop.module.scss';
 import { Button, Icons, Img, Popup } from '@/shared/ui';
+import { Balance } from '@/components';
 import { ShopProps } from './Shop.props';
-import { Balance } from '../Balance';
 import { ShopDescription } from './ShopDescription';
 
 import { useState } from 'react';
-import { useShopStore } from '@/shared/stores/shop';
+import { useShopStore } from '@/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
-import { useLanguage } from '@/shared/hooks/useLanguage';
+import { useLanguage } from '@/shared/hooks';
 
 export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
     const [activeItemType, setActiveItemType] = useState<ItemType>(

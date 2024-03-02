@@ -1,17 +1,11 @@
 import { useEffect } from 'react';
 import InitSettings from '@settings/_init';
 import InitDataMock from '@settings/initDataMock.json';
-import { usePlayerStore } from '@/shared/stores/player';
-import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType } from '@settings/types';
-import { useSoundController } from '@/shared/stores/sound';
-interface IProps {
-    children: React.ReactNode;
-    setIsLoading: (value: boolean) => void;
-    isLoading: boolean;
-}
+import { IProps } from './props';
+import { usePlayerStore, useShopStore, useSoundController } from '@/stores';
 
-export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
+export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
     const { setBalance, setLanguage, startCoinsPerSecond, resetCoinsPerClick } =
         usePlayerStore();
     const { initShopData, characters, backgrounds } = useShopStore();
@@ -101,7 +95,9 @@ export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
         };
     }, []);
 
-    if (isLoading) return null;
+    if (isLoading) {
+        return null;
+    }
 
     return <>{children}</>;
 };

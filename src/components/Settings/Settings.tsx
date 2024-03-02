@@ -1,10 +1,9 @@
 import { Checkbox, Icons, Img, Popup, SoundController } from '@/shared/ui';
 import { SettingsProps } from './props';
 import styles from './Settings.module.scss';
-import { useLanguage } from '@/shared/hooks/useLanguage';
 import classNames from 'classnames';
-import { usePlayerStore } from '@/shared/stores/player';
-import { useSoundController } from '@/shared/stores/sound';
+import { usePlayerStore, useSoundController } from '@/stores';
+import { useLanguage } from '@/shared/hooks';
 
 export const Settings = ({
     isSettingsOpen,

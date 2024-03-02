@@ -1,32 +1,36 @@
+// ? Стили
 import './reset.css';
 import './settings.module.scss';
 import styles from './App.module.scss';
-import { useLanguage } from '@/shared/hooks/useLanguage';
-import { Settings, Shop } from '@/components';
-import { Balance } from '@/components/Balance';
-import { usePlayerStore } from '@/shared/stores/player';
-import { InitProcess } from './Prosecc/InitProcess';
-import { useCallback, useState } from 'react';
-import { useShopStore } from '@/shared/stores/shop';
-import { Button, Icons, Img } from '@/shared/ui';
-import { Wrapper } from './Wrapper/Wrapper';
-import Particles from 'react-particles';
-import type { Container, Engine } from 'tsparticles-engine';
-import { loadSlim } from 'tsparticles-slim';
-import { particleOptions } from '@settings/index';
+
+// ? helper-функции
 import { shortNumber } from '@/shared/helper';
-import { useSoundController } from '@/shared/stores/sound';
+import { useLanguage } from '@/shared/hooks';
+
+// ? Компоненты
+import { Init } from './Process';
+import { Wrapper } from './Wrapper/Wrapper';
+import { Balance, Settings, Shop } from '@/components';
+import { Button, Icons, Img } from '@/shared/ui';
+
+// ? Требуемые библиотеки
+import { useCallback, useState } from 'react';
+import Particles from 'react-particles';
+import { loadSlim } from 'tsparticles-slim';
+import type { Container, Engine } from 'tsparticles-engine';
+import { particleOptions } from '@settings/index';
+
+// ? Хранилища
+import { usePlayerStore, useShopStore, useSoundController } from '@/stores';
 
 function App() {
-    const { activeCharacter } = useShopStore();
-    if (!activeCharacter) return null;
-
     const [isLoading, setIsLoading] = useState(true);
 
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     const { playSoundOfClick } = useSoundController();
+    const { activeCharacter } = useShopStore();
 
     const {
         click,
@@ -43,13 +47,11 @@ function App() {
 
     const handleClick = () => {
         playSoundOfClick();
-        activeCharacter
-            ? click(
-                  activeCharacter.damageBonus,
-                  activeCharacter.luckyBonusX5,
-                  coinsPerClick,
-              )
-            : click(1, 0, 1);
+        click(
+            activeCharacter.damageBonus,
+            activeCharacter.luckyBonusX5,
+            coinsPerClick,
+        );
     };
 
     const handleUpgradeCoinsPerClick = () => {
@@ -62,7 +64,7 @@ function App() {
     }, []);
 
     return (
-        <InitProcess isLoading={isLoading} setIsLoading={setIsLoading}>
+        <Init isLoading={isLoading} setIsLoading={setIsLoading}>
             <Wrapper>
                 <Shop setIsShopOpen={setIsShopOpen} isShopOpen={isShopOpen} />
                 <Settings
@@ -148,7 +150,7 @@ function App() {
                     </Button>
                 </div>
             </Wrapper>
-        </InitProcess>
+        </Init>
     );
 }
 

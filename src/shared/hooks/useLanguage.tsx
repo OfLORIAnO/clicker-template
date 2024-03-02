@@ -1,4 +1,4 @@
-import { usePlayerStore } from '@stores/player';
+import { usePlayerStore } from '@/stores';
 import { texts } from '@settings/index';
 
 export const useLanguage = (text: keyof typeof texts) => {

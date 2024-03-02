@@ -1,6 +1,6 @@
+import { useShopStore } from '@/stores';
 import { ShopItem } from '../ShopItem';
 import styles from './ShopItems.module.scss';
-import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 import classNames from 'classnames';
 
@@ -62,10 +62,7 @@ export const ShopItems = ({ selectedItem, handleClick, itemType }: IProps) => {
                             itemId={background.id}
                             itemType={ItemType.background}
                             image={background.image}
-                            isActive={
-                                !!activeBackground &&
-                                background.id === activeBackground.id
-                            }
+                            isActive={background.id === activeBackground.id}
                             isSelected={selectedItem?.id === background.id}
                             isLocked={checkIsLocked(background.id)}
                         />

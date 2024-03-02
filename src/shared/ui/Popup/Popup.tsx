@@ -3,6 +3,7 @@ import { Dialog } from '@headlessui/react';
 import { PopupProps } from './Popup.props';
 import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
+
 export const Popup = ({ isOpened, close, children, className }: PopupProps) => {
     const handleClose = () => {
         close && close();

@@ -5,7 +5,7 @@ import {
     perSecondCalc,
     upgradeCoinsPerClickCalc,
     upgradeCoinsPerSecondCalc,
-} from '../helper/index';
+} from '../shared/helper/index';
 import { useShopStore } from './shop';
 interface PlayerState {
     isParticlesOn: boolean;

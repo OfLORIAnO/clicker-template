@@ -2,6 +2,8 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <script src="https://yandex.ru/games/sdk/v2"></script>
+
         <link rel="icon" type="image/svg+xml" href="/vite.svg" />
         <link
             rel="stylesheet"
@@ -14,4 +16,17 @@
         <div id="root"></div>
         <script type="module" src="/src/main.tsx"></script>
     </body>
+    <script>
+        const options = {
+            orientation: {
+                value: 'landscape',
+            },
+        };
+        YaGames.init(options)
+            .then((ysdk) => {
+                console.log('Yandex SDK initialized');
+                window.ysdk = ysdk;
+            })
+            .catch();
+    </script>
 </html>
