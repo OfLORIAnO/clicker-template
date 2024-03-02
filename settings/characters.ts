@@ -29,7 +29,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 0,
-        damage: 2,
+        damageBonus: 0, // ? Процент в десятичной дроби
+        luckyBonusX5: 0.05, // ? Процент в десятичной дроби (шанс получить Х5)
+        coinsPerSecondBonus: 1, // ? Множитель от текущего
     },
     {
         id: 5,
@@ -42,7 +44,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 500,
-        damage: 5,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 10,
@@ -55,7 +59,24 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
+    },
+    {
+        id: 10,
+        type: ItemType.character,
+        image: les10,
+        name: ['Рено Логан', 'Renault Logan', 'Dipper'],
+        description: [
+            'Просторный и функциональный автомобиль с привлекательным дизайном. Логан - это надежный спутник для семейных поездок и ежедневных деловых поездок, обеспечивая комфорт и безопасность на дороге.',
+            'A spacious and functional car with an attractive design. Logan is a reliable companion for family trips and daily business trips, providing comfort and safety on the road.',
+            "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
+        ],
+        price: 1500,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 15,
@@ -68,7 +89,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 20,
@@ -81,7 +104,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 25,
@@ -94,7 +119,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 30,
@@ -107,7 +134,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 35,
@@ -120,7 +149,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 40,
@@ -133,7 +164,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 45,
@@ -146,7 +179,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 50,
@@ -159,7 +194,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 55,
@@ -172,7 +209,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 60,
@@ -185,7 +224,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 65,
@@ -198,7 +239,9 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
     {
         id: 70,
@@ -211,6 +254,8 @@ export const characters: CharacterType[] = [
             "Dipper'ın keskin bir zihni ve inanılmaz bir zekası vardır. Karşılaştığı en zor bilmeceleri ve gizemleri çözmek için her zaman alışılmadık çözümler bulur.\nGenç yaşına rağmen Dipper en tehlikeli durumlarda inanılmaz bir cesaret ve kararlılık gösterir. Arkadaşlarını ve ailesini korumak için her türlü zorlukla mücadele etmeye hazırdır.\nDipper her zaman iyiliğin ve adaletin yanında durur. Başı dertte olanlara yardım etmeye hazırdır ve arkadaşlarına ve ailesine sonuna kadar sadıktır",
         ],
         price: 1500,
-        damage: 15,
+        damageBonus: 0.05,
+        luckyBonusX5: 0.05,
+        coinsPerSecondBonus: 1.2,
     },
 ];

@@ -11,6 +11,9 @@ import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 import { useLanguage } from '@/shared/hooks/useLanguage';
 
 export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
+    const [activeItemType, setActiveItemType] = useState<ItemType>(
+        ItemType.background,
+    );
     const { activeCharacter, activeBackground, characters, backgrounds } =
         useShopStore();
 
@@ -18,10 +21,6 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
         useState<CharacterType | null>(activeCharacter);
     const [selectedBackground, setSelectedBackground] =
         useState<BackgroundType | null>(activeBackground);
-
-    const [activeItemType, setActiveItemType] = useState<ItemType>(
-        ItemType.character,
-    );
 
     const handleOnItemClick = (id: number) => {
         activeItemType === ItemType.character &&
@@ -35,7 +34,6 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
     };
 
     const handleOnChangeItemType = (itemType: ItemType) => {
-        setActiveItemType(itemType);
         switch (itemType) {
             case ItemType.character:
                 setSelectedCharacter(activeCharacter);
@@ -44,6 +42,7 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                 setSelectedBackground(activeBackground);
                 break;
         }
+        setActiveItemType(itemType);
     };
 
     return (
@@ -67,17 +66,21 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                             >
                                 Персонажи
                             </Button>
-                            <Button
-                                disabled={
-                                    activeItemType === ItemType.background
-                                }
-                                className={styles.chooseButton}
-                                onClick={() =>
-                                    handleOnChangeItemType(ItemType.background)
-                                }
-                            >
-                                Фоны
-                            </Button>
+                            {backgrounds.length > 0 && (
+                                <Button
+                                    disabled={
+                                        activeItemType === ItemType.background
+                                    }
+                                    className={styles.chooseButton}
+                                    onClick={() =>
+                                        handleOnChangeItemType(
+                                            ItemType.background,
+                                        )
+                                    }
+                                >
+                                    Фоны
+                                </Button>
+                            )}
                         </div>
                         {/* <Button>Плюшки</Button> */}
                     </nav>

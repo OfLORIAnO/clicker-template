@@ -4,6 +4,7 @@ import InitDataMock from '@settings/initDataMock.json';
 import { usePlayerStore } from '@/shared/stores/player';
 import { useShopStore } from '@/shared/stores/shop';
 import { BackgroundType, CharacterType } from '@settings/types';
+import { useSoundController } from '@/shared/stores/sound';
 interface IProps {
     children: React.ReactNode;
     setIsLoading: (value: boolean) => void;
@@ -11,8 +12,10 @@ interface IProps {
 }
 
 export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
-    const { setBalance, setLanguage } = usePlayerStore();
+    const { setBalance, setLanguage, startCoinsPerSecond, resetCoinsPerClick } =
+        usePlayerStore();
     const { initShopData, characters, backgrounds } = useShopStore();
+    const { turnOnMusic } = useSoundController();
 
     const getMyBackgrounds = (myBackgroundsId: number[]): BackgroundType[] => {
         return backgrounds
@@ -80,16 +83,22 @@ export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
         setIsLoading(true);
 
         InitSettings();
-        if (InitDataMock) {
+        if (InitDataMock.ready) {
             InitUserData();
         }
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         setIsLoading(false);
     };
 
     useEffect(() => {
         InitGameData();
+        document.addEventListener('click', turnOnMusic);
+
+        startCoinsPerSecond();
+        return () => {
+            resetCoinsPerClick();
+        };
     }, []);
 
     if (isLoading) return null;

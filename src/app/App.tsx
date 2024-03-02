@@ -13,38 +13,54 @@ import { Wrapper } from './Wrapper/Wrapper';
 import Particles from 'react-particles';
 import type { Container, Engine } from 'tsparticles-engine';
 import { loadSlim } from 'tsparticles-slim';
-import { particleOptions, defaultOptions } from '@settings/index';
+import { particleOptions } from '@settings/index';
+import { shortNumber } from '@/shared/helper';
+import { useSoundController } from '@/shared/stores/sound';
 
 function App() {
+    const { activeCharacter } = useShopStore();
+    if (!activeCharacter) return null;
+
     const [isLoading, setIsLoading] = useState(true);
 
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    const { activeCharacter } = useShopStore();
+    const { playSoundOfClick } = useSoundController();
 
-    const { click } = usePlayerStore();
+    const {
+        click,
+        priceCoinsPerClick,
+        upgradeCoinsPerClick,
+        coinsPerClick,
+        setBalance,
+        balance,
+        isParticlesOn,
+
+        upgradeCoinsPerSecond,
+        priceCoinsPerSecond,
+    } = usePlayerStore();
 
     const handleClick = () => {
-        activeCharacter?.damage ? click(activeCharacter.damage) : click(1);
+        playSoundOfClick();
+        activeCharacter
+            ? click(
+                  activeCharacter.damageBonus,
+                  activeCharacter.luckyBonusX5,
+                  coinsPerClick,
+              )
+            : click(1, 0, 1);
     };
 
-    if (!activeCharacter) return null;
-    const particlesInit = useCallback(async (engine: Engine) => {
-        console.log(engine);
+    const handleUpgradeCoinsPerClick = () => {
+        setBalance(balance - priceCoinsPerClick);
+        upgradeCoinsPerClick();
+    };
 
+    const particlesInit = useCallback(async (engine: Engine) => {
         await loadSlim(engine);
     }, []);
 
-    const particlesLoaded = useCallback(
-        async (container: Container | undefined) => {
-            await console.log(container);
-        },
-        [],
-    );
-    const getRandomHexColor = () => {
-        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    };
     return (
         <InitProcess isLoading={isLoading} setIsLoading={setIsLoading}>
             <Wrapper>
@@ -71,81 +87,49 @@ function App() {
                             src={Icons.advertWhite}
                             className={styles.advertImage}
                         />
+                        {useLanguage('x2For')}
                     </Button>
                 </div>
                 <div className={styles.scalesContainer}>
-                    <Button> {useLanguage('scaleClick')}</Button>
-                    <Button>{useLanguage('scaleMoneyPerSecond')}</Button>
-                    <Button>{useLanguage('scaleLucky')}</Button>
+                    <Button
+                        onClick={handleUpgradeCoinsPerClick}
+                        className={styles.scalesButton}
+                        disabled={balance < priceCoinsPerClick}
+                    >
+                        {useLanguage('scaleClick')}
+                        <span className={styles.scalesPrice}>
+                            {shortNumber(priceCoinsPerClick)}
+                            <Img src={Icons.balanceWhite} />
+                        </span>
+                    </Button>
+                    <Button
+                        onClick={upgradeCoinsPerSecond}
+                        className={styles.scalesButton}
+                        disabled={balance < priceCoinsPerSecond}
+                    >
+                        {useLanguage('scaleMoneyPerSecond')}
+                        <span className={styles.scalesPrice}>
+                            {shortNumber(priceCoinsPerSecond)}
+                            <Img src={Icons.balanceWhite} />
+                        </span>
+                    </Button>
                 </div>
 
                 <div className={styles.characterContainer}>
                     <button
+                        id="parent"
                         onClick={handleClick}
                         className={styles.characterButton}
                     >
-                        <Particles
-                            id="tsparticles"
-                            init={particlesInit}
-                            loaded={particlesLoaded}
-                            options={{
-                                fpsLimit: 60,
-                                interactivity: {
-                                    events: {
-                                        onClick: {
-                                            enable: true,
-                                            mode: 'repulse',
-                                        },
-                                    },
-                                    modes: {
-                                        push: {
-                                            quantity: 4,
-                                        },
-                                        repulse: {
-                                            distance: 500,
-                                            duration: 0.4,
-                                        },
-                                    },
-                                },
-                                particles: {
-                                    bounce: {
-                                        vertical: {
-                                            random: true,
-                                        },
-                                    },
-                                    color: {
-                                        value: ['#00fafa'],
-                                    },
-                                    move: {
-                                        direction: 'outside',
-                                        enable: true,
-                                        outModes: {
-                                            default: 'bounce',
-                                        },
-                                        random: true,
-                                        speed: 5,
-                                        straight: false,
-                                    },
-                                    number: {
-                                        density: {
-                                            enable: true,
-                                            area: 100,
-                                        },
-                                        value: 10,
-                                    },
-                                    opacity: {
-                                        value: 1,
-                                    },
-                                    shape: {
-                                        type: 'circle',
-                                    },
-                                    size: {
-                                        value: { min: 1, max: 10 },
-                                    },
-                                },
-                                detectRetina: true,
-                            }}
-                        />
+                        {isParticlesOn && (
+                            <Particles
+                                id="tsparticles"
+                                init={particlesInit}
+                                // loaded={particlesLoaded}
+                                options={particleOptions}
+                            />
+                        )}
+
                         <Img
                             src={activeCharacter.image}
                             className={styles.characterImage}

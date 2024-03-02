@@ -1,5 +1,9 @@
 @import '../../../app/mixins.scss';
 
+.mobileOnly {
+    display: none;
+}
+
 .wrapper {
     @include innerBoxShadow(20px);
     @include borderRad(10px);
@@ -61,7 +65,15 @@
             }
         }
     }
-
+    .topInfo {
+        width: 100%;
+        h4 {
+            text-align: center;
+            display: block;
+            font-weight: 500;
+            margin: 0px 0px 6px 0px;
+        }
+    }
     .stats {
         @include innerBoxShadow(15px);
         @include borderRad(10px);
@@ -183,7 +195,11 @@
             font-size: 16px;
         }
     }
+    .header {
+        gap: 10px;
+    }
 }
+
 @media screen and (max-width: 1200px) {
     .backgroundImage {
         width: 250px !important;
@@ -191,10 +207,20 @@
     .desktop {
         display: none;
     }
+    .mobileOnly {
+        img {
+            width: 18px;
+            height: 18px;
+        }
+        display: block;
+    }
 }
 @media screen and (max-width: 900px) {
+    .wrapper {
+        padding: 5px;
+    }
     .header {
-        height: 100px;
+        height: 120px;
         .characterImage {
             width: 100px;
             height: 100px;

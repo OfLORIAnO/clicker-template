@@ -37,6 +37,12 @@
         height: 22px;
     }
 }
+.balance {
+    span {
+        font-size: 18px !important;
+    }
+}
+
 .content {
     padding: 0 34px 34px;
     display: flex;
@@ -45,6 +51,7 @@
 
 .nav {
     flex: 0 1 10%;
+    display: flex;
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -116,6 +123,8 @@
         }
     }
     .nav {
+        flex-direction: row-reverse;
+        justify-content: space-between;
         gap: 10px;
     }
     .shopContent {
@@ -152,6 +161,15 @@
 }
 @media screen and (max-width: 640px) and (max-height: 468px) {
     .shopContent {
-        max-height: 200px;
+        max-height: 240px;
+        h4 {
+            font-size: 12px !important;
+        }
+        p {
+            font-size: 14px !important;
+        }
+        button {
+            font-size: 14px !important;
+        }
     }
 }

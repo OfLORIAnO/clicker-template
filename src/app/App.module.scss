@@ -32,11 +32,17 @@
     gap: 12px;
 
     .moneyBalance {
+        display: flex;
+        justify-content: flex-start;
+        width: 175px;
         font-weight: 500;
-        font-size: 26px;
+        font-size: 24px;
     }
 
     .advertButton {
+        display: flex;
+        align-items: center;
+        gap: 8px;
         padding: 0 5px;
     }
 
@@ -52,8 +58,22 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
+    .scalesButton {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        .scalesPrice {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        img {
+            height: 20px;
+            width: 20px;
+        }
+    }
 }
-
 .characterContainer {
     grid-row: 1 / 4;
     grid-column: 2 / 3;
@@ -77,12 +97,15 @@
 
         background: none;
         border: none;
-
-        transition-duration: 0.02s;
-
         // position: relative;
+        img {
+            z-index: 200;
+            transition-duration: 0.02s;
+        }
         &:active {
-            transform: scale(0.9);
+            img {
+                transform: scale(0.9);
+            }
         }
         // &:after {
         //     content: '';
@@ -126,10 +149,6 @@
     justify-content: flex-start;
     align-items: flex-end;
 
-    @media screen and (max-height: 600px) {
-        grid-row: 2 / 3;
-    }
-
     .settingsButton {
         padding: 5px;
     }
@@ -137,5 +156,50 @@
     .settingsImage {
         width: 64px;
         height: 64px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .shopContainer {
+        grid-column: 2 / 3;
+        justify-content: center;
+        .shopButton {
+            padding: 5px;
+            font-size: 16px;
+            img {
+                height: 20px;
+                width: 20px;
+            }
+        }
+    }
+    .characterContainer {
+        grid-row: 2 / 3;
+        .characterButton {
+            padding: 0;
+        }
+    }
+    .scalesContainer {
+        grid-row: 1 / 2;
+    }
+    .settingsContainer {
+        grid-row: 2 / 3;
+    }
+    .moneyBalance {
+        width: 125px !important;
+        span {
+            font-size: 16px !important;
+        }
+        img {
+            height: 20px !important;
+            width: 20px !important;
+        }
+    }
+    .settingsButton,
+    .advertButton {
+        padding: 7px !important;
+        img {
+            height: 20px !important;
+            width: 20px !important;
+        }
     }
 }

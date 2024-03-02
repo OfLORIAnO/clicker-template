@@ -1,0 +1,55 @@
+@import '../../../app/mixins.scss';
+
+.wrapper {
+    --width: 40px;
+    --height: 20px;
+    --circle: 1rem;
+    align-items: center;
+    display: flex;
+    gap: 10px;
+}
+.input {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+.label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: var(--width);
+    height: var(--height);
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+
+    color: var(--black);
+    font-size: 26px;
+}
+
+.label:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+    width: var(--circle);
+    height: var(--circle);
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.3s;
+}
+
+.input:checked + .label {
+    background: var(--primary);
+}
+
+.input:checked + .label:after {
+    left: calc(100% - 5px);
+    transform: translate(-100%, -50%);
+}
+
+.label:active:after {
+    width: 20px;
+}

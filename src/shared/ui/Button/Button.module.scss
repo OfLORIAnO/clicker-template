@@ -5,6 +5,8 @@
     padding: 12px 16px;
     transition-duration: 0.2s;
 
+    font-size: 20px;
+    font-weight: 500;
     &:hover {
         transition-duration: 0.2s;
         filter: brightness(1.1);
@@ -21,4 +23,13 @@
 // Modifications
 .bordered {
     border: 5px solid var(--primaryEffect);
+}
+@media screen and (max-width: 800px) {
+    .button {
+        padding: 5px 7px;
+        font-size: 16px;
+    }
+    .bordered {
+        border: 3px solid var(--primaryEffect);
+    }
 }
