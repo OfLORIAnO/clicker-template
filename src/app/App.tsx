@@ -18,12 +18,13 @@ import { shortNumber } from '@/shared/helper';
 import { useSoundController } from '@/shared/stores/sound';
 
 function App() {
+    const { activeCharacter } = useShopStore();
+    if (!activeCharacter) return null;
+
     const [isLoading, setIsLoading] = useState(true);
 
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-    const { activeCharacter } = useShopStore();
 
     const { playSoundOfClick } = useSoundController();
 
@@ -35,9 +36,10 @@ function App() {
         setBalance,
         balance,
         isParticlesOn,
-    } = usePlayerStore();
 
-    if (!activeCharacter) return null;
+        upgradeCoinsPerSecond,
+        priceCoinsPerSecond,
+    } = usePlayerStore();
 
     const handleClick = () => {
         playSoundOfClick();
@@ -77,7 +79,6 @@ function App() {
                         {useLanguage('store')}
                         <Img src={Icons.shopWhite} />
                     </Button>
-                    {/* {coinsPerClick} */}
                 </div>
                 <div className={styles.moneyContainer}>
                     <Balance className={styles.moneyBalance} />
@@ -101,8 +102,16 @@ function App() {
                             <Img src={Icons.balanceWhite} />
                         </span>
                     </Button>
-                    <Button className={styles.scalesButton}>
+                    <Button
+                        onClick={upgradeCoinsPerSecond}
+                        className={styles.scalesButton}
+                        disabled={balance < priceCoinsPerSecond}
+                    >
                         {useLanguage('scaleMoneyPerSecond')}
+                        <span className={styles.scalesPrice}>
+                            {shortNumber(priceCoinsPerSecond)}
+                            <Img src={Icons.balanceWhite} />
+                        </span>
                     </Button>
                 </div>
 

@@ -3,6 +3,7 @@ const generateRandomNumber = (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
 };
 const ciel = (number: number) => Math.ceil(number);
+const floor = (number: number) => Math.floor(number);
 const testIndexes = (minIndex: number, maxIndex: number) => {
     // ? Тест коэффициентов
     let temp = 1;
@@ -12,7 +13,6 @@ const testIndexes = (minIndex: number, maxIndex: number) => {
     }
     console.log('------------------------');
 };
-
 const addSpace = (number: string): string => {
     if (number.length === 7) {
         return number[0] + ' ' + number.slice(1);
@@ -59,7 +59,7 @@ export const clickCalc = (
 //? generate random number in range
 
 export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
-    //! returns: [newPrice, newCoinsPerSecond]
+    //! returns: [newPrice, newCoinsPerClick]
 
     const minIndexClick = 1.2;
     const maxIndexClick = 1.8;
@@ -74,4 +74,32 @@ export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
     );
 
     return [newPrice, newCoinsPerClick];
+};
+
+export const perSecondCalc = (
+    coinsPerSecondBonus: number,
+    coinsPerClick: number,
+): number => {
+    const coinsWithBonus = floor(coinsPerSecondBonus * coinsPerClick);
+
+    return coinsWithBonus;
+};
+
+export const upgradeCoinsPerSecondCalc = (
+    current: number,
+): [number, number] => {
+    //! returns: [newPrice, newCoinsPerSecond]
+
+    const minIndexClick = 1.2;
+    const maxIndexClick = 1.6;
+
+    testIndexes(minIndexClick, maxIndexClick);
+
+    const newCoinsPerSecond = floor(
+        generateRandomNumber(current * minIndexClick, current * maxIndexClick),
+    );
+    const newPrice = ciel(
+        generateRandomNumber(newCoinsPerSecond * 120, newCoinsPerSecond * 180),
+    );
+    return [newPrice, newCoinsPerSecond];
 };

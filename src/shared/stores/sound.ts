@@ -37,7 +37,8 @@ const createSoundSlice: StateCreator<
         soundOfClick.play();
     },
     setSoundVolume: (value: number) => {
-        set({ soundVolume: value }, false, 'setSoundVolume');
+        // TODO сохранять данные
+        set({ soundVolume: value });
     },
 
     music: new Audio(musicPath),
@@ -52,7 +53,8 @@ const createSoundSlice: StateCreator<
 
     musicVolume: 0,
     setMusicVolume: (value: number) => {
-        set({ musicVolume: value }, false, 'setMusicVolume');
+        // TODO сохранять данные
+        set({ musicVolume: value });
         const music = get().music;
         music.volume = get().musicVolume / 100;
     },

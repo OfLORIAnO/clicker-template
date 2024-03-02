@@ -3,6 +3,7 @@ import { backgrounds } from '@settings/backgrounds';
 import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
+import { unstable_batchedUpdates } from 'react-dom';
 
 interface ShopState {
     characters: CharacterType[];
@@ -39,7 +40,9 @@ const createShopSlice: StateCreator<
     myCharacters: [characters[0]],
 
     activeCharacter: characters[0],
+
     setActiveCharacter: (character: CharacterType) => {
+        // TODO сохранять данные
         set({ activeCharacter: character });
     },
 
@@ -49,10 +52,12 @@ const createShopSlice: StateCreator<
     activeBackground: backgrounds[0],
 
     setActiveBackground: (background: BackgroundType) => {
+        // TODO сохранять данные
         set({ activeBackground: background });
     },
 
     buyItem: (item: CharacterType | BackgroundType, type: ItemType) => {
+        // TODO сохранять данные
         if (type === ItemType.character) {
             const myCharacters = get().myCharacters;
             const setActiveCharacter = get().setActiveCharacter;
@@ -69,7 +74,7 @@ const createShopSlice: StateCreator<
     },
 
     getActiveDamage: () => {
-        const damage = get().activeCharacter?.damage;
+        const damage = get().activeCharacter?.damageBonus;
         return damage ?? 1;
     },
 

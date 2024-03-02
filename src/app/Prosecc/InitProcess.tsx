@@ -12,9 +12,11 @@ interface IProps {
 }
 
 export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
-    const { setBalance, setLanguage } = usePlayerStore();
+    const { setBalance, setLanguage, startCoinsPerSecond, resetCoinsPerClick } =
+        usePlayerStore();
     const { initShopData, characters, backgrounds } = useShopStore();
     const { turnOnMusic } = useSoundController();
+
     const getMyBackgrounds = (myBackgroundsId: number[]): BackgroundType[] => {
         return backgrounds
             ? backgrounds.filter((background) =>
@@ -84,7 +86,7 @@ export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
         if (InitDataMock.ready) {
             InitUserData();
         }
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         setIsLoading(false);
     };
@@ -92,6 +94,11 @@ export const InitProcess = ({ children, setIsLoading, isLoading }: IProps) => {
     useEffect(() => {
         InitGameData();
         document.addEventListener('click', turnOnMusic);
+
+        startCoinsPerSecond();
+        return () => {
+            resetCoinsPerClick();
+        };
     }, []);
 
     if (isLoading) return null;
