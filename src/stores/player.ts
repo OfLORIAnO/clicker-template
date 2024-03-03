@@ -7,6 +7,7 @@ import {
     upgradeCoinsPerSecondCalc,
 } from '../shared/helper/index';
 import { useShopStore } from './shop';
+import { useYandexStore } from '.';
 interface PlayerState {
     isParticlesOn: boolean;
     setIsParticlesOn: (isParticlesOn: boolean) => void;
@@ -62,8 +63,9 @@ const createPlayerSlice: StateCreator<
     language: 0,
     setLanguage: (language: number) => {
         // TODO сохранять данные
-
         set({ language });
+        const setDataYsdk = useYandexStore.getState().setDataYsdk;
+        setDataYsdk(['language', language.toString()]);
     },
 
     balance: 0,
@@ -128,14 +130,13 @@ const createPlayerSlice: StateCreator<
         const setBalance = get().setBalance;
         const getActiveCharacter = useShopStore.getState().activeCharacter;
 
-        getActiveCharacter &&
-            setBalance(
-                get().balance +
-                    perSecondCalc(
-                        getActiveCharacter.coinsPerSecondBonus,
-                        get().coinsPerSecond,
-                    ),
-            );
+        setBalance(
+            get().balance +
+                perSecondCalc(
+                    getActiveCharacter.coinsPerSecondBonus,
+                    get().coinsPerSecond,
+                ),
+        );
     },
     upgradeCoinsPerSecond: () => {
         // TODO сохранять данные

@@ -1,6 +1,6 @@
 import { CharacterType, ItemType } from './types';
-import DipperImage from '@assets/dipper.png';
-import Jojo from '@assets/jojo-1.png';
+// import DipperImage from '@assets/dipper.png';
+// import Jojo from '@assets/jojo-1.png';
 import les0 from '@assets/les0.png';
 import les5 from '@assets/les5.png';
 import les10 from '@assets/les10.png';

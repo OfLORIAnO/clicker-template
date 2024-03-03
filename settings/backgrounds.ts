@@ -1,7 +1,7 @@
 import { BackgroundType, ItemType } from './types';
-import WestImage from '@assets/west.png';
-import TerrariaImage from '@assets/terraria.png';
-import JojoGb from '@assets/bg-1.jpg';
+// import WestImage from '@assets/west.png';
+// import TerrariaImage from '@assets/terraria.png';
+// import JojoGb from '@assets/bg-1.jpg';
 import lesBG0 from '@assets/lesBG0.jpg';
 import carBG5 from '@assets/carBG5.jpg';
 import carBG10 from '@assets/carBG10.jpg';
@@ -138,7 +138,5 @@ export const backgrounds: BackgroundType[] = [
         coinsPerSecondBonus: 1.2,
         luckyBonusX5: 0.05,
         damageBonus: 0.05,
-
-        
     },
 ];

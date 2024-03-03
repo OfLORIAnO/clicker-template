@@ -9,7 +9,7 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
     const { setBalance, setLanguage, startCoinsPerSecond, resetCoinsPerClick } =
         usePlayerStore();
     const { initShopData, characters, backgrounds } = useShopStore();
-    const { turnOnMusic } = useSoundController();
+    const { initSounds } = useSoundController();
 
     const getMyBackgrounds = (myBackgroundsId: number[]): BackgroundType[] => {
         return backgrounds
@@ -80,14 +80,15 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
         if (InitDataMock.ready) {
             InitUserData();
         }
-        await new Promise((resolve) => setTimeout(resolve, 0));
 
         setIsLoading(false);
     };
 
     useEffect(() => {
         InitGameData();
-        document.addEventListener('click', turnOnMusic);
+        document
+            .getElementById('root')
+            ?.addEventListener('click', initSounds, { once: true });
 
         startCoinsPerSecond();
         return () => {
