@@ -2,7 +2,7 @@ import styles from './ShopDescription.module.scss';
 import { useLanguage } from '@/shared/hooks/useLanguage';
 import { Button, Icons, Img } from '@/shared/ui';
 import { usePlayerStore, useShopStore } from '@/stores';
-import { BackgroundType, CharacterType, ItemType } from '@settings/types';
+import { BackgroundType, CharacterType, ItemType } from '@settings/index';
 import classNames from 'classnames';
 
 interface IProps {

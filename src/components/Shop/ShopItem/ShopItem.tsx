@@ -1,7 +1,7 @@
 import { ShopItemProps } from './ShopItem.props';
 import styles from './ShopItem.module.scss';
 import classNames from 'classnames';
-import { ItemType } from '@settings/types';
+import { ItemType } from '@settings/index';
 import { Img } from '@/shared/ui';
 export const ShopItem = ({
     itemId,

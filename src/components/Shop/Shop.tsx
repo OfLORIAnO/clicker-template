@@ -7,8 +7,8 @@ import { ShopDescription } from './ShopDescription';
 
 import { useState } from 'react';
 import { useShopStore } from '@/stores/shop';
-import { BackgroundType, CharacterType, ItemType } from '@settings/types';
 import { useLanguage } from '@/shared/hooks';
+import { BackgroundType, CharacterType, ItemType } from '@settings/index';
 
 export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
     const [activeItemType, setActiveItemType] = useState<ItemType>(

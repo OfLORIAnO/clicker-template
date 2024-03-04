@@ -1,7 +1,7 @@
 import { useShopStore } from '@/stores';
 import { ShopItem } from '../ShopItem';
 import styles from './ShopItems.module.scss';
-import { BackgroundType, CharacterType, ItemType } from '@settings/types';
+import { BackgroundType, CharacterType, ItemType } from '@settings/index';
 import classNames from 'classnames';
 
 interface IProps {

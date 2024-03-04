@@ -1,4 +1,4 @@
-import { BackgroundType, CharacterType, ItemType } from '@settings/types';
+import { BackgroundType, CharacterType, ItemType } from '@settings/index';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { characters } from '@settings/characters';
@@ -32,7 +32,14 @@ interface ShopState {
         activeBackground: BackgroundType,
     ) => void;
 
-    getStateDataForYandex: () => [number, number, number[], number[]];
+    getStateDataForYsdk: () => {
+        activeCharacter: number;
+        activeBackground: number;
+        myCharacters: number[];
+        myBackgrounds: number[];
+    };
+
+    changeDataYsdk: () => Promise<void>;
 }
 
 const createShopSlice: StateCreator<
@@ -49,11 +56,7 @@ const createShopSlice: StateCreator<
 
         setActiveCharacter: async (character: CharacterType) => {
             set({ activeCharacter: character });
-
-            const setDataYsdk = useYandexStore.getState().setDataYsdk;
-            await setDataYsdk({
-                activeCharacter: character.id,
-            });
+            await get().changeDataYsdk();
         },
 
         backgrounds: backgrounds,
@@ -63,35 +66,19 @@ const createShopSlice: StateCreator<
 
         setActiveBackground: async (background: BackgroundType) => {
             set({ activeBackground: background });
-
-            const setDataYsdk = useYandexStore.getState().setDataYsdk;
-            await setDataYsdk({
-                activeBackground: background.id,
-            });
+            await get().changeDataYsdk();
         },
 
         buyItem: async (
             item: CharacterType | BackgroundType,
             type: ItemType,
         ) => {
-            const setDataYsdk = useYandexStore.getState().setDataYsdk;
-
             if (type === ItemType.character) {
                 const myCharacters = get().myCharacters;
                 const setActiveCharacter = get().setActiveCharacter;
 
                 set({ myCharacters: [...myCharacters, item as CharacterType] });
                 setActiveCharacter(item as CharacterType);
-
-                await setDataYsdk({
-                    myCharacters: get().myCharacters.map(
-                        (characters) => characters.id,
-                    ),
-                });
-                console.log(
-                    'Попытались добавить',
-                    get().myCharacters.map((characters) => characters.id),
-                );
             } else if (type === ItemType.background) {
                 const myBackgrounds = get().myBackgrounds;
                 const setActiveBackground = get().setActiveBackground;
@@ -100,13 +87,8 @@ const createShopSlice: StateCreator<
                     myBackgrounds: [...myBackgrounds, item as BackgroundType],
                 });
                 setActiveBackground(item as BackgroundType);
-
-                await setDataYsdk({
-                    myBackgrounds: get().myBackgrounds.map(
-                        (backgrounds) => backgrounds.id,
-                    ),
-                });
             }
+            await get().changeDataYsdk();
         },
 
         getActiveDamage: () => {
@@ -120,21 +102,28 @@ const createShopSlice: StateCreator<
             myBackgrounds: BackgroundType[],
             activeBackground: BackgroundType,
         ) => {
-            const setActiveCharacter = get().setActiveCharacter;
-            set({ myCharacters: myCharacters });
-            setActiveCharacter(activeCharacter);
-
-            const setActiveBackground = get().setActiveBackground;
-            set({ myBackgrounds: myBackgrounds });
-            setActiveBackground(activeBackground);
+            set({
+                myCharacters,
+                activeCharacter,
+                myBackgrounds,
+                activeBackground,
+            });
         },
-        getStateDataForYandex: () => {
-            return [
-                get().activeCharacter.id,
-                get().activeBackground.id,
-                get().myCharacters.map((character) => character.id),
-                get().myBackgrounds.map((background) => background.id),
-            ];
+        getStateDataForYsdk: () => {
+            return {
+                activeCharacter: get().activeCharacter.id,
+                activeBackground: get().activeBackground.id,
+                myCharacters: get().myCharacters.map(
+                    (character) => character.id,
+                ),
+                myBackgrounds: get().myBackgrounds.map(
+                    (background) => background.id,
+                ),
+            };
+        },
+
+        changeDataYsdk: async () => {
+            await useYandexStore.getState().setDataYsdk();
         },
     };
 };

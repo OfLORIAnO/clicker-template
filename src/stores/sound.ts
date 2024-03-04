@@ -16,9 +16,16 @@ interface SoundState {
     setMusicVolume: (value: number) => Promise<void>;
     turnOnMusic: () => void;
 
-    initSounds: () => void;
+    startSounds: () => void;
 
-    getStateDataForYandex: () => [number, number];
+    initSoundData: (soundVolume: number, musicVolume: number) => void;
+
+    getStateDataForYsdk: () => {
+        soundVolume: number;
+        musicVolume: number;
+    };
+
+    changeDataYsdk: () => Promise<void>;
 }
 
 const createSoundSlice: StateCreator<
@@ -40,14 +47,12 @@ const createSoundSlice: StateCreator<
         soundOfClick.play();
     },
     setSoundVolume: async (value: number) => {
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-
         set({ soundVolume: value });
-
-        await setDataYsdk({ soundVolume: value });
 
         const soundOfClick = get().soundOfClick;
         soundOfClick.volume = get().soundVolume / 100;
+
+        await get().changeDataYsdk();
     },
 
     turnOnMusic: () => {
@@ -57,25 +62,36 @@ const createSoundSlice: StateCreator<
         music.play();
     },
     setMusicVolume: async (value: number) => {
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-
         set({ musicVolume: value });
-
-        await setDataYsdk({ musicVolume: value });
 
         const music = get().music;
         music.volume = get().musicVolume / 100;
+
+        await get().changeDataYsdk();
     },
 
-    initSounds: () => {
+    startSounds: () => {
         get().soundOfClick.volume = get().soundVolume / 100;
         get().music.volume = get().musicVolume / 100;
 
         get().turnOnMusic();
     },
+    initSoundData: (soundVolume: number, musicVolume: number) => {
+        set({
+            soundVolume,
+            musicVolume,
+        });
+    },
 
-    getStateDataForYandex: () => {
-        return [get().soundVolume, get().musicVolume];
+    getStateDataForYsdk: () => {
+        return {
+            soundVolume: get().soundVolume,
+            musicVolume: get().musicVolume,
+        };
+    },
+
+    changeDataYsdk: async () => {
+        await useYandexStore.getState().setDataYsdk();
     },
 });
 export const useSoundController = create<SoundState>()(

@@ -1,29 +1,40 @@
 import { useEffect } from 'react';
 import InitSettings from '@settings/_init';
 import InitDataMock from '@settings/initDataMock.json';
-import { BackgroundType, CharacterType } from '@settings/types';
 import { IProps } from './props';
-import { usePlayerStore, useShopStore, useSoundController } from '@/stores';
+import {
+    IYandexData,
+    usePlayerStore,
+    useShopStore,
+    useSoundController,
+    useYandexStore,
+} from '@/stores';
+import { YandexGames } from 'CreexTeamYaSDK';
+import { BackgroundType, CharacterType } from '@settings/index';
+
+// ? Типизация Yandex SDK
+declare global {
+    interface Window {
+        ysdk: YandexGames.sdk;
+    }
+}
 
 export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
-    const { setBalance, setLanguage, startCoinsPerSecond, resetCoinsPerClick } =
-        usePlayerStore();
+    const { initPlayerData, startCoinsPerSecond } = usePlayerStore();
     const { initShopData, characters, backgrounds } = useShopStore();
-    const { initSounds } = useSoundController();
+    const { initSoundData, startSounds } = useSoundController();
+
+    const { setYsdk, ysdk, getDataFromYsdk } = useYandexStore();
 
     const getMyBackgrounds = (myBackgroundsId: number[]): BackgroundType[] => {
-        return backgrounds
-            ? backgrounds.filter((background) =>
-                  myBackgroundsId.includes(background.id),
-              )
-            : [];
+        return backgrounds.filter((background) =>
+            myBackgroundsId.includes(background.id),
+        );
     };
     const getMyCharacters = (myCharactersId: number[]): CharacterType[] => {
-        return characters
-            ? characters.filter((character) =>
-                  myCharactersId.includes(character.id),
-              )
-            : [];
+        return characters.filter((character) =>
+            myCharactersId.includes(character.id),
+        );
     };
 
     const getActiveCharacter = (activeCharacterId: number): CharacterType => {
@@ -39,65 +50,118 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
         ) as BackgroundType;
     };
 
-    const InitPlayer = () => {
-        const { myBalance, language } = InitDataMock;
+    const InitMockData = () => {
+        initSoundData(InitDataMock.soundVolume, InitDataMock.musicVolume);
 
-        setBalance(myBalance);
-
-        setLanguage(language);
-    };
-
-    const InitShop = () => {
-        // ? Init Characters
-        const activeCharacterId: number = InitDataMock.activeCharacterId;
-        const myCharactersId = InitDataMock.myCharactersId;
-        const myCharacters = getMyCharacters(myCharactersId);
-        const activeCharacter = getActiveCharacter(activeCharacterId);
-
-        // ? Init Backgrounds
-        const myBackgroundsId = InitDataMock.myBackgroundsId;
-        const activeBackgroundsId = InitDataMock.activeBackgroundsId;
-        const myBackgrounds = getMyBackgrounds(myBackgroundsId);
-        const activeBackground = getActiveBackground(activeBackgroundsId);
+        initPlayerData(
+            InitDataMock.balance,
+            InitDataMock.language,
+            InitDataMock.coinsPerClick,
+            InitDataMock.priceCoinsPerClick,
+            InitDataMock.coinsPerSecond,
+            InitDataMock.priceCoinsPerSecond,
+        );
 
         initShopData(
-            myCharacters,
-            activeCharacter,
-            myBackgrounds,
-            activeBackground,
+            getMyCharacters(InitDataMock.myCharacters),
+            getActiveCharacter(InitDataMock.activeCharacter),
+            getMyBackgrounds(InitDataMock.myBackgrounds),
+            getActiveBackground(InitDataMock.activeBackground),
         );
     };
 
-    const InitUserData = () => {
-        InitPlayer();
-        InitShop();
+    const InitUserData = (data: IYandexData) => {
+        initSoundData(data.soundVolume, data.musicVolume);
+
+        initPlayerData(
+            data.balance,
+            data.language,
+            data.coinsPerClick,
+            data.priceCoinsPerClick,
+            data.coinsPerSecond,
+            data.priceCoinsPerSecond,
+        );
+
+        initShopData(
+            getMyCharacters(data.myCharacters),
+            getActiveCharacter(data.activeCharacter),
+            getMyBackgrounds(data.myBackgrounds),
+            getActiveBackground(data.activeBackground),
+        );
     };
+
+    const startProcesses = () => {
+        document
+            .getElementById('root')
+            ?.addEventListener('click', startSounds, { once: true });
+
+        startCoinsPerSecond();
+    };
+
+    const isLocalhost = location.hostname === 'localhost';
+
+    useEffect(() => {
+        console.log(isLoading);
+    }, [isLoading]);
 
     const InitGameData = async () => {
         setIsLoading(true);
 
         InitSettings();
-        if (InitDataMock.ready) {
-            InitUserData();
+
+        if (isLocalhost) {
+            console.log('localhost init');
+            if (InitDataMock.ready) {
+                InitMockData();
+
+                console.log('mock init');
+            }
+        } else {
+            if (ysdk) {
+                const data = await getDataFromYsdk();
+                if (data) {
+                    InitUserData(data);
+                } else {
+                    console.log('zero data blayt', data);
+                }
+            }
         }
 
         setIsLoading(false);
+
+        startProcesses();
     };
 
     useEffect(() => {
-        InitGameData();
-        document
-            .getElementById('root')
-            ?.addEventListener('click', initSounds, { once: true });
+        if (isLocalhost) {
+            InitGameData();
+            return;
+        }
 
-        startCoinsPerSecond();
-        return () => {
-            resetCoinsPerClick();
-        };
-    }, []);
+        YaGames.init()
+            .then((ysdk: YandexGames.sdk) => {
+                window.ysdk = ysdk;
+                return ysdk;
+            })
+            .then((ysdk) => {
+                setYsdk(ysdk);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }, [window.ysdk]);
+
+    useEffect(() => {
+        if (!ysdk) {
+            return;
+        }
+
+        // ? Init
+        InitGameData();
+    }, [ysdk]);
 
     if (isLoading) {
-        return null;
+        return <>Загрузка</>;
     }
 
     return <>{children}</>;

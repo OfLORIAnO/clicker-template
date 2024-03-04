@@ -1,14 +1,32 @@
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { YandexGames } from 'CreexTeamYaSDK';
-import { useShopStore, useSoundController } from '.';
+import { usePlayerStore, useShopStore, useSoundController } from '.';
+
+export interface IYandexData {
+    // ? Sounds
+    soundVolume: number;
+    musicVolume: number;
+    // ? Player
+    balance: number;
+    language: number;
+    coinsPerClick: number;
+    priceCoinsPerClick: number;
+    coinsPerSecond: number;
+    priceCoinsPerSecond: number;
+    // ? Shop
+    activeCharacter: number;
+    activeBackground: number;
+    myCharacters: number[];
+    myBackgrounds: number[];
+    isParticlesOn: boolean;
+}
 
 interface YandexState {
     ysdk: YandexGames.sdk | null;
     setYsdk: (value: YandexGames.sdk) => void;
-    setDataYsdk: (
-        data: Partial<YandexGames.Player['setData']>,
-    ) => Promise<void>;
+    setDataYsdk: () => Promise<void>;
+    getDataFromYsdk: () => Promise<IYandexData | null>;
 }
 
 const createYandexSlice: StateCreator<
@@ -25,24 +43,27 @@ const createYandexSlice: StateCreator<
         const ysdk = get().ysdk;
         if (!ysdk) return;
 
-        const [soundVolume] = [
-            useSoundController.getState().getStateDataForYandex(),
-        ];
-        const [activeCharacter, activeBackground, myCharacters, myBackgrounds] =
-            useShopStore.getState().getStateDataForYandex();
-
-        const data = {
-            soundVolume,
-            // musicVolume,
-            activeCharacter,
-            activeBackground,
-            myCharacters,
-            myBackgrounds,
+        const data: IYandexData = {
+            ...useSoundController.getState().getStateDataForYsdk(),
+            ...usePlayerStore.getState().getStateDataForYsdk(),
+            ...useShopStore.getState().getStateDataForYsdk(),
         };
 
         await ysdk.getPlayer().then((player) => {
-            player.setData(data, true);
+            player.setData<IYandexData>(data, true);
         });
+    },
+
+    getDataFromYsdk: async () => {
+        const ysdk = get().ysdk;
+        if (!ysdk) return null;
+
+        const data: IYandexData | null =
+            (await ysdk.getPlayer({ signed: false }).then((player) => {
+                return player.getData<IYandexData>();
+            })) ?? null;
+
+        return data;
     },
 });
 export const useYandexStore = create<YandexState>()(

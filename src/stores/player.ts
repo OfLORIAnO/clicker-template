@@ -8,6 +8,7 @@ import {
 } from '../shared/helper/index';
 import { useShopStore } from './shop';
 import { useYandexStore } from '.';
+
 interface PlayerState {
     isParticlesOn: boolean;
     setIsParticlesOn: (isParticlesOn: boolean) => void;
@@ -24,7 +25,7 @@ interface PlayerState {
         coinsPerClick: number,
         priceCoinsPerClick: number,
     ) => Promise<void>;
-    upgradeCoinsPerClick: () => void;
+    upgradeCoinsPerClick: () => Promise<void>;
 
     coinsPerSecond: number;
     priceCoinsPerSecond: number;
@@ -38,13 +39,35 @@ interface PlayerState {
     startCoinsPerSecond: () => void;
     startIntervalSecond: () => void;
     resetCoinsPerClick: () => void;
-    upgradeCoinsPerSecond: () => void;
+    upgradeCoinsPerSecond: () => Promise<void>;
 
     click: (
         damageBonus: number,
         luckyBonus: number,
         coinsPerClick: number,
     ) => void;
+
+    initPlayerData: (
+        balance: number,
+        language: number,
+        coinsPerClick: number,
+        priceCoinsPerClick: number,
+        coinsPerSecond: number,
+        priceCoinsPerSecond: number,
+        isParticlesOn: boolean,
+    ) => void;
+
+    getStateDataForYsdk: () => {
+        balance: number;
+        language: number;
+        coinsPerClick: number;
+        priceCoinsPerClick: number;
+        coinsPerSecond: number;
+        priceCoinsPerSecond: number;
+        isParticlesOn: boolean;
+    };
+
+    changeDataYsdk: () => Promise<void>;
 }
 
 const createPlayerSlice: StateCreator<
@@ -56,25 +79,18 @@ const createPlayerSlice: StateCreator<
     isParticlesOn: false,
     setIsParticlesOn: async (isParticlesOn: boolean) => {
         set({ isParticlesOn });
-
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-        await setDataYsdk({ balance: isParticlesOn });
+        await get().changeDataYsdk();
     },
 
     language: 0,
     setLanguage: async (language: number) => {
         set({ language });
-
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-        await setDataYsdk({ language: language });
+        await get().changeDataYsdk();
     },
 
     balance: 0,
     setBalance: async (balance: number) => {
         set({ balance });
-
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-        await setDataYsdk({ balance: balance });
     },
 
     coinsPerClick: 1,
@@ -87,21 +103,16 @@ const createPlayerSlice: StateCreator<
             coinsPerClick,
             priceCoinsPerClick,
         });
-
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-        await setDataYsdk({
-            coinsPerClick: coinsPerClick,
-            priceCoinsPerClick: priceCoinsPerClick,
-        });
     },
 
-    upgradeCoinsPerClick: () => {
+    upgradeCoinsPerClick: async () => {
         const currentCoinsPerClick = get().coinsPerClick;
         const setCoinsPerClick = get().setCoinsPerClick;
         const [newPrice, newCoinsPerClick] =
             upgradeCoinsPerClickCalc(currentCoinsPerClick);
 
         setCoinsPerClick(newCoinsPerClick, newPrice);
+        await get().changeDataYsdk();
     },
     resetCoinsPerClick: () => {
         const data = get().constPerSecInterval;
@@ -120,12 +131,6 @@ const createPlayerSlice: StateCreator<
         set({
             coinsPerSecond,
             priceCoinsPerSecond,
-        });
-
-        const setDataYsdk = useYandexStore.getState().setDataYsdk;
-        await setDataYsdk({
-            coinsPerSecond: coinsPerSecond,
-            priceCoinsPerSecond: priceCoinsPerSecond,
         });
     },
     startCoinsPerSecond: () => {
@@ -149,9 +154,7 @@ const createPlayerSlice: StateCreator<
                 ),
         );
     },
-    upgradeCoinsPerSecond: () => {
-        // TODO сохранять данные
-
+    upgradeCoinsPerSecond: async () => {
         const coinsPerSecond = get().coinsPerSecond;
         const resetCoinsPerClick = get().resetCoinsPerClick;
         const setCoinsPerSecond = get().setCoinsPerSecond;
@@ -164,11 +167,11 @@ const createPlayerSlice: StateCreator<
         setCoinsPerSecond(newCoinsPerSecond, newPrice);
 
         startCoinsPerSecond();
+
+        await get().changeDataYsdk();
     },
 
     click: (damageBonus: number, luckyBonus: number, coinsPerClick: number) => {
-        // TODO сохранять данные
-
         const [clickCoins, _] = clickCalc(
             damageBonus,
             luckyBonus,
@@ -177,6 +180,42 @@ const createPlayerSlice: StateCreator<
 
         const setBalance = get().setBalance;
         setBalance(get().balance + clickCoins);
+    },
+
+    initPlayerData: async (
+        balance: number,
+        language: number,
+        coinsPerClick: number,
+        priceCoinsPerClick: number,
+        coinsPerSecond: number,
+        priceCoinsPerSecond: number,
+        isParticlesOn: boolean,
+    ) => {
+        set({
+            balance,
+            language,
+            coinsPerClick,
+            priceCoinsPerClick,
+            coinsPerSecond,
+            priceCoinsPerSecond,
+            isParticlesOn,
+        });
+    },
+
+    getStateDataForYsdk: () => {
+        return {
+            balance: get().balance,
+            language: get().language,
+            coinsPerClick: get().coinsPerClick,
+            priceCoinsPerClick: get().priceCoinsPerClick,
+            coinsPerSecond: get().coinsPerSecond,
+            priceCoinsPerSecond: get().priceCoinsPerSecond,
+            isParticlesOn: get().isParticlesOn,
+        };
+    },
+
+    changeDataYsdk: async () => {
+        await useYandexStore.getState().setDataYsdk();
     },
 });
 

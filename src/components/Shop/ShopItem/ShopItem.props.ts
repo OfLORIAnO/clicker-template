@@ -1,4 +1,4 @@
-import { ItemType } from '@settings/types';
+import { ItemType } from '@settings/index';
 
 export interface ShopItemProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {

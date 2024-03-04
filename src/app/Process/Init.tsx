@@ -1,5 +1,4 @@
 import React from 'react';
-import { InitYandex } from './InitYandex/InitYandex';
 import { InitData } from './InitData/InitData';
 
 interface IProps {
@@ -10,10 +9,8 @@ interface IProps {
 
 export const Init = ({ setIsLoading, isLoading, children }: IProps) => {
     return (
-        <InitYandex>
-            <InitData isLoading={isLoading} setIsLoading={setIsLoading}>
-                {children}
-            </InitData>
-        </InitYandex>
+        <InitData setIsLoading={setIsLoading} isLoading={isLoading}>
+            {children}
+        </InitData>
     );
 };

@@ -24,7 +24,7 @@ import { particleOptions } from '@settings/index';
 import { usePlayerStore, useShopStore, useSoundController } from '@/stores';
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
