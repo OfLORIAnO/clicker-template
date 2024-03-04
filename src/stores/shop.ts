@@ -1,8 +1,12 @@
-import { BackgroundType, CharacterType, ItemType } from '@settings/index';
+import {
+    BackgroundType,
+    CharacterType,
+    ItemType,
+    characters,
+    backgrounds,
+} from '@settings/index';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { characters } from '@settings/characters';
-import { backgrounds } from '@settings/backgrounds';
 import { useYandexStore } from '.';
 
 interface ShopState {
