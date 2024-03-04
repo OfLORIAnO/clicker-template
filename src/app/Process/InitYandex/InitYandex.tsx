@@ -18,19 +18,25 @@ export const InitYandex = ({ children }: { children: React.ReactNode }) => {
         setYsdk(ysdk);
     }, [window.ysdk]);
 
+    const consolelogData = async () => {
+        ysdk &&
+            ysdk.getPlayer({ signed: false }).then((player) => {
+                player
+                    .getData()
+                    .then((data) => {
+                        console.log(data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            });
+    };
+
     useEffect(() => {
         if (!ysdk) return;
 
         // ? Player
-        ysdk.getPlayer({ signed: false }).then((player) => {
-            if (player.getMode() !== 'lite') {
-                console.log(
-                    player.getData(['language']).then((data) => {
-                        console.log(data.language);
-                    }),
-                );
-            }
-        });
+        setInterval(consolelogData, 5000);
     }, [ysdk]);
 
     return <>{children}</>;

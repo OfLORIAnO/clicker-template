@@ -3,23 +3,27 @@ import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { characters } from '@settings/characters';
 import { backgrounds } from '@settings/backgrounds';
+import { useYandexStore } from '.';
 
 interface ShopState {
     characters: CharacterType[];
     myCharacters: CharacterType[];
 
     activeCharacter: CharacterType;
-    setActiveCharacter: (character: CharacterType) => void;
+    setActiveCharacter: (character: CharacterType) => Promise<void>;
 
     backgrounds: BackgroundType[];
     myBackgrounds: BackgroundType[];
 
     activeBackground: BackgroundType;
-    setActiveBackground: (background: BackgroundType) => void;
+    setActiveBackground: (background: BackgroundType) => Promise<void>;
 
     getActiveDamage: () => number;
 
-    buyItem: (item: CharacterType | BackgroundType, type: ItemType) => void;
+    buyItem: (
+        item: CharacterType | BackgroundType,
+        type: ItemType,
+    ) => Promise<void>;
 
     initShopData: (
         myCharacters: CharacterType[],
@@ -27,6 +31,8 @@ interface ShopState {
         myBackgrounds: BackgroundType[],
         activeBackground: BackgroundType,
     ) => void;
+
+    getStateDataForYandex: () => [number, number, number[], number[]];
 }
 
 const createShopSlice: StateCreator<
@@ -41,9 +47,13 @@ const createShopSlice: StateCreator<
 
         activeCharacter: characters[0],
 
-        setActiveCharacter: (character: CharacterType) => {
-            // TODO сохранять данные
+        setActiveCharacter: async (character: CharacterType) => {
             set({ activeCharacter: character });
+
+            const setDataYsdk = useYandexStore.getState().setDataYsdk;
+            await setDataYsdk({
+                activeCharacter: character.id,
+            });
         },
 
         backgrounds: backgrounds,
@@ -51,19 +61,37 @@ const createShopSlice: StateCreator<
 
         activeBackground: backgrounds[0],
 
-        setActiveBackground: (background: BackgroundType) => {
-            // TODO сохранять данные
+        setActiveBackground: async (background: BackgroundType) => {
             set({ activeBackground: background });
+
+            const setDataYsdk = useYandexStore.getState().setDataYsdk;
+            await setDataYsdk({
+                activeBackground: background.id,
+            });
         },
 
-        buyItem: (item: CharacterType | BackgroundType, type: ItemType) => {
-            // TODO сохранять данные
+        buyItem: async (
+            item: CharacterType | BackgroundType,
+            type: ItemType,
+        ) => {
+            const setDataYsdk = useYandexStore.getState().setDataYsdk;
+
             if (type === ItemType.character) {
                 const myCharacters = get().myCharacters;
                 const setActiveCharacter = get().setActiveCharacter;
 
                 set({ myCharacters: [...myCharacters, item as CharacterType] });
                 setActiveCharacter(item as CharacterType);
+
+                await setDataYsdk({
+                    myCharacters: get().myCharacters.map(
+                        (characters) => characters.id,
+                    ),
+                });
+                console.log(
+                    'Попытались добавить',
+                    get().myCharacters.map((characters) => characters.id),
+                );
             } else if (type === ItemType.background) {
                 const myBackgrounds = get().myBackgrounds;
                 const setActiveBackground = get().setActiveBackground;
@@ -72,6 +100,12 @@ const createShopSlice: StateCreator<
                     myBackgrounds: [...myBackgrounds, item as BackgroundType],
                 });
                 setActiveBackground(item as BackgroundType);
+
+                await setDataYsdk({
+                    myBackgrounds: get().myBackgrounds.map(
+                        (backgrounds) => backgrounds.id,
+                    ),
+                });
             }
         },
 
@@ -93,6 +127,14 @@ const createShopSlice: StateCreator<
             const setActiveBackground = get().setActiveBackground;
             set({ myBackgrounds: myBackgrounds });
             setActiveBackground(activeBackground);
+        },
+        getStateDataForYandex: () => {
+            return [
+                get().activeCharacter.id,
+                get().activeBackground.id,
+                get().myCharacters.map((character) => character.id),
+                get().myBackgrounds.map((background) => background.id),
+            ];
         },
     };
 };

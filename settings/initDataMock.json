@@ -1,10 +1,10 @@
 {
     "ready": true,
-    "myBalance": 0,
+    "myBalance": 123456,
     "language": 0,
-    "myCharactersId": [0, 10],
-    "activeCharacterId": 10,
+    "myCharactersId": [0],
+    "activeCharacterId": 0,
 
-    "myBackgroundsId": [0, 10],
+    "myBackgroundsId": [0],
     "activeBackgroundsId": 10
 }

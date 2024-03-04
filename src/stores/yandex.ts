@@ -1,11 +1,14 @@
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { YandexGames } from 'CreexTeamYaSDK';
+import { useShopStore, useSoundController } from '.';
 
 interface YandexState {
     ysdk: YandexGames.sdk | null;
     setYsdk: (value: YandexGames.sdk) => void;
-    setDataYsdk: (value: [string, string]) => void;
+    setDataYsdk: (
+        data: Partial<YandexGames.Player['setData']>,
+    ) => Promise<void>;
 }
 
 const createYandexSlice: StateCreator<
@@ -18,12 +21,27 @@ const createYandexSlice: StateCreator<
     setYsdk: (value) => {
         set({ ysdk: value });
     },
-    setDataYsdk: (value) => {
+    setDataYsdk: async () => {
         const ysdk = get().ysdk;
         if (!ysdk) return;
 
-        ysdk.getPlayer().then((player) => {
-            player.setData(value);
+        const [soundVolume] = [
+            useSoundController.getState().getStateDataForYandex(),
+        ];
+        const [activeCharacter, activeBackground, myCharacters, myBackgrounds] =
+            useShopStore.getState().getStateDataForYandex();
+
+        const data = {
+            soundVolume,
+            // musicVolume,
+            activeCharacter,
+            activeBackground,
+            myCharacters,
+            myBackgrounds,
+        };
+
+        await ysdk.getPlayer().then((player) => {
+            player.setData(data, true);
         });
     },
 });
