@@ -3,4 +3,5 @@ export interface PopupProps {
     close?: () => void;
     children: React.ReactNode;
     className?: string;
+    classNameContent?: string;
 }

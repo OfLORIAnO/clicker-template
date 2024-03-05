@@ -1,5 +1,7 @@
 // ! utils
 
+import { usePlayerStore, useShopStore } from '@/stores';
+
 //? generate random number in range
 const generateRandomNumber = (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
@@ -59,15 +61,17 @@ export const getCoinsClickWithBonus = (
     }
 };
 
-export const clickCalc = (
-    characterDamageBonus: number,
-    characterLuckyBonus: number,
-    coinsPerClick: number,
-
-    backgroundDamageBonus: number,
-    backgroundLuckyBonus: number,
-): [number, boolean] => {
+export const clickCalc = (): [number, boolean] => {
     //! returns: [totalClick, isBonuced]
+    const characterDamageBonus =
+        useShopStore.getState().activeCharacter.damageBonus;
+    const characterLuckyBonus =
+        useShopStore.getState().activeCharacter.luckyBonusX5;
+    const backgroundDamageBonus =
+        useShopStore.getState().activeBackground.damageBonus;
+    const backgroundLuckyBonus =
+        useShopStore.getState().activeBackground.luckyBonusX5;
+    const coinsPerClick = usePlayerStore.getState().coinsPerClick;
 
     const isBonucedCharacter = generateRandomNumber(0, 1) < characterLuckyBonus; // ? Выпал ли нам шанс Х5 к клику
     const clickCoinsCharacter =
@@ -117,11 +121,13 @@ export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
     return [newPrice, newCoinsPerClick];
 };
 
-export const perSecondCalc = (
-    characterCoinsPerSecondBonus: number,
-    backgroundCoinsPerSecondBonus: number,
-    coinsPerSecond: number,
-): number => {
+export const perSecondCalc = (): number => {
+    const characterCoinsPerSecondBonus =
+        useShopStore.getState().activeCharacter.coinsPerSecondBonus;
+    const backgroundCoinsPerSecondBonus =
+        useShopStore.getState().activeBackground.coinsPerSecondBonus;
+    const coinsPerSecond = usePlayerStore.getState().coinsPerSecond;
+
     const coinsWithBonus = floor(
         coinsPerSecond *
             characterCoinsPerSecondBonus *

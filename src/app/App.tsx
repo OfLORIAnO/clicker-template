@@ -14,7 +14,7 @@ import { useLanguage } from '@/shared/hooks';
 // ? Компоненты
 import { Init } from './Process';
 import { Wrapper } from './Wrapper/Wrapper';
-import { Balance, Settings, Shop } from '@/components';
+import { Advert, Balance, Settings, Shop } from '@/components';
 import { Button, Icons, Img } from '@/shared/ui';
 
 // ? Требуемые библиотеки
@@ -25,17 +25,22 @@ import type { Engine } from 'tsparticles-engine';
 import { particleOptions } from '@settings/index';
 
 // ? Хранилища
-import { usePlayerStore, useShopStore, useSoundController } from '@/stores';
+import {
+    usePlayerStore,
+    useShopStore,
+    useSoundController,
+    useYandexStore,
+} from '@/stores';
 
 function App() {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
+    const { isAvailableRewardedAdvert } = useYandexStore();
     const { playSoundOfClick } = useSoundController();
     const { activeCharacter, activeBackground } = useShopStore();
-
     const {
         click,
         priceCoinsPerClick,
@@ -52,25 +57,19 @@ function App() {
 
     const handleClick = () => {
         playSoundOfClick();
-        click(
-            activeCharacter.damageBonus,
-            activeCharacter.luckyBonusX5,
-            coinsPerClick,
-
-            activeBackground.damageBonus,
-            activeBackground.luckyBonusX5,
-        );
+        click();
     };
 
     const handleUpgradeCoinsPerClick = () => {
         setBalance(balance - priceCoinsPerClick);
         upgradeCoinsPerClick();
     };
-
     const handleUpgradeCoinsPerSecond = () => {
         setBalance(balance - priceCoinsPerSecond);
         upgradeCoinsPerSecond();
     };
+
+    const handleRewardedAdvert = (onRewaeded?: () => void) => {};
 
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadSlim(engine);
@@ -84,6 +83,7 @@ function App() {
                     setIsSettingsOpen={setIsSettingsOpen}
                     isSettingsOpen={isSettingsOpen}
                 />
+                <Advert />
                 <div className={styles.shopContainer}>
                     <Button
                         onClick={() => {
@@ -97,13 +97,30 @@ function App() {
                 </div>
                 <div className={styles.moneyContainer}>
                     <Balance className={styles.moneyBalance} />
-                    <Button className={styles.advertButton}>
-                        <Img
-                            src={Icons.advertWhite}
-                            className={styles.advertImage}
-                        />
-                        {useLanguage('x2For')}
-                    </Button>
+                    {isAvailableRewardedAdvert && (
+                        <>
+                            <Button className={styles.advertButton}>
+                                <Img
+                                    src={Icons.advertWhite}
+                                    className={styles.advertImage}
+                                    onClick={() => {
+                                        handleRewardedAdvert();
+                                    }}
+                                />
+                                {useLanguage('x2For')}
+                            </Button>
+                            <Button className={styles.advertButton}>
+                                <Img
+                                    src={Icons.advertWhite}
+                                    className={styles.advertImage}
+                                    onClick={() => {
+                                        handleRewardedAdvert();
+                                    }}
+                                />
+                                {useLanguage('x2For')}
+                            </Button>
+                        </>
+                    )}
                 </div>
                 <div className={styles.scalesContainer}>
                     <Button
@@ -195,13 +212,7 @@ function App() {
                                 {useLanguage('moneyPerSecond')}:
                             </span>
                             <span className={styles.statsValue}>
-                                {shortNumber(
-                                    perSecondCalc(
-                                        activeCharacter.coinsPerSecondBonus,
-                                        activeBackground.coinsPerSecondBonus,
-                                        coinsPerSecond,
-                                    ),
-                                )}
+                                {shortNumber(perSecondCalc())}
                             </span>
                         </div>
                         <div className={styles.statsBlock}>

@@ -5,6 +5,13 @@ export const texts = {
     balance: ['Баланс', 'Balance', 'Balans'],
     settings: ['Настройки', 'Settings', 'Ayarlar'],
     click: ['Клик', 'Click', 'Tıklama'],
+    otherSettings: ['Другие настройки', 'Other Settings', 'Diğer ayarlar'],
+    resetProgress: [
+        'Сбросить прогресс',
+        'Reset Progress',
+        'İlerlemeyi sıfırla',
+    ],
+
     // ? ShopItem description
     name: ['Имя', 'Name', 'Adı'],
     damageBonus: ['Бонус к награде', 'Reward bonus', 'Ödül bonusu'],
@@ -21,8 +28,13 @@ export const texts = {
 
     // ? Advert
     x2For: [
-        'x2 награды на 30 сек',
-        'x2 reward for 30 sec',
-        '30 saniye için x2 ödül',
+        'x2 награды на 60 сек',
+        'x2 reward for 60 sec',
+        '60 saniye için x2 ödül',
+    ],
+    fullScreenAdvert: [
+        'Реклама через 3 секунды',
+        'Ad in 3 seconds',
+        '3 saniye içinde reklamlar',
     ],
 };

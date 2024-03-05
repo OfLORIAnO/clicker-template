@@ -63,6 +63,7 @@
 .settings {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     gap: 10px;
 }
 .settings,
@@ -129,6 +130,10 @@
     flex-direction: column;
     gap: 12px;
 }
+
+.resetProgress {
+    max-width: 250px;
+}
 @media screen and (max-width: 768px) {
     .flagIcon {
         width: 80px;
@@ -145,14 +150,20 @@
         position: sticky;
         z-index: 600;
     }
-
+    .popup {
+        @include borderRad(20px);
+        overflow-y: auto;
+    }
     .wrapper {
-        overflow-y: scroll;
+        padding: 0 34px 34px;
+        overflow-y: auto;
         height: calc(100vh - 20px);
+        @include scrollType(var(--secondary), #9faaff, 12px);
     }
     .content {
         gap: 20px;
         flex-direction: column;
+        padding: 0;
     }
     .sound {
         display: flex;

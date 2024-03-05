@@ -15,7 +15,9 @@ import {
     getActiveCharacter,
     getMyBackgrounds,
     getActiveBackground,
+    isLocalhost,
 } from '@/shared/helper';
+import { Loading } from '@/components';
 // ? Типизация Yandex SDK
 declare global {
     interface Window {
@@ -26,7 +28,8 @@ declare global {
 export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
     const { initPlayerData, startCoinsPerSecond } = usePlayerStore();
     const { initShopData } = useShopStore();
-    const { initSoundData, startSounds } = useSoundController();
+    const { initSoundData, startSounds, setSoundOnVisibility } =
+        useSoundController();
 
     const { setYsdk, ysdk, getDataFromYsdk } = useYandexStore();
 
@@ -72,27 +75,34 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
         );
     };
 
-    const startProcesses = () => {
-        document
-            .getElementById('root')
-            ?.addEventListener('click', startSounds, { once: true });
+    const initEndPoint = () => {
+        const root = document.getElementById('root');
+        if (root) {
+            root.addEventListener('click', startSounds, { once: true });
+
+            root.addEventListener(
+                'click',
+                () => {
+                    document.addEventListener(
+                        'visibilitychange',
+                        setSoundOnVisibility,
+                    );
+                },
+                { once: true },
+            );
+        }
 
         startCoinsPerSecond();
     };
-
-    const isLocalhost = location.hostname === 'localhost';
-
-    useEffect(() => {
-        console.log(isLoading);
-    }, [isLoading]);
 
     const InitGameData = async () => {
         setIsLoading(true);
 
         InitSettings();
 
-        if (isLocalhost) {
-            console.log('localhost init');
+        // if (isLocalhost) {
+        if (false) {
+            console.log('local init');
             if (InitDevData.ready) {
                 InitMockData();
 
@@ -110,7 +120,7 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
 
         setIsLoading(false);
 
-        startProcesses();
+        initEndPoint();
     };
 
     useEffect(() => {
@@ -134,12 +144,11 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
             return;
         }
 
-        // ? Init
         InitGameData();
     }, [ysdk]);
 
     if (isLoading) {
-        return <>Загрузка</>;
+        return <Loading />;
     }
 
     return <>{children}</>;

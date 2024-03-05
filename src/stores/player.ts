@@ -6,7 +6,6 @@ import {
     upgradeCoinsPerClickCalc,
     upgradeCoinsPerSecondCalc,
 } from '../shared/helper/index';
-import { useShopStore } from './shop';
 import { useYandexStore } from '.';
 import { PlayerDataInit } from '@settings/index';
 
@@ -42,14 +41,7 @@ interface PlayerState {
     resetCoinsPerClick: () => void;
     upgradeCoinsPerSecond: () => Promise<void>;
 
-    click: (
-        characterDamageBonus: number,
-        characterLuckyBonus: number,
-        coinsPerClick: number,
-
-        backgroundDamageBonus: number,
-        backgroundLuckyBonus: number,
-    ) => void;
+    click: () => void;
 
     initPlayerData: (
         balance: number,
@@ -147,17 +139,8 @@ const createPlayerSlice: StateCreator<
 
     startIntervalSecond: () => {
         const setBalance = get().setBalance;
-        const activeCharacter = useShopStore.getState().activeCharacter;
-        const activeBackground = useShopStore.getState().activeBackground;
 
-        setBalance(
-            get().balance +
-                perSecondCalc(
-                    activeCharacter.coinsPerSecondBonus,
-                    activeBackground.coinsPerSecondBonus,
-                    get().coinsPerSecond,
-                ),
-        );
+        setBalance(get().balance + perSecondCalc());
     },
     upgradeCoinsPerSecond: async () => {
         const [newPrice, newCoinsPerSecond] = upgradeCoinsPerSecondCalc(
@@ -172,22 +155,8 @@ const createPlayerSlice: StateCreator<
         await get().changeDataYsdk();
     },
 
-    click: (
-        characterDamageBonus: number,
-        characterLuckyBonus: number,
-        coinsPerClick: number,
-
-        backgroundDamageBonus: number,
-        backgroundLuckyBonus: number,
-    ) => {
-        const [clickCoins, _] = clickCalc(
-            characterDamageBonus,
-            characterLuckyBonus,
-            coinsPerClick,
-
-            backgroundDamageBonus,
-            backgroundLuckyBonus,
-        );
+    click: () => {
+        const [clickCoins, _] = clickCalc();
 
         const setBalance = get().setBalance;
         setBalance(get().balance + clickCoins);

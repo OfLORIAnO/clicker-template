@@ -20,6 +20,10 @@ interface SoundState {
 
     initSoundData: (soundVolume: number, musicVolume: number) => void;
 
+    pauseAllSounds: () => void;
+
+    setSoundOnVisibility: () => void;
+
     getStateDataForYsdk: () => {
         soundVolume: number;
         musicVolume: number;
@@ -81,6 +85,19 @@ const createSoundSlice: StateCreator<
             soundVolume,
             musicVolume,
         });
+    },
+
+    pauseAllSounds: () => {
+        get().music.pause();
+        get().soundOfClick.pause();
+    },
+
+    setSoundOnVisibility: () => {
+        if (document.visibilityState === 'hidden') {
+            get().pauseAllSounds();
+        } else {
+            get().turnOnMusic();
+        }
     },
 
     getStateDataForYsdk: () => {

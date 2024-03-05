@@ -26,3 +26,5 @@ export function getActiveBackground(
         (b) => b.id === activeBackgroundId,
     ) as BackgroundType;
 }
+
+export const isLocalhost = location.hostname === 'localhost';

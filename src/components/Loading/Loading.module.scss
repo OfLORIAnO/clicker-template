@@ -1,0 +1,145 @@
+.wrapper {
+    min-width: 100vw;
+    min-height: 100vh;
+
+    padding: 30px;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    --dotSize: 12px;
+    --topEndPoint: 55px;
+}
+
+.textContainer {
+    height: 80px;
+
+    font-weight: 500;
+    font-size: 55px;
+    line-height: 120%;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.loadingDotContainer {
+    width: 80px;
+    height: 100px;
+
+    overflow: hidden;
+
+    display: flex;
+    justify-content: space-around;
+}
+.loadDot1,
+.loadDot2,
+.loadDot3 {
+    width: var(--dotSize);
+    height: var(--dotSize);
+    border-radius: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.loadDot1 {
+    animation: loadDot1 2.5s infinite;
+}
+.loadDot2 {
+    animation: loadDot2 2.5s infinite;
+}
+.loadDot3 {
+    animation: loadDot3 2.5s infinite;
+}
+
+@keyframes loadDot1 {
+    0% {
+        top: 0px;
+        opacity: 1;
+    }
+    20% {
+        top: 50px;
+    }
+    50% {
+        top: var(--topEndPoint);
+        opacity: 1;
+    }
+    55% {
+        opacity: 1;
+    }
+    80% {
+        top: 80px;
+        opacity: 0;
+    }
+    100% {
+        top: 0px;
+        opacity: 0;
+    }
+}
+@keyframes loadDot2 {
+    0% {
+        top: 0px;
+        opacity: 0;
+    }
+    9% {
+        top: 0px;
+        opacity: 0;
+    }
+    10% {
+        top: 0px;
+        opacity: 1;
+    }
+    30% {
+        top: var(--topEndPoint);
+    }
+    50% {
+        top: var(--topEndPoint);
+        opacity: 1;
+    }
+    55% {
+        opacity: 1;
+    }
+    80% {
+        top: 80px;
+        opacity: 0;
+    }
+    100% {
+        top: 0px;
+        opacity: 0;
+    }
+}
+@keyframes loadDot3 {
+    0% {
+        top: 0px;
+        opacity: 0;
+    }
+    19% {
+        top: 0px;
+        opacity: 0;
+    }
+    20% {
+        top: 0px;
+        opacity: 1;
+    }
+    40% {
+        top: var(--topEndPoint);
+    }
+    50% {
+        top: var(--topEndPoint);
+        opacity: 1;
+    }
+    55% {
+        opacity: 1;
+    }
+    80% {
+        top: 80px;
+        opacity: 0;
+    }
+    100% {
+        top: 0px;
+        opacity: 0;
+    }
+}

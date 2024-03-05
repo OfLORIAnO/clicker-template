@@ -4,7 +4,7 @@ import { PopupProps } from './Popup.props';
 import { AnimatePresence, motion } from 'framer-motion';
 import classNames from 'classnames';
 
-export const Popup = ({ isOpened, close, children, className }: PopupProps) => {
+export const Popup = ({ isOpened, close, children, className, classNameContent }: PopupProps) => {
     const handleClose = () => {
         close && close();
     };
@@ -61,7 +61,14 @@ export const Popup = ({ isOpened, close, children, className }: PopupProps) => {
                             }}
                         >
                             <Dialog.Panel>
-                                <div className={styles.content}>{children}</div>
+                                <div
+                                    className={classNames(
+                                        classNameContent,
+                                        styles.content,
+                                    )}
+                                >
+                                    {children}
+                                </div>
                             </Dialog.Panel>
                         </motion.div>
                     </motion.div>

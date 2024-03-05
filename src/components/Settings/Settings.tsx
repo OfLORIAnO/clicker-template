@@ -1,15 +1,38 @@
-import { Checkbox, Icons, Img, Popup, SoundController } from '@/shared/ui';
+import {
+    Button,
+    Checkbox,
+    Icons,
+    Img,
+    Popup,
+    SoundController,
+} from '@/shared/ui';
 import { SettingsProps } from './props';
 import styles from './Settings.module.scss';
 import classNames from 'classnames';
-import { usePlayerStore, useSoundController } from '@/stores';
+import {
+    usePlayerStore,
+    useShopStore,
+    useSoundController,
+    useYandexStore,
+} from '@/stores';
 import { useLanguage } from '@/shared/hooks';
+import { PlayerDataInit, ShopDataInit } from '@settings/index';
+import {
+    getActiveBackground,
+    getActiveCharacter,
+    getMyBackgrounds,
+    getMyCharacters,
+    isLocalhost,
+} from '@/shared/helper';
 
 export const Settings = ({
     isSettingsOpen,
     setIsSettingsOpen,
 }: SettingsProps) => {
-    const { setLanguage, setIsParticlesOn, isParticlesOn } = usePlayerStore();
+    const { setLanguage, setIsParticlesOn, isParticlesOn, initPlayerData } =
+        usePlayerStore();
+    const { initShopData } = useShopStore();
+    const { setDataYsdk } = useYandexStore();
 
     const chooseLanguage = (value: number) => {
         setLanguage(value);
@@ -18,8 +41,34 @@ export const Settings = ({
     const { soundVolume, musicVolume, setSoundVolume, setMusicVolume } =
         useSoundController();
 
+    const resetAllData = () => {
+        initShopData(
+            getMyCharacters(ShopDataInit.myCharacters),
+            getActiveCharacter(ShopDataInit.activeCharacter),
+            getMyBackgrounds(ShopDataInit.myBackgrounds),
+            getActiveBackground(ShopDataInit.activeBackground),
+        );
+
+        initPlayerData(
+            PlayerDataInit.balance,
+            PlayerDataInit.language,
+            PlayerDataInit.coinsPerClick,
+            PlayerDataInit.priceCoinsPerClick,
+            PlayerDataInit.coinsPerSecond,
+            PlayerDataInit.priceCoinsPerSecond,
+            PlayerDataInit.isParticlesOn,
+        );
+        if (!isLocalhost) {
+            setDataYsdk();
+        }
+    };
+
     return (
-        <Popup close={() => setIsSettingsOpen(false)} isOpened={isSettingsOpen}>
+        <Popup
+            close={() => setIsSettingsOpen(false)}
+            isOpened={isSettingsOpen}
+            classNameContent={styles.popup}
+        >
             <div className={styles.wrapper}>
                 <div className={styles.header}>
                     <h1>{useLanguage('settings')}</h1>
@@ -76,7 +125,7 @@ export const Settings = ({
                                     className={styles.flagButton}
                                 >
                                     <span className={styles.flagName}>
-                                        Türk dili
+                                        Türkçe
                                     </span>
                                     <span
                                         className={classNames(
@@ -88,25 +137,19 @@ export const Settings = ({
                             </div>
                         </div>
                         <div className={styles.otherSettings}>
-                            <h2>Другие настройки</h2>
+                            <h2>{useLanguage('otherSettings')}</h2>
                             <div className={styles.settings}>
                                 <Checkbox
                                     isOn={isParticlesOn}
                                     setIsOn={setIsParticlesOn}
                                 />
-                                <Checkbox
-                                    isOn={isParticlesOn}
-                                    setIsOn={setIsParticlesOn}
-                                />
-                                <Checkbox
-                                    isOn={isParticlesOn}
-                                    setIsOn={setIsParticlesOn}
-                                />
-                                <Checkbox
-                                    isOn={isParticlesOn}
-                                    setIsOn={setIsParticlesOn}
-                                />
                             </div>
+                            <Button
+                                className={styles.resetProgress}
+                                onClick={resetAllData}
+                            >
+                                {useLanguage('resetProgress')}
+                            </Button>
                         </div>
                     </div>
                 </div>
