@@ -1,0 +1,20 @@
+{
+    "ready": false,
+
+    "soundVolume": 12.5,
+    "musicVolume": 0,
+
+    "balance": 1200,
+    "language": 0,
+    "coinsPerClick": 6,
+    "priceCoinsPerClick": 100,
+    "coinsPerSecond": 1,
+    "priceCoinsPerSecond": 100,
+    "isParticlesOn": false,
+
+    "myCharacters": [0, 5],
+    "activeCharacter": 0,
+
+    "myBackgrounds": [0, 5, 10],
+    "activeBackground": 0
+}

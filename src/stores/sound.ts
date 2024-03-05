@@ -1,4 +1,4 @@
-import { musicPath, soundOfClickPath } from '@settings/index';
+import { SoundDataInit, musicPath, soundOfClickPath } from '@settings/index';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { useYandexStore } from '.';
@@ -37,8 +37,8 @@ const createSoundSlice: StateCreator<
     soundOfClick: new Audio(soundOfClickPath),
     music: new Audio(musicPath),
 
-    musicVolume: 5,
-    soundVolume: 100,
+    musicVolume: SoundDataInit.musicVolume,
+    soundVolume: SoundDataInit.soundVolume,
 
     playSoundOfClick: () => {
         const soundOfClick = get().soundOfClick;

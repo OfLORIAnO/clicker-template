@@ -4,10 +4,17 @@ import {
     ItemType,
     characters,
     backgrounds,
+    ShopDataInit,
 } from '@settings/index';
 import { StateCreator, create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { useYandexStore } from '.';
+import {
+    getActiveBackground,
+    getActiveCharacter,
+    getMyBackgrounds,
+    getMyCharacters,
+} from '@/shared/helper';
 
 interface ShopState {
     characters: CharacterType[];
@@ -21,8 +28,6 @@ interface ShopState {
 
     activeBackground: BackgroundType;
     setActiveBackground: (background: BackgroundType) => Promise<void>;
-
-    getActiveDamage: () => number;
 
     buyItem: (
         item: CharacterType | BackgroundType,
@@ -54,9 +59,9 @@ const createShopSlice: StateCreator<
 > = (set, get) => {
     return {
         characters: characters,
-        myCharacters: [characters[0]],
+        myCharacters: getMyCharacters(ShopDataInit.myCharacters),
 
-        activeCharacter: characters[0],
+        activeCharacter: getActiveCharacter(ShopDataInit.activeCharacter),
 
         setActiveCharacter: async (character: CharacterType) => {
             set({ activeCharacter: character });
@@ -64,9 +69,9 @@ const createShopSlice: StateCreator<
         },
 
         backgrounds: backgrounds,
-        myBackgrounds: [backgrounds[0]],
+        myBackgrounds: getMyBackgrounds(ShopDataInit.myBackgrounds),
 
-        activeBackground: backgrounds[0],
+        activeBackground: getActiveBackground(ShopDataInit.activeBackground),
 
         setActiveBackground: async (background: BackgroundType) => {
             set({ activeBackground: background });
@@ -93,11 +98,6 @@ const createShopSlice: StateCreator<
                 setActiveBackground(item as BackgroundType);
             }
             await get().changeDataYsdk();
-        },
-
-        getActiveDamage: () => {
-            const damage = get().activeCharacter?.damageBonus;
-            return damage ?? 1;
         },
 
         initShopData: (

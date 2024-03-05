@@ -8,6 +8,7 @@ import {
 } from '../shared/helper/index';
 import { useShopStore } from './shop';
 import { useYandexStore } from '.';
+import { PlayerDataInit } from '@settings/index';
 
 interface PlayerState {
     isParticlesOn: boolean;
@@ -42,9 +43,12 @@ interface PlayerState {
     upgradeCoinsPerSecond: () => Promise<void>;
 
     click: (
-        damageBonus: number,
-        luckyBonus: number,
+        characterDamageBonus: number,
+        characterLuckyBonus: number,
         coinsPerClick: number,
+
+        backgroundDamageBonus: number,
+        backgroundLuckyBonus: number,
     ) => void;
 
     initPlayerData: (
@@ -76,25 +80,25 @@ const createPlayerSlice: StateCreator<
     [],
     PlayerState
 > = (set, get) => ({
-    isParticlesOn: false,
+    isParticlesOn: PlayerDataInit.isParticlesOn,
     setIsParticlesOn: async (isParticlesOn: boolean) => {
         set({ isParticlesOn });
         await get().changeDataYsdk();
     },
 
-    language: 0,
+    language: PlayerDataInit.language,
     setLanguage: async (language: number) => {
         set({ language });
         await get().changeDataYsdk();
     },
 
-    balance: 0,
+    balance: PlayerDataInit.balance,
     setBalance: async (balance: number) => {
         set({ balance });
     },
 
-    coinsPerClick: 1,
-    priceCoinsPerClick: 20,
+    coinsPerClick: PlayerDataInit.coinsPerClick,
+    priceCoinsPerClick: PlayerDataInit.priceCoinsPerClick,
     setCoinsPerClick: async (
         coinsPerClick: number,
         priceCoinsPerClick: number,
@@ -106,12 +110,11 @@ const createPlayerSlice: StateCreator<
     },
 
     upgradeCoinsPerClick: async () => {
-        const currentCoinsPerClick = get().coinsPerClick;
-        const setCoinsPerClick = get().setCoinsPerClick;
-        const [newPrice, newCoinsPerClick] =
-            upgradeCoinsPerClickCalc(currentCoinsPerClick);
+        const [newPrice, newCoinsPerClick] = upgradeCoinsPerClickCalc(
+            get().coinsPerClick,
+        );
 
-        setCoinsPerClick(newCoinsPerClick, newPrice);
+        get().setCoinsPerClick(newCoinsPerClick, newPrice);
         await get().changeDataYsdk();
     },
     resetCoinsPerClick: () => {
@@ -119,8 +122,8 @@ const createPlayerSlice: StateCreator<
         data.interval && clearInterval(data.interval);
     },
 
-    coinsPerSecond: 1,
-    priceCoinsPerSecond: 1,
+    coinsPerSecond: PlayerDataInit.coinsPerSecond,
+    priceCoinsPerSecond: PlayerDataInit.priceCoinsPerSecond,
     constPerSecInterval: {
         interval: null,
     },
@@ -144,38 +147,46 @@ const createPlayerSlice: StateCreator<
 
     startIntervalSecond: () => {
         const setBalance = get().setBalance;
-        const getActiveCharacter = useShopStore.getState().activeCharacter;
+        const activeCharacter = useShopStore.getState().activeCharacter;
+        const activeBackground = useShopStore.getState().activeBackground;
 
         setBalance(
             get().balance +
                 perSecondCalc(
-                    getActiveCharacter.coinsPerSecondBonus,
+                    activeCharacter.coinsPerSecondBonus,
+                    activeBackground.coinsPerSecondBonus,
                     get().coinsPerSecond,
                 ),
         );
     },
     upgradeCoinsPerSecond: async () => {
-        const coinsPerSecond = get().coinsPerSecond;
-        const resetCoinsPerClick = get().resetCoinsPerClick;
-        const setCoinsPerSecond = get().setCoinsPerSecond;
-        const startCoinsPerSecond = get().startCoinsPerSecond;
+        const [newPrice, newCoinsPerSecond] = upgradeCoinsPerSecondCalc(
+            get().coinsPerSecond,
+        );
 
-        const [newPrice, newCoinsPerSecond] =
-            upgradeCoinsPerSecondCalc(coinsPerSecond);
+        get().resetCoinsPerClick();
+        get().setCoinsPerSecond(newCoinsPerSecond, newPrice);
 
-        resetCoinsPerClick();
-        setCoinsPerSecond(newCoinsPerSecond, newPrice);
-
-        startCoinsPerSecond();
+        get().startCoinsPerSecond();
 
         await get().changeDataYsdk();
     },
 
-    click: (damageBonus: number, luckyBonus: number, coinsPerClick: number) => {
+    click: (
+        characterDamageBonus: number,
+        characterLuckyBonus: number,
+        coinsPerClick: number,
+
+        backgroundDamageBonus: number,
+        backgroundLuckyBonus: number,
+    ) => {
         const [clickCoins, _] = clickCalc(
-            damageBonus,
-            luckyBonus,
+            characterDamageBonus,
+            characterLuckyBonus,
             coinsPerClick,
+
+            backgroundDamageBonus,
+            backgroundLuckyBonus,
         );
 
         const setBalance = get().setBalance;

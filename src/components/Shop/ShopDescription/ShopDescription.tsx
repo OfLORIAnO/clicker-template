@@ -90,7 +90,23 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                             <span className={styles.mobileOnly}>
                                 <Img src={Icons.luckyBlack} />
                             </span>
-                            <b>+{item.luckyBonusX5 * 100}%</b>
+                            <b>{item.luckyBonusX5 * 100}%</b>
+                        </div>
+
+                        <div className={styles.name}>
+                            <span className={styles.desktop}>
+                                {useLanguage('click')}:
+                            </span>
+                            <span className={styles.mobileOnly}>
+                                <Img src={Icons.scaleClickBlack} />
+                            </span>
+                            <b>
+                                +
+                                {item.coinsPerSecondBonus !== 1
+                                    ? item.coinsPerSecondBonus
+                                    : 0}
+                                %
+                            </b>
                         </div>
                     </div>
                 </div>

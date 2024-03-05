@@ -7,8 +7,24 @@ export const Button: FC<ButtonProps> = ({
     children,
     className,
     bordered = true,
+    viewDisabled = false,
     ...props
 }) => {
+    if (viewDisabled) {
+        return (
+            <div
+                className={classnames(
+                    className,
+                    styles.button,
+                    styles.viewDisabled,
+                    { [styles.bordered]: bordered },
+                )}
+            >
+                {children}
+            </div>
+        );
+    }
+
     return (
         <button
             {...props}

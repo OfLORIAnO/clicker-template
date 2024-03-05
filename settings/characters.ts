@@ -30,7 +30,7 @@ export const characters: CharacterType[] = [
         ],
         price: 0,
         damageBonus: 0, // ? Процент в десятичной дроби
-        luckyBonusX5: 0.05, // ? Процент в десятичной дроби (шанс получить Х5)
+        luckyBonusX5: 0.02, // ? Процент в десятичной дроби (шанс получить Х5)
         coinsPerSecondBonus: 1, // ? Множитель от текущего
     },
     {

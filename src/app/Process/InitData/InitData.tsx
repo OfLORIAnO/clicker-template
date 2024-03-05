@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import InitSettings from '@settings/_init';
-import InitDataMock from '@settings/initDataMock.json';
+import InitDevData from '@settings/InitDevData.json';
 import { IProps } from './props';
 import {
     IYandexData,
@@ -10,8 +10,12 @@ import {
     useYandexStore,
 } from '@/stores';
 import { YandexGames } from 'CreexTeamYaSDK';
-import { BackgroundType, CharacterType } from '@settings/index';
-
+import {
+    getMyCharacters,
+    getActiveCharacter,
+    getMyBackgrounds,
+    getActiveBackground,
+} from '@/shared/helper';
 // ? Типизация Yandex SDK
 declare global {
     interface Window {
@@ -21,52 +25,29 @@ declare global {
 
 export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
     const { initPlayerData, startCoinsPerSecond } = usePlayerStore();
-    const { initShopData, characters, backgrounds } = useShopStore();
+    const { initShopData } = useShopStore();
     const { initSoundData, startSounds } = useSoundController();
 
     const { setYsdk, ysdk, getDataFromYsdk } = useYandexStore();
 
-    const getMyBackgrounds = (myBackgroundsId: number[]): BackgroundType[] => {
-        return backgrounds.filter((background) =>
-            myBackgroundsId.includes(background.id),
-        );
-    };
-    const getMyCharacters = (myCharactersId: number[]): CharacterType[] => {
-        return characters.filter((character) =>
-            myCharactersId.includes(character.id),
-        );
-    };
-
-    const getActiveCharacter = (activeCharacterId: number): CharacterType => {
-        return characters.find(
-            (c) => c.id === activeCharacterId,
-        ) as CharacterType;
-    };
-    const getActiveBackground = (
-        activeBackgroundId: number,
-    ): BackgroundType => {
-        return backgrounds.find(
-            (b) => b.id === activeBackgroundId,
-        ) as BackgroundType;
-    };
-
     const InitMockData = () => {
-        initSoundData(InitDataMock.soundVolume, InitDataMock.musicVolume);
+        initSoundData(InitDevData.soundVolume, InitDevData.musicVolume);
 
         initPlayerData(
-            InitDataMock.balance,
-            InitDataMock.language,
-            InitDataMock.coinsPerClick,
-            InitDataMock.priceCoinsPerClick,
-            InitDataMock.coinsPerSecond,
-            InitDataMock.priceCoinsPerSecond,
+            InitDevData.balance,
+            InitDevData.language,
+            InitDevData.coinsPerClick,
+            InitDevData.priceCoinsPerClick,
+            InitDevData.coinsPerSecond,
+            InitDevData.priceCoinsPerSecond,
+            InitDevData.isParticlesOn,
         );
 
         initShopData(
-            getMyCharacters(InitDataMock.myCharacters),
-            getActiveCharacter(InitDataMock.activeCharacter),
-            getMyBackgrounds(InitDataMock.myBackgrounds),
-            getActiveBackground(InitDataMock.activeBackground),
+            getMyCharacters(InitDevData.myCharacters),
+            getActiveCharacter(InitDevData.activeCharacter),
+            getMyBackgrounds(InitDevData.myBackgrounds),
+            getActiveBackground(InitDevData.activeBackground),
         );
     };
 
@@ -80,6 +61,7 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
             data.priceCoinsPerClick,
             data.coinsPerSecond,
             data.priceCoinsPerSecond,
+            data.isParticlesOn,
         );
 
         initShopData(
@@ -111,7 +93,7 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
 
         if (isLocalhost) {
             console.log('localhost init');
-            if (InitDataMock.ready) {
+            if (InitDevData.ready) {
                 InitMockData();
 
                 console.log('mock init');
@@ -122,7 +104,6 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
                 if (data) {
                     InitUserData(data);
                 } else {
-                    console.log('zero data blayt', data);
                 }
             }
         }
@@ -145,9 +126,6 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
             })
             .then((ysdk) => {
                 setYsdk(ysdk);
-            })
-            .catch((e) => {
-                console.log(e);
             });
     }, [window.ysdk]);
 

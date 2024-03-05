@@ -4,13 +4,15 @@ export const texts = {
     language: ['Язык', 'Language', 'Dil'],
     balance: ['Баланс', 'Balance', 'Balans'],
     settings: ['Настройки', 'Settings', 'Ayarlar'],
-    // ? Shop
+    click: ['Клик', 'Click', 'Tıklama'],
+    // ? ShopItem description
     name: ['Имя', 'Name', 'Adı'],
     damageBonus: ['Бонус к награде', 'Reward bonus', 'Ödül bonusu'],
+    changeX5: ['Шанс получить Х5', 'Chance of getting an X5', 'X5 alma şansı'],
+    moneyPerSecond: ['$/сек', '$/s', '$/sn'],
 
     // ? Scale Buttons
     scaleClick: ['Улучшить клик', 'Click Upgrade', 'Tıklama yükseltme'],
-    changeX5: ['Шанс получить Х5', 'Chance of getting an X5', 'X5 alma şansı'],
     scaleMoneyPerSecond: [
         'Улучшить $/сек.',
         'Improve $/sec.',

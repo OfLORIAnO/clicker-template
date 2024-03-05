@@ -20,6 +20,14 @@
     }
 }
 
+.viewDisabled:disabled {
+    opacity: 1;
+    cursor: default;
+}
+.viewDisabled:hover {
+    filter: none;
+}
+
 // Modifications
 .bordered {
     border: 5px solid var(--primaryEffect);

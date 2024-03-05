@@ -4,7 +4,11 @@ import './settings.module.scss';
 import styles from './App.module.scss';
 
 // ? helper-функции
-import { shortNumber } from '@/shared/helper';
+import {
+    getCoinsClickWithBonus,
+    perSecondCalc,
+    shortNumber,
+} from '@/shared/helper';
 import { useLanguage } from '@/shared/hooks';
 
 // ? Компоненты
@@ -30,7 +34,7 @@ function App() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     const { playSoundOfClick } = useSoundController();
-    const { activeCharacter } = useShopStore();
+    const { activeCharacter, activeBackground } = useShopStore();
 
     const {
         click,
@@ -42,6 +46,7 @@ function App() {
         isParticlesOn,
 
         upgradeCoinsPerSecond,
+        coinsPerSecond,
         priceCoinsPerSecond,
     } = usePlayerStore();
 
@@ -51,12 +56,20 @@ function App() {
             activeCharacter.damageBonus,
             activeCharacter.luckyBonusX5,
             coinsPerClick,
+
+            activeBackground.damageBonus,
+            activeBackground.luckyBonusX5,
         );
     };
 
     const handleUpgradeCoinsPerClick = () => {
         setBalance(balance - priceCoinsPerClick);
         upgradeCoinsPerClick();
+    };
+
+    const handleUpgradeCoinsPerSecond = () => {
+        setBalance(balance - priceCoinsPerSecond);
+        upgradeCoinsPerSecond();
     };
 
     const particlesInit = useCallback(async (engine: Engine) => {
@@ -105,7 +118,7 @@ function App() {
                         </span>
                     </Button>
                     <Button
-                        onClick={upgradeCoinsPerSecond}
+                        onClick={handleUpgradeCoinsPerSecond}
                         className={styles.scalesButton}
                         disabled={balance < priceCoinsPerSecond}
                     >
@@ -147,6 +160,65 @@ function App() {
                             src={Icons.settingsWhite}
                             className={styles.settingsImage}
                         />
+                    </Button>
+                </div>
+                <div className={styles.statsContainer}>
+                    <Button className={styles.statsContent} viewDisabled>
+                        <div className={styles.statsBlock}>
+                            <Img
+                                className={styles.statsImg}
+                                src={Icons.scaleClickWhite}
+                            />
+                            <span className={styles.statsTitle}>
+                                {useLanguage('click')}:
+                            </span>
+                            <span className={styles.statsValue}>
+                                {shortNumber(
+                                    getCoinsClickWithBonus(
+                                        coinsPerClick,
+                                        activeCharacter.damageBonus,
+                                        true,
+                                    ) +
+                                        getCoinsClickWithBonus(
+                                            coinsPerClick,
+                                            activeBackground.damageBonus,
+                                        ),
+                                )}
+                            </span>
+                        </div>
+                        <div className={styles.statsBlock}>
+                            <Img
+                                className={styles.statsImg}
+                                src={Icons.timeWhite}
+                            />
+                            <span className={styles.statsTitle}>
+                                {useLanguage('moneyPerSecond')}:
+                            </span>
+                            <span className={styles.statsValue}>
+                                {shortNumber(
+                                    perSecondCalc(
+                                        activeCharacter.coinsPerSecondBonus,
+                                        activeBackground.coinsPerSecondBonus,
+                                        coinsPerSecond,
+                                    ),
+                                )}
+                            </span>
+                        </div>
+                        <div className={styles.statsBlock}>
+                            <Img
+                                className={styles.statsImg}
+                                src={Icons.luckyWhite}
+                            />
+                            <span className={styles.statsTitle}>
+                                {useLanguage('changeX5')}:
+                            </span>
+                            <span className={styles.statsValue}>
+                                {shortNumber(
+                                    activeCharacter.luckyBonusX5 * 100,
+                                )}
+                                %
+                            </span>
+                        </div>
                     </Button>
                 </div>
             </Wrapper>

@@ -18,16 +18,11 @@
     }
 }
 
-@media screen and (max-width: 768px) {
-    .wrapper {
-        grid-template-columns: 1fr 2fr 1fr;
-        padding: 10px;
-    }
-}
 @media screen and (max-width: 800px) {
     .wrapper {
         grid-template-columns: 2fr 3fr 2fr;
         max-height: 100vh;
         grid-template-rows: 1fr minmax(50px, 10000px);
+        padding: 10px;
     }
 }

@@ -1,4 +1,6 @@
 // ! utils
+
+//? generate random number in range
 const generateRandomNumber = (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
 };
@@ -39,24 +41,63 @@ export const shortNumber = (number: number): string => {
 
 // ?
 
-export const clickCalc = (
-    damageBonus: number,
-    luckyBonus: number,
+export const getCoinsClickWithBonus = (
     coinsPerClick: number,
-): [number, boolean] => {
-    //! returns: [clickCoins, isBonuced]
+    damageBonus: number,
+    isComplex: boolean = false,
+): number => {
+    const coinsWithBonus = floor(coinsPerClick * damageBonus);
 
-    const isBonuced = generateRandomNumber(0, 1) < luckyBonus; // ? Выпал ли нам шанс Х5 к клику
-    const coinsWithBonus =
-        coinsPerClick * damageBonus > 5 ? coinsPerClick * damageBonus : 0;
-    const clickCoins = ciel(
-        (coinsPerClick + coinsWithBonus) * (isBonuced ? 5 : 1),
-    );
-
-    return [clickCoins, isBonuced];
+    if (isComplex) {
+        if (coinsPerClick + coinsWithBonus > 5) {
+            return coinsPerClick + coinsWithBonus;
+        } else {
+            return coinsPerClick;
+        }
+    } else {
+        return coinsWithBonus;
+    }
 };
 
-//? generate random number in range
+export const clickCalc = (
+    characterDamageBonus: number,
+    characterLuckyBonus: number,
+    coinsPerClick: number,
+
+    backgroundDamageBonus: number,
+    backgroundLuckyBonus: number,
+): [number, boolean] => {
+    //! returns: [totalClick, isBonuced]
+
+    const isBonucedCharacter = generateRandomNumber(0, 1) < characterLuckyBonus; // ? Выпал ли нам шанс Х5 к клику
+    const clickCoinsCharacter =
+        getCoinsClickWithBonus(coinsPerClick, characterDamageBonus, true) *
+        (isBonucedCharacter ? 5 : 1);
+
+    const isBonucedBackground =
+        generateRandomNumber(0, 1) < backgroundLuckyBonus;
+    const clickCoinsBackground =
+        getCoinsClickWithBonus(coinsPerClick, backgroundDamageBonus) *
+        (isBonucedBackground ? 5 : 1);
+
+    const logoutData = true;
+
+    logoutData &&
+        console.log(
+            'click:',
+            coinsPerClick,
+            '\ncharacter:',
+            clickCoinsCharacter,
+            isBonucedCharacter,
+            '\nbackground:',
+            clickCoinsBackground,
+            isBonucedBackground,
+        );
+    return [
+        clickCoinsBackground + clickCoinsCharacter,
+        isBonucedCharacter || isBonucedBackground,
+    ];
+};
 
 export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
     //! returns: [newPrice, newCoinsPerClick]
@@ -70,17 +111,34 @@ export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
         generateRandomNumber(current * minIndexClick, current * maxIndexClick),
     );
     const newPrice = ciel(
-        generateRandomNumber(newCoinsPerClick * 60, newCoinsPerClick * 90),
+        generateRandomNumber(newCoinsPerClick * 20, newCoinsPerClick * 30),
     );
 
     return [newPrice, newCoinsPerClick];
 };
 
 export const perSecondCalc = (
-    coinsPerSecondBonus: number,
-    coinsPerClick: number,
+    characterCoinsPerSecondBonus: number,
+    backgroundCoinsPerSecondBonus: number,
+    coinsPerSecond: number,
 ): number => {
-    const coinsWithBonus = floor(coinsPerSecondBonus * coinsPerClick);
+    const coinsWithBonus = floor(
+        coinsPerSecond *
+            characterCoinsPerSecondBonus *
+            backgroundCoinsPerSecondBonus,
+    );
+
+    const logoutData = false;
+
+    logoutData &&
+        console.log(
+            'perSecondData:',
+            coinsPerSecond,
+            characterCoinsPerSecondBonus,
+            backgroundCoinsPerSecondBonus,
+            '\nperSecondWithBonus:',
+            coinsWithBonus,
+        );
 
     return coinsWithBonus;
 };
@@ -95,7 +153,7 @@ export const upgradeCoinsPerSecondCalc = (
 
     testIndexes(minIndexClick, maxIndexClick);
 
-    const newCoinsPerSecond = floor(
+    const newCoinsPerSecond = ciel(
         generateRandomNumber(current * minIndexClick, current * maxIndexClick),
     );
     const newPrice = ciel(

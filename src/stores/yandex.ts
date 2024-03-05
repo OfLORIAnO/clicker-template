@@ -3,24 +3,27 @@ import { devtools } from 'zustand/middleware';
 import { YandexGames } from 'CreexTeamYaSDK';
 import { usePlayerStore, useShopStore, useSoundController } from '.';
 
-export interface IYandexData {
-    // ? Sounds
+export interface ISoundState {
     soundVolume: number;
     musicVolume: number;
-    // ? Player
+}
+export interface IPlayerState {
     balance: number;
     language: number;
     coinsPerClick: number;
     priceCoinsPerClick: number;
     coinsPerSecond: number;
     priceCoinsPerSecond: number;
-    // ? Shop
+}
+export interface IShopState {
     activeCharacter: number;
     activeBackground: number;
     myCharacters: number[];
     myBackgrounds: number[];
     isParticlesOn: boolean;
 }
+
+export interface IYandexData extends ISoundState, IPlayerState, IShopState {}
 
 interface YandexState {
     ysdk: YandexGames.sdk | null;
