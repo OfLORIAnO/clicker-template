@@ -11,7 +11,7 @@ export const SoundDataInit = {
 };
 
 export const PlayerDataInit = {
-    balance: 123,
+    balance: 0,
     language: 0,
     coinsPerClick: 1,
     priceCoinsPerClick: 100,
