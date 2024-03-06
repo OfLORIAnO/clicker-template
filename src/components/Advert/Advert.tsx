@@ -1,4 +1,4 @@
-import { useYandexStore } from '@/stores';
+import { usePlayerStore, useYandexStore } from '@/stores';
 import styles from './Advert.module.scss';
 import { Button, Popup } from '@/shared/ui';
 import { useEffect, useState } from 'react';
@@ -12,17 +12,22 @@ export const Advert = () => {
         showFullScreenAdvert,
         ysdk,
     } = useYandexStore();
+    const { startCoinsPerSecond, resetCoinsPerClick } = usePlayerStore();
 
     const [isAvailable, setIsAvailable] = useState<boolean>(true);
 
     useEffect(() => {
         if (!ysdk || !isAvailableFullScreenAdvert || !isAvailable) return;
 
-        const timeSec = 60;
+        const timeSec = 240;
 
         setIsAvailableFullScreenAdvert(false, 0);
-        showFullScreenAdvert(timeSec);
+        resetCoinsPerClick();
         setIsAvailable(false);
+
+        showFullScreenAdvert(timeSec, () => {
+            startCoinsPerSecond();
+        });
     }, [isAvailableFullScreenAdvert, ysdk, isAvailable]);
 
     useEffect(() => {

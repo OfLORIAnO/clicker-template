@@ -18,7 +18,7 @@ import { Advert, Balance, Settings, Shop } from '@/components';
 import { Button, Icons, Img } from '@/shared/ui';
 
 // ? Требуемые библиотеки
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Particles from 'react-particles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
@@ -38,7 +38,15 @@ function App() {
     const [isShopOpen, setIsShopOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    const { isAvailableRewardedAdvert } = useYandexStore();
+    const [isDoubledClickInfo, setIsDoubledClickInfo] = useState<string>('');
+    const [isDoubledPerSecondInfo, setIsDoubledPerSecondInfo] =
+        useState<string>('');
+
+    const {
+        isAvailableRewardedAdvert,
+        setIsAvailableRewardedAdvert,
+        showRewardedVideo,
+    } = useYandexStore();
     const { playSoundOfClick } = useSoundController();
     const { activeCharacter, activeBackground } = useShopStore();
     const {
@@ -46,14 +54,34 @@ function App() {
         priceCoinsPerClick,
         upgradeCoinsPerClick,
         coinsPerClick,
+        isDoubledClick,
+        setIsDoubledClick,
         setBalance,
+
         balance,
         isParticlesOn,
 
         upgradeCoinsPerSecond,
-        coinsPerSecond,
         priceCoinsPerSecond,
+        isDoubledPerSecond,
+        setIsDoubledPerSecond,
     } = usePlayerStore();
+
+    useEffect(() => {
+        if (isDoubledClick) {
+            setIsDoubledClickInfo('x2');
+        } else {
+            setIsDoubledClickInfo('');
+        }
+    }, [isDoubledClick]);
+
+    useEffect(() => {
+        if (isDoubledPerSecond) {
+            setIsDoubledPerSecondInfo('x2');
+        } else {
+            setIsDoubledPerSecondInfo('');
+        }
+    }, [isDoubledPerSecond]);
 
     const handleClick = () => {
         playSoundOfClick();
@@ -69,7 +97,26 @@ function App() {
         upgradeCoinsPerSecond();
     };
 
-    const handleRewardedAdvert = (onRewaeded?: () => void) => {};
+    const doublePerSecondTime = 60;
+
+    const handleRewardedAdvert = (onRewarded: () => void) => {
+        showRewardedVideo(doublePerSecondTime, () => {
+            onRewarded();
+            setIsAvailableRewardedAdvert(false, doublePerSecondTime);
+        });
+    };
+
+    const doubleClick = () => {
+        handleRewardedAdvert(() => {
+            setIsDoubledClick(doublePerSecondTime);
+        });
+    };
+
+    const doublePerSecond = () => {
+        handleRewardedAdvert(() => {
+            setIsDoubledPerSecond(doublePerSecondTime);
+        });
+    };
 
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadSlim(engine);
@@ -103,9 +150,7 @@ function App() {
                                 <Img
                                     src={Icons.advertWhite}
                                     className={styles.advertImage}
-                                    onClick={() => {
-                                        handleRewardedAdvert();
-                                    }}
+                                    onClick={doubleClick}
                                 />
                                 {useLanguage('x2For')}
                             </Button>
@@ -113,9 +158,7 @@ function App() {
                                 <Img
                                     src={Icons.advertWhite}
                                     className={styles.advertImage}
-                                    onClick={() => {
-                                        handleRewardedAdvert();
-                                    }}
+                                    onClick={doublePerSecond}
                                 />
                                 {useLanguage('x2For')}
                             </Button>
@@ -200,7 +243,8 @@ function App() {
                                             coinsPerClick,
                                             activeBackground.damageBonus,
                                         ),
-                                )}
+                                )}{' '}
+                                {isDoubledClickInfo}
                             </span>
                         </div>
                         <div className={styles.statsBlock}>
@@ -212,7 +256,8 @@ function App() {
                                 {useLanguage('moneyPerSecond')}:
                             </span>
                             <span className={styles.statsValue}>
-                                {shortNumber(perSecondCalc())}
+                                {shortNumber(perSecondCalc())}{' '}
+                                {isDoubledPerSecondInfo}
                             </span>
                         </div>
                         <div className={styles.statsBlock}>

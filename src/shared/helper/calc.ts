@@ -72,6 +72,7 @@ export const clickCalc = (): [number, boolean] => {
     const backgroundLuckyBonus =
         useShopStore.getState().activeBackground.luckyBonusX5;
     const coinsPerClick = usePlayerStore.getState().coinsPerClick;
+    const isDoubled = usePlayerStore.getState().isDoubledClick;
 
     const isBonucedCharacter = generateRandomNumber(0, 1) < characterLuckyBonus; // ? Выпал ли нам шанс Х5 к клику
     const clickCoinsCharacter =
@@ -98,7 +99,7 @@ export const clickCalc = (): [number, boolean] => {
             isBonucedBackground,
         );
     return [
-        clickCoinsBackground + clickCoinsCharacter,
+        (clickCoinsBackground + clickCoinsCharacter) * (isDoubled ? 2 : 1),
         isBonucedCharacter || isBonucedBackground,
     ];
 };
@@ -127,6 +128,7 @@ export const perSecondCalc = (): number => {
     const backgroundCoinsPerSecondBonus =
         useShopStore.getState().activeBackground.coinsPerSecondBonus;
     const coinsPerSecond = usePlayerStore.getState().coinsPerSecond;
+    const isDoubled = usePlayerStore.getState().isDoubledPerSecond;
 
     const coinsWithBonus = floor(
         coinsPerSecond *
@@ -134,7 +136,7 @@ export const perSecondCalc = (): number => {
             backgroundCoinsPerSecondBonus,
     );
 
-    const logoutData = false;
+    const logoutData = true;
 
     logoutData &&
         console.log(
@@ -144,9 +146,11 @@ export const perSecondCalc = (): number => {
             backgroundCoinsPerSecondBonus,
             '\nperSecondWithBonus:',
             coinsWithBonus,
+            '\nisDoubled:',
+            isDoubled,
         );
 
-    return coinsWithBonus;
+    return coinsWithBonus * (isDoubled ? 2 : 1);
 };
 
 export const upgradeCoinsPerSecondCalc = (
