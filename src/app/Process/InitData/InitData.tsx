@@ -123,8 +123,8 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
 
         InitSettings();
 
-        // if (isLocalhost) {
-        if (false) {
+        if (isLocalhost) {
+            // if (false) {
             console.log('local init');
             if (InitDevData.ready) {
                 InitMockData();
@@ -136,7 +136,6 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
                 const data = await getDataFromYsdk();
                 if (data) {
                     InitUserData(data);
-                } else {
                 }
             }
         }

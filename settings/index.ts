@@ -8,3 +8,4 @@ export { particleOptions, defaultOptions } from './particles';
 export * from './audio';
 export * from './InitData';
 export * from './ui';
+export * from './gameBalance';

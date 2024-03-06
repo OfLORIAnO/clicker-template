@@ -161,9 +161,11 @@
     }
     .statsBlock {
         display: flex;
-        gap: 8px;
         flex-wrap: wrap;
         align-items: flex-end;
+        & > *:not(:first-child) {
+            margin: 0px 3px 0px 8px;
+        }
     }
     .statsImg {
         display: none;

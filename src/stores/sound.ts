@@ -63,7 +63,9 @@ const createSoundSlice: StateCreator<
         const music = get().music;
 
         music.loop = true;
-        music.play();
+        try {
+            music.play();
+        } catch (error) {}
     },
     setMusicVolume: async (value: number) => {
         set({ musicVolume: value });

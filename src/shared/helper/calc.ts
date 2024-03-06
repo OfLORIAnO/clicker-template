@@ -1,6 +1,16 @@
 // ! utils
 
 import { usePlayerStore, useShopStore } from '@/stores';
+import {
+    clicksForNextUpgradeMax,
+    clicksForNextUpgradeMin,
+    secondsForNextUpgradeCoinsPerSecondMax,
+    secondsForNextUpgradeCoinsPerSecondMin,
+    upgradeClickDamageMax,
+    upgradeClickDamageMin,
+    upgradeCoinsPerSecondMax,
+    upgradeCoinsPerSecondMin,
+} from '@settings/gameBalance';
 
 //? generate random number in range
 const generateRandomNumber = (min: number, max: number): number => {
@@ -89,7 +99,6 @@ export const clickCalc = (): [number, boolean] => {
         (isBonucedBackground ? 5 : 1);
 
     const logoutData = true;
-
     logoutData &&
         console.log(
             'click:',
@@ -110,16 +119,20 @@ export const clickCalc = (): [number, boolean] => {
 export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
     //! returns: [newPrice, newCoinsPerClick]
 
-    const minIndexClick = 1.2;
-    const maxIndexClick = 1.8;
-
-    testIndexes(minIndexClick, maxIndexClick);
+    const logoutData = false;
+    logoutData && testIndexes(upgradeClickDamageMin, upgradeClickDamageMax);
 
     const newCoinsPerClick = ciel(
-        generateRandomNumber(current * minIndexClick, current * maxIndexClick),
+        generateRandomNumber(
+            current * upgradeClickDamageMin,
+            current * upgradeClickDamageMax,
+        ),
     );
     const newPrice = ciel(
-        generateRandomNumber(newCoinsPerClick * 20, newCoinsPerClick * 30),
+        generateRandomNumber(
+            newCoinsPerClick * clicksForNextUpgradeMin,
+            newCoinsPerClick * clicksForNextUpgradeMax,
+        ),
     );
 
     return [newPrice, newCoinsPerClick];
@@ -161,16 +174,21 @@ export const upgradeCoinsPerSecondCalc = (
 ): [number, number] => {
     //! returns: [newPrice, newCoinsPerSecond]
 
-    const minIndexClick = 1.2;
-    const maxIndexClick = 1.6;
-
-    testIndexes(minIndexClick, maxIndexClick);
+    const logoutData = false;
+    logoutData &&
+        testIndexes(upgradeCoinsPerSecondMin, upgradeCoinsPerSecondMax);
 
     const newCoinsPerSecond = ciel(
-        generateRandomNumber(current * minIndexClick, current * maxIndexClick),
+        generateRandomNumber(
+            current * upgradeCoinsPerSecondMin,
+            current * upgradeCoinsPerSecondMax,
+        ),
     );
     const newPrice = ciel(
-        generateRandomNumber(newCoinsPerSecond * 120, newCoinsPerSecond * 180),
+        generateRandomNumber(
+            newCoinsPerSecond * secondsForNextUpgradeCoinsPerSecondMin,
+            newCoinsPerSecond * secondsForNextUpgradeCoinsPerSecondMax,
+        ),
     );
     return [newPrice, newCoinsPerSecond];
 };
