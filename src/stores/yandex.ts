@@ -44,7 +44,7 @@ interface YandexState {
         stateAdvert: boolean,
         timeSec: number,
     ) => void;
-    showRewardedVideo: (timeSec: number, onClose?: () => void) => void;
+    showRewardedVideo: (timeSec: number, onCloseFunc: () => void) => void;
 }
 
 const createYandexSlice: StateCreator<
@@ -100,7 +100,7 @@ const createYandexSlice: StateCreator<
         if (!ysdk) return null;
 
         const pauseAllSounds = useSoundController.getState().pauseAllSounds;
-        const turnOnMusic = useSoundController.getState().turnOnMusic;
+        const startSounds = useSoundController.getState().startSounds;
 
         ysdk.adv.showFullscreenAdv({
             callbacks: {
@@ -108,43 +108,51 @@ const createYandexSlice: StateCreator<
                     pauseAllSounds();
                 },
                 onClose: () => {
-                    turnOnMusic();
+                    startSounds();
                     get().setIsAvailableFullScreenAdvert(true, timeSec);
                     onClose && onClose();
                     console.log('Закрыли рекламу');
                 },
                 onError: () => {
-                    turnOnMusic();
+                    startSounds();
                     get().setIsAvailableFullScreenAdvert(true, timeSec);
                     onClose && onClose();
                 },
                 onOffline: () => {
-                    turnOnMusic();
+                    startSounds();
                     onClose && onClose();
                 },
             },
         });
-        // get().setIsAvailableFullScreenAdvert(true, timeSec);
     },
 
     isAvailableRewardedAdvert: true,
     setIsAvailableRewardedAdvert: (stateAdvert: boolean, timeSec: number) => {
+        if (timeSec === 0) {
+            set({ isAvailableRewardedAdvert: stateAdvert });
+            return;
+        }
+
         setTimeout(() => {
             set({ isAvailableRewardedAdvert: stateAdvert });
         }, timeSec * 1000);
 
         console.log(
-            'Rewarded реклама станет доступна через',
+            'isAvailableRewardedAdvert:',
+            stateAdvert,
+            '\nчерез',
             timeSec,
             'секунд',
         );
     },
-    showRewardedVideo: (timeSec: number, onClose?: () => void) => {
+    showRewardedVideo: (timeSec: number, onCloseFunc: () => void) => {
         const ysdk = get().ysdk;
         if (!ysdk) return null;
 
         const pauseAllSounds = useSoundController.getState().pauseAllSounds;
         const turnOnMusic = useSoundController.getState().turnOnMusic;
+
+        get().setIsAvailableRewardedAdvert(false, 0);
 
         ysdk.adv.showRewardedVideo({
             callbacks: {
@@ -153,16 +161,23 @@ const createYandexSlice: StateCreator<
                 },
                 onRewarded: () => {
                     turnOnMusic();
+
+                    get().setIsAvailableRewardedAdvert(true, timeSec);
+                    onCloseFunc();
                 },
                 onClose: () => {
                     turnOnMusic();
-                    get().setIsAvailableRewardedAdvert(true, timeSec);
-                    onClose && onClose();
+
+                    // get().setIsAvailableRewardedAdvert(true, timeSec);
+
+                    onCloseFunc();
                 },
                 onError: () => {
                     turnOnMusic();
-                    get().setIsAvailableRewardedAdvert(true, timeSec);
-                    onClose && onClose();
+
+                    // get().setIsAvailableRewardedAdvert(true, timeSec);
+
+                    onCloseFunc();
                 },
             },
         });

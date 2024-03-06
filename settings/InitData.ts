@@ -17,5 +17,5 @@ export const PlayerDataInit = {
     priceCoinsPerClick: 100,
     coinsPerSecond: 1,
     priceCoinsPerSecond: 50,
-    isParticlesOn: true,
+    isParticlesOn: false,
 };

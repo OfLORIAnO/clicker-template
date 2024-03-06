@@ -101,7 +101,7 @@ export const Settings = ({
                                     </span>
                                     <span
                                         className={classNames(
-                                            'fi-ru',
+                                            styles.russian,
                                             styles.flagIcon,
                                         )}
                                     />
@@ -115,7 +115,7 @@ export const Settings = ({
                                     </span>
                                     <span
                                         className={classNames(
-                                            'fi-us',
+                                            styles.english,
                                             styles.flagIcon,
                                         )}
                                     />
@@ -129,7 +129,7 @@ export const Settings = ({
                                     </span>
                                     <span
                                         className={classNames(
-                                            'fi-tr',
+                                            styles.turkish,
                                             styles.flagIcon,
                                         )}
                                     />

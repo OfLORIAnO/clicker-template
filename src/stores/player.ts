@@ -20,17 +20,19 @@ interface PlayerState {
     setBalance: (balance: number) => Promise<void>;
 
     isDoubledClick: boolean;
-    setIsDoubledClick: (time: number) => Promise<void>;
+    setIsDoubledClick: (state: boolean) => void;
+    setIsDoubledClickForAdvert: (timeSec: number) => Promise<void>;
+
     coinsPerClick: number;
     priceCoinsPerClick: number;
     setCoinsPerClick: (
         coinsPerClick: number,
         priceCoinsPerClick: number,
-    ) => Promise<void>;
+    ) => void;
     upgradeCoinsPerClick: () => Promise<void>;
 
     isDoubledPerSecond: boolean;
-    setIsDoubledPerSecond: (timeSec: number) => Promise<void>;
+    setIsDoubledPerSecond: (state: boolean) => void;
     coinsPerSecond: number;
     priceCoinsPerSecond: number;
     constPerSecInterval: {
@@ -70,9 +72,6 @@ interface PlayerState {
     changeDataYsdk: () => Promise<void>;
 }
 
-const asyncTimeout = (timeSec: number) =>
-    new Promise((resolve) => setTimeout(resolve, timeSec * 1000));
-
 const createPlayerSlice: StateCreator<
     PlayerState,
     [['zustand/devtools', never]],
@@ -97,11 +96,15 @@ const createPlayerSlice: StateCreator<
     },
 
     isDoubledClick: false,
-    setIsDoubledClick: async (timeSec: number) => {
+    setIsDoubledClick: (state: boolean) => {
+        set({ isDoubledClick: state });
+    },
+    setIsDoubledClickForAdvert: async (timeSec: number) => {
         set({ isDoubledClick: true });
-        await asyncTimeout(timeSec);
 
-        set({ isDoubledClick: false });
+        setTimeout(() => {
+            set({ isDoubledClick: false });
+        }, timeSec * 1000);
     },
     coinsPerClick: PlayerDataInit.coinsPerClick,
     priceCoinsPerClick: PlayerDataInit.priceCoinsPerClick,
@@ -129,17 +132,8 @@ const createPlayerSlice: StateCreator<
     },
 
     isDoubledPerSecond: false,
-    setIsDoubledPerSecond: async (timeSec: number) => {
-        set({ isDoubledPerSecond: true });
-        get().resetCoinsPerClick();
-        get().startCoinsPerSecond();
-
-        await asyncTimeout(timeSec);
-
-        set({ isDoubledPerSecond: false });
-        get().resetCoinsPerClick();
-        await asyncTimeout(2);
-        get().startCoinsPerSecond();
+    setIsDoubledPerSecond: async (state: boolean) => {
+        set({ isDoubledPerSecond: state });
     },
     coinsPerSecond: PlayerDataInit.coinsPerSecond,
     priceCoinsPerSecond: PlayerDataInit.priceCoinsPerSecond,

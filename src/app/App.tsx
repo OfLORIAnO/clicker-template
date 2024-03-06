@@ -14,39 +14,36 @@ import { useLanguage } from '@/shared/hooks';
 // ? Компоненты
 import { Init } from './Process';
 import { Wrapper } from './Wrapper/Wrapper';
-import { Advert, Balance, Settings, Shop } from '@/components';
+import {
+    AdvertFullScreen,
+    Balance,
+    Settings,
+    Shop,
+    XAdvertClick,
+    XAdvertPerSecond,
+} from '@/components';
 import { Button, Icons, Img } from '@/shared/ui';
 
 // ? Требуемые библиотеки
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Particles from 'react-particles';
 import { loadSlim } from 'tsparticles-slim';
 import type { Engine } from 'tsparticles-engine';
 import { particleOptions } from '@settings/index';
 
 // ? Хранилища
-import {
-    usePlayerStore,
-    useShopStore,
-    useSoundController,
-    useYandexStore,
-} from '@/stores';
+import { usePlayerStore, useShopStore, useSoundController } from '@/stores';
 
 function App() {
-    const [isLoading, setIsLoading] = useState(true);
+    const particlesInit = useCallback(async (engine: Engine) => {
+        await loadSlim(engine);
+    }, []);
 
-    const [isShopOpen, setIsShopOpen] = useState(false);
-    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    const [isDoubledClickInfo, setIsDoubledClickInfo] = useState<string>('');
-    const [isDoubledPerSecondInfo, setIsDoubledPerSecondInfo] =
-        useState<string>('');
+    const [isShopOpen, setIsShopOpen] = useState<boolean>(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
-    const {
-        isAvailableRewardedAdvert,
-        setIsAvailableRewardedAdvert,
-        showRewardedVideo,
-    } = useYandexStore();
     const { playSoundOfClick } = useSoundController();
     const { activeCharacter, activeBackground } = useShopStore();
     const {
@@ -55,7 +52,6 @@ function App() {
         upgradeCoinsPerClick,
         coinsPerClick,
         isDoubledClick,
-        setIsDoubledClick,
         setBalance,
 
         balance,
@@ -64,24 +60,7 @@ function App() {
         upgradeCoinsPerSecond,
         priceCoinsPerSecond,
         isDoubledPerSecond,
-        setIsDoubledPerSecond,
     } = usePlayerStore();
-
-    useEffect(() => {
-        if (isDoubledClick) {
-            setIsDoubledClickInfo('x2');
-        } else {
-            setIsDoubledClickInfo('');
-        }
-    }, [isDoubledClick]);
-
-    useEffect(() => {
-        if (isDoubledPerSecond) {
-            setIsDoubledPerSecondInfo('x2');
-        } else {
-            setIsDoubledPerSecondInfo('');
-        }
-    }, [isDoubledPerSecond]);
 
     const handleClick = () => {
         playSoundOfClick();
@@ -97,31 +76,6 @@ function App() {
         upgradeCoinsPerSecond();
     };
 
-    const doublePerSecondTime = 60;
-
-    const handleRewardedAdvert = (onRewarded: () => void) => {
-        showRewardedVideo(doublePerSecondTime, () => {
-            onRewarded();
-            setIsAvailableRewardedAdvert(false, doublePerSecondTime);
-        });
-    };
-
-    const doubleClick = () => {
-        handleRewardedAdvert(() => {
-            setIsDoubledClick(doublePerSecondTime);
-        });
-    };
-
-    const doublePerSecond = () => {
-        handleRewardedAdvert(() => {
-            setIsDoubledPerSecond(doublePerSecondTime);
-        });
-    };
-
-    const particlesInit = useCallback(async (engine: Engine) => {
-        await loadSlim(engine);
-    }, []);
-
     return (
         <Init isLoading={isLoading} setIsLoading={setIsLoading}>
             <Wrapper>
@@ -130,7 +84,7 @@ function App() {
                     setIsSettingsOpen={setIsSettingsOpen}
                     isSettingsOpen={isSettingsOpen}
                 />
-                <Advert />
+                <AdvertFullScreen />
                 <div className={styles.shopContainer}>
                     <Button
                         onClick={() => {
@@ -144,26 +98,8 @@ function App() {
                 </div>
                 <div className={styles.moneyContainer}>
                     <Balance className={styles.moneyBalance} />
-                    {isAvailableRewardedAdvert && (
-                        <>
-                            <Button className={styles.advertButton}>
-                                <Img
-                                    src={Icons.advertWhite}
-                                    className={styles.advertImage}
-                                    onClick={doubleClick}
-                                />
-                                {useLanguage('x2For')}
-                            </Button>
-                            <Button className={styles.advertButton}>
-                                <Img
-                                    src={Icons.advertWhite}
-                                    className={styles.advertImage}
-                                    onClick={doublePerSecond}
-                                />
-                                {useLanguage('x2For')}
-                            </Button>
-                        </>
-                    )}
+                    <XAdvertClick />
+                    <XAdvertPerSecond />
                 </div>
                 <div className={styles.scalesContainer}>
                     <Button
@@ -244,7 +180,7 @@ function App() {
                                             activeBackground.damageBonus,
                                         ),
                                 )}{' '}
-                                {isDoubledClickInfo}
+                                {isDoubledClick && '(x2)'}
                             </span>
                         </div>
                         <div className={styles.statsBlock}>
@@ -257,7 +193,7 @@ function App() {
                             </span>
                             <span className={styles.statsValue}>
                                 {shortNumber(perSecondCalc())}{' '}
-                                {isDoubledPerSecondInfo}
+                                {isDoubledPerSecond && '(x2)'}
                             </span>
                         </div>
                         <div className={styles.statsBlock}>

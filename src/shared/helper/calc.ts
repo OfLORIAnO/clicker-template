@@ -43,6 +43,9 @@ export const shortNumber = (number: number): string => {
 
 // ?
 
+export const delaySeconds = (second: number) =>
+    new Promise((resolve) => setTimeout(resolve, second * 1000));
+
 export const getCoinsClickWithBonus = (
     coinsPerClick: number,
     damageBonus: number,
@@ -136,7 +139,7 @@ export const perSecondCalc = (): number => {
             backgroundCoinsPerSecondBonus,
     );
 
-    const logoutData = true;
+    const logoutData = false;
 
     logoutData &&
         console.log(

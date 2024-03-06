@@ -30,8 +30,31 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
     const { initShopData } = useShopStore();
     const { initSoundData, startSounds, setSoundOnVisibility } =
         useSoundController();
-
     const { setYsdk, ysdk, getDataFromYsdk } = useYandexStore();
+
+    useEffect(() => {
+        if (isLocalhost) {
+            InitGameData();
+            return;
+        }
+
+        YaGames.init()
+            .then((ysdk: YandexGames.sdk) => {
+                window.ysdk = ysdk;
+                return ysdk;
+            })
+            .then((ysdk) => {
+                setYsdk(ysdk);
+            });
+    }, [window.ysdk]);
+
+    useEffect(() => {
+        if (!ysdk) {
+            return;
+        }
+
+        InitGameData();
+    }, [ysdk]);
 
     const InitMockData = () => {
         initSoundData(InitDevData.soundVolume, InitDevData.musicVolume);
@@ -122,30 +145,6 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
 
         initEndPoint();
     };
-
-    useEffect(() => {
-        if (isLocalhost) {
-            InitGameData();
-            return;
-        }
-
-        YaGames.init()
-            .then((ysdk: YandexGames.sdk) => {
-                window.ysdk = ysdk;
-                return ysdk;
-            })
-            .then((ysdk) => {
-                setYsdk(ysdk);
-            });
-    }, [window.ysdk]);
-
-    useEffect(() => {
-        if (!ysdk) {
-            return;
-        }
-
-        InitGameData();
-    }, [ysdk]);
 
     if (isLoading) {
         return <Loading />;

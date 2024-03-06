@@ -11,8 +11,6 @@ interface IProps {
 }
 
 export const ShopDescription = ({ item, itemType }: IProps) => {
-    if (!item || !itemType) return null;
-
     const { language, balance, setBalance } = usePlayerStore();
     const {
         myCharacters,
@@ -27,6 +25,8 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
     } = useShopStore();
 
     const checkIsHave = (): boolean => {
+        if (!item) return false;
+
         if (itemType === ItemType.character) {
             return myCharacters.map((c) => c.id).includes(item.id);
         } else if (itemType === ItemType.background) {
@@ -35,6 +35,8 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
         return false;
     };
     const isActive = (): boolean => {
+        if (!item) return false;
+
         if (itemType === ItemType.character) {
             return activeCharacter.id === item.id;
         } else if (itemType === ItemType.background) {
@@ -51,10 +53,14 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
     };
 
     const handleBuyItem = () => {
+        if (!item) return;
+
         itemType === ItemType.character && buyItem(item, ItemType.character);
         itemType === ItemType.background && buyItem(item, ItemType.background);
         setBalance(balance - item.price);
     };
+
+    if (!item || !itemType) return null;
 
     return (
         <div className={styles.wrapper}>

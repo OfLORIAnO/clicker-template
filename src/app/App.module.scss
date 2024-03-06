@@ -38,17 +38,6 @@
         font-weight: 500;
         font-size: 24px;
     }
-
-    .advertButton {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        padding: 0 5px;
-    }
-
-    .advertImage {
-        width: 64px;
-    }
 }
 
 .scalesContainer {
@@ -178,12 +167,16 @@
     }
     .statsImg {
         display: none;
-        width: 24px;
-        height: 24px;
+        width: 16px;
+        height: 16px;
     }
     .statsTitle {
-        font-size: 16px;
+        font-size: 12px;
         font-weight: 400;
+    }
+    .statsValue {
+        font-size: 14px;
+        font-weight: 500;
     }
 }
 
@@ -234,8 +227,8 @@
         grid-row: 2 / 3;
         .statsImg {
             display: block;
-            width: 16px;
-            height: 16px;
+            width: 12px;
+            height: 12px;
         }
         .statsTitle {
             display: none;
