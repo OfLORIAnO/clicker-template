@@ -1,5 +1,5 @@
-const primary = '#FD5555';
-const primaryEffect = '#CA4040';
+const primary = '#00BC26';
+const primaryEffect = '#007317';
 const primaryDisabled = '#993030';
 
 const secondary = '#CCD1FB';
