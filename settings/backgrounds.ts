@@ -174,4 +174,36 @@ export const backgrounds: BackgroundType[] = [
 
 
     },
+    {
+        id: 50,
+        type: ItemType.background,
+        image: BGles50,
+        name: ['Утренний осенний лес', 'Morning autumn forest', 'Sabah sonbahar ormanı'],
+        description: [
+            'Осенний лес утром окутан туманом, словно завесой, размывающей контуры деревьев и создающей загадочную атмосферу. Утренний свет проникает сквозь пелену тумана, придавая окружающему миру мягкие и нежные оттенки. Листья падают с деревьев, словно медленный танец прощания с уходящим сезоном.',
+            'The autumn forest in the morning is shrouded in mist, like a curtain blurring the outlines of trees and creating a mysterious atmosphere. Morning light filters through the veil of mist, giving the surrounding world soft and gentle shades. Leaves fall from the trees, like a slow dance bidding farewell to the departing season.',
+            "Sonbahar ormanı sabahları sisle sarılır, ağaçların sınırlarını belirsizleştiren bir perde gibi. Sabah ışığı sis perdesinden süzülerek etrafındaki dünyaya yumuşak ve nazik tonlar kazandırır. Yapraklar ağaçlardan düşer, sanki mevsimin sona ermesine veda eden yavaş bir dans gibi.",
+        ],
+        price: 100,
+
+        coinsPerSecondBonus: 1.2,
+        luckyBonusX5: 0.05,
+        damageBonus: 0.05,
+    },
+    {
+        id: 55,
+        type: ItemType.background,
+        image: BGles55,
+        name: ['Весенний лес', 'Spring forest', 'İlkbahar ormanı'],
+        description: [
+            'Весенний лес приветствует своих посетителей морем зелени и цветов. Ветви деревьев украшены свежими почками, а под ногами расстилается цветущий ковёр из первоцветов и зелёной травы. В воздухе витает аромат весенней свежести, а птицы заполняют лес своими пением, создавая мелодичный концерт природы.',
+            'The spring forest welcomes its visitors with a sea of greenery and flowers. Tree branches are adorned with fresh buds, and beneath them lies a blooming carpet of wildflowers and green grass. The air is filled with the scent of spring freshness, and birds fill the forest with their songs, creating a melodious concert of nature.',
+            "İlkbahar ormanı, ziyaretçilerini yeşillik ve çiçeklerle dolu bir denizle karşılıyor. Ağaç dalları taze tomurcuklarla süslenmiş, altında vahşi çiçekler ve yeşil çimenlerin çiçek açan bir halısı serilmiştir. Hava, ilkbahar tazeliği kokusuyla doludur ve kuşlar şarkılarıyla ormanı doldurarak doğanın melodik bir konseri oluştururlar.",
+        ],
+        price: 100,
+
+        coinsPerSecondBonus: 1.2,
+        luckyBonusX5: 0.05,
+        damageBonus: 0.05,
+    },
 ];
