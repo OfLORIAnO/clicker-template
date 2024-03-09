@@ -86,7 +86,7 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                             <span className={styles.mobileOnly}>
                                 <Img src={Icons.scaleClickBlack} />
                             </span>
-                            <b>+{item.damageBonus * 100}%</b>
+                            <b>+{(item.damageBonus * 100).toFixed(1)}%</b>
                         </div>
 
                         <div className={styles.name}>
@@ -96,7 +96,7 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                             <span className={styles.mobileOnly}>
                                 <Img src={Icons.luckyBlack} />
                             </span>
-                            <b>{item.luckyBonusX5 * 100}%</b>
+                            <b>{(item.luckyBonusX5 * 100).toFixed(1)}%</b>
                         </div>
 
                         <div className={styles.name}>
@@ -104,7 +104,7 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                                 {useLanguage('click')}:
                             </span>
                             <span className={styles.mobileOnly}>
-                                <Img src={Icons.scaleClickBlack} />
+                                <Img src={Icons.timeBlack} />
                             </span>
                             <b>
                                 +

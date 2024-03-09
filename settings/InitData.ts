@@ -7,14 +7,14 @@ export const ShopDataInit = {
 
 export const SoundDataInit = {
     soundVolume: 12.5,
-    musicVolume: 0,
+    musicVolume: 12.5,
 };
 
 export const PlayerDataInit = {
     balance: 0,
     language: 0,
     coinsPerClick: 1,
-    priceCoinsPerClick: 100,
+    priceCoinsPerClick: 50,
     coinsPerSecond: 1,
     priceCoinsPerSecond: 50,
     isParticlesOn: false,

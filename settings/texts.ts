@@ -43,4 +43,16 @@ export const texts = {
         'Ad in 3 seconds',
         '3 saniye içinde reklamlar',
     ],
+
+    characters: [
+        'Персонажи',
+        'Characters',
+        'Kişiler'
+    ],
+
+    backgrounds: [
+        'Фоны',
+        'Backgrounds',
+        'Arka Planlar'
+    ]
 };

@@ -51,7 +51,7 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                 <div className={styles.header}>
                     <h1>{useLanguage('store')}</h1>
                     <Img src={Icons.shopBlack} />
-                    <button onClick={() => setIsShopOpen(false)}>с</button>
+                    <button onClick={() => setIsShopOpen(false)}>x</button>
                 </div>
                 <div className={styles.content}>
                     <nav className={styles.nav}>
@@ -64,7 +64,9 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                                 }
                                 className={styles.chooseButton}
                             >
-                                Персонажи
+                                {
+                                    useLanguage('characters')
+                                }
                             </Button>
                             {backgrounds.length > 0 && (
                                 <Button
@@ -78,7 +80,9 @@ export const Shop = ({ setIsShopOpen, isShopOpen, ...props }: ShopProps) => {
                                         )
                                     }
                                 >
-                                    Фоны
+                                {
+                                    useLanguage('backgrounds')
+                                }
                                 </Button>
                             )}
                         </div>
