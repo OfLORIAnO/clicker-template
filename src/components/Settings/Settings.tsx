@@ -73,7 +73,7 @@ export const Settings = ({
                 <div className={styles.header}>
                     <h1>{useLanguage('settings')}</h1>
                     <Img src={Icons.shopBlack} />
-                    <button onClick={() => setIsSettingsOpen(false)}>с</button>
+                    <button onClick={() => setIsSettingsOpen(false)}>x</button>
                 </div>
                 <div className={styles.content}>
                     <div className={styles.sound}>

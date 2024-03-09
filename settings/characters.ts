@@ -26,7 +26,7 @@ export const characters: CharacterType[] = [
         ],
         price: 0,
         damageBonus: 0, // ? Процент в десятичной дроби
-        luckyBonusX5: 0.02, // ? Процент в десятичной дроби (шанс получить Х5)
+        luckyBonusX5: 0, // ? Процент в десятичной дроби (шанс получить Х5)
         coinsPerSecondBonus: 1, // ? Множитель от текущего
     },
     {
@@ -55,9 +55,9 @@ export const characters: CharacterType[] = [
             "Tavşan, tüylü ve sevimli bir yaratıktır ve tünellerde ve orman açıklıklarında yaşamayı tercih eder. Alçakgönüllülüğü ve utangaçlığı ile bilinir, ancak gerektiğinde hızlı ve çeviktir. Tavşanlar, ailenin zarafetini ve korunmasını sembolize eder.",
         ],
         price: 1500,
-        damageBonus: 0.05,
-        luckyBonusX5: 0.05,
-        coinsPerSecondBonus: 1.2,
+        damageBonus: 0,
+        luckyBonusX5: 0.15,
+        coinsPerSecondBonus: 1.8,
     },
     {
         id: 15,
@@ -70,9 +70,9 @@ export const characters: CharacterType[] = [
             "Kirpi, sakin ve savunmacı bir yaratıktır ve genellikle çalılar altında saklanmayı tercih eder. Tehditkarlara karşı koruma sağlayan keskin dikenlere sahiptir. Kirpiler, her eylemde dikkat ve öngörüyü sembolize eder.",
         ],
         price: 1500,
-        damageBonus: 0.05,
-        luckyBonusX5: 0.05,
-        coinsPerSecondBonus: 1.2,
+        damageBonus: 0.15,
+        luckyBonusX5: 0.2,
+        coinsPerSecondBonus: 2,
     },
     {
         id: 20,
@@ -85,9 +85,9 @@ export const characters: CharacterType[] = [
             "Kunduz, evlerini odun ve dallardan inşa eden güçlü ve çalışkan bir yaratıktır. Ağaç gövdelerini kemirmesine izin veren güçlü dişlere sahiptir. Kunduzlar, aile refahını ve çalışkanlığı sembolize eder.",
         ],
         price: 1500,
-        damageBonus: 0.05,
-        luckyBonusX5: 0.05,
-        coinsPerSecondBonus: 1.2,
+        damageBonus: 0.2,
+        luckyBonusX5: 0.22,
+        coinsPerSecondBonus: 4,
     },
     {
         id: 25,
@@ -100,9 +100,9 @@ export const characters: CharacterType[] = [
             "Baykuş, gizemli ve bilge bir yaratıktır ve genellikle gece avlanır, keskin pençelerini ve mükemmel görüşünü kullanır. Bilgelik ve sezgiyi sembolize eder, her zaman uyanık ve dikkatli kalır.",
         ],
         price: 1500,
-        damageBonus: 0.05,
-        luckyBonusX5: 0.05,
-        coinsPerSecondBonus: 1.2,
+        damageBonus: 0.22,
+        luckyBonusX5: 0.25,
+        coinsPerSecondBonus: 5,
     },
     {
         id: 30,
@@ -115,9 +115,9 @@ export const characters: CharacterType[] = [
             "Tilki, her zaman kendi yolunu izleyen kurnaz ve çevik bir yaratıktır, engellerden kaçınır ve her durumda bir çıkış yolu bulur. Keskin bir zihne ve zarif bir cazibeye sahiptir, bu da onun hedeflerine ulaşmasına yardımcı olur. Tilki, kurnazlık ve kaynaklılığı sembolize eder.",
         ],
         price: 1500,
-        damageBonus: 0.05,
-        luckyBonusX5: 0.05,
-        coinsPerSecondBonus: 1.2,
+        damageBonus: 0.24,
+        luckyBonusX5: 0.3,
+        coinsPerSecondBonus: 6,
     },
     {
         id: 35,
@@ -130,7 +130,7 @@ export const characters: CharacterType[] = [
             "Kurt, sürüler halinde yaşayan güçlü ve vahşi bir yaratıktır ve üstün av yeteneklerine sahiptir. Ailesine sadıktır ve onu her koşulda korumaya hazırdır. Kurtlar, gücü ve sadakati sembolize eder.",
         ],
         price: 1500,
-        damageBonus: 0.05,
+        damageBonus: 0.28,
         luckyBonusX5: 0.05,
         coinsPerSecondBonus: 1.2,
     },
