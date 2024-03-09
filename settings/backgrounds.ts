@@ -24,9 +24,9 @@ export const backgrounds: BackgroundType[] = [
             "Sabah ormanı, sessiz fısıltıları ve serinliğiyle sizi karşılıyor. Güneş ışığı yoğun yeşillikler arasından süzülerek yerde ışık ve gölge oyunu oluşturuyor. Havada tazelik ve yaşam kokusu hakim.",
         ],
         price: 0,
-        coinsPerSecondBonus: 1,
-        luckyBonusX5: 0.02,
-        damageBonus: 0,
+        damageBonus: 0, // ? Процент в десятичной дроби
+        luckyBonusX5: 0, // ? Процент в десятичной дроби (шанс получить Х5)
+        coinsPerSecondBonus: 1, // ? Множитель от текущего
     },
     {
         id: 5,
@@ -38,11 +38,10 @@ export const backgrounds: BackgroundType[] = [
             'The hollow in the old oak looks like an invitation to a hidden world. Its dark depths provide coziness and protection from the outside world. In the mornings, soft rustling sounds from within the hollow can be heard, and at sunset, it fills with gentle light, creating a magical atmosphere.',
             "Eski meşede bulunan boşluk, gizli bir dünyaya davet gibi görünüyor. Koyu derinlikleri dış dünyadan korunma ve sıcaklık sağlıyor. Sabahları boşluktan gelen yumuşak hışırtıları duyulurken, gün batımında hafif ışıkla dolup sihirli bir atmosfer oluşturuyor.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
+        price: 500,
         damageBonus: 0.05,
+        luckyBonusX5: 0.001,
+        coinsPerSecondBonus: 1.1,
     },
     {
         id: 10,
@@ -54,11 +53,10 @@ export const backgrounds: BackgroundType[] = [
             'The rabbit burrow is hidden among thick bushes and resembles an inconspicuous mound with a portal to the underground world. Its entrance is adorned with soft fluffy patches of moss. Inside the burrow, there is a sense of coziness and warmth, where the rabbit feels safe and secure.',
             "Tavşan yuvası, kalın çalılıklar arasında gizlenmiş ve yeraltı dünyasına bir portalı andırıyor. Girişi yumuşak tüylü yosun parçalarıyla süslenmiş. Yuva içinde, tavşanın kendini güvende hissettiği bir sıcaklık ve rahatlık hakim.",
         ],
-        price: 100,
-
+        price: 1000,
+        damageBonus: 0.08,
+        luckyBonusX5: 0.002,
         coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
     },
     {
         id: 15,
@@ -70,11 +68,10 @@ export const backgrounds: BackgroundType[] = [
             'The dense summer forest is imbued with the scent of resin and earth. Every step is accompanied by the crackling of twigs underfoot and the muted murmuring of streams hidden somewhere in the depths. Sunbeams penetrate through the thick foliage, creating a mosaic of light and shadow on the ground.',
             "Yoğun yaz ormanı reçine ve toprak kokusuyla dolu. Her adım, ayak altında çıt çıtlayan dalların ve derinliklerde gizlenmiş pınarların hafif mırıltılarıyla eşlik ediyor. Güneş ışınları yoğun yapraklar arasından sızarak yerde ışık ve gölge mozaikleri oluşturuyor.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 2000,
+        damageBonus: 0.12,
+        luckyBonusX5: 0.003,
+        coinsPerSecondBonus: 1.3,
     },
     {
         id: 20,
@@ -86,11 +83,10 @@ export const backgrounds: BackgroundType[] = [
             'The beaver dam crosses a stream, creating a small reservoir amidst the forest. Its wooden logs glisten in the sunlight, while the water murmurs as it overcomes obstacles. Around the dam, traces of beaver activity and a variety of vegetation attract attention to the diverse life in this unique corner of nature.',
             "Kunduz barajı bir dereyi geçerek ormanın içinde küçük bir su birikintisi oluşturur. Tahta kütükler güneşte parıldarken, su engelleri aşarken mırıldanır. Barajın etrafında, kunduz etkinliğine ve çeşitli bitki örtüsüne dikkat çeken izler bulunur.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 4000,
+        damageBonus: 0.15,
+        luckyBonusX5: 0.004,
+        coinsPerSecondBonus: 1.4,
     },
     {
         id: 25,
@@ -102,11 +98,10 @@ export const backgrounds: BackgroundType[] = [
             'Tree branches illuminated by the full moon appear as black silhouettes against the silvery backdrop of the night sky. Shadows play on the ground, creating mysterious patterns. At this time, the forest is filled with magic and mystery, as if inviting exploration of ancient secrets and riddles.',
             "Dolunay tarafından aydınlatılan ağaç dalları, gece gökyüzünün gümüş arka planına karşı siyah siluetler gibi görünür. Gölgeler, gizemli desenler oluşturarak yerde oynar. Bu zamanlarda, orman sihir ve gizemle doludur, sanki eski sırları ve bilmeceyi keşfetmeye davet eder.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 8000,
+        damageBonus: 0.18,
+        luckyBonusX5: 0.005,
+        coinsPerSecondBonus: 1.5,
     },
     {
         id: 30,
@@ -118,11 +113,10 @@ export const backgrounds: BackgroundType[] = [
             'The open winter forest presents a white expanse where each tree is adorned with a light layer of snow. The air is permeated with freshness, and the soft crunching sound of snow underfoot creates a sense of peace and tranquility. In the distance, traces of animals can be seen, also enjoying the winter morning in the forest.',
             "Açık kış ormanı, her ağacın hafif karla süslendiği beyaz bir alan sunar. Hava tazelikle dolar, ayak altında karın hafif çıtırtısı huzur ve sükûnet hissi uyandırır. Uzakta, hayvan izleri de gözlemlenebilir, onlar da ormandaki kış sabahının tadını çıkarırlar.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 16000,
+        damageBonus: 0.21,
+        luckyBonusX5: 0.006,
+        coinsPerSecondBonus: 1.6,
     },
     {
         id: 35,
@@ -134,11 +128,10 @@ export const backgrounds: BackgroundType[] = [
             'The dense winter forest is mysterious and enigmatic, as if hidden behind a veil of secrecy. The thick blanket of snow creates a feeling of seclusion and impregnability. Sunbeams penetrate through the branches, painting the snowy hills in various shades of white and blue.',
             "Yoğun kış ormanı gizemli ve esrarengizdir, sanki bir gizlilik perdesinin ardında gizlenmiştir. Kalın kar örtüsü, bir mahremiyet ve dayanıklılık hissi oluşturur. Güneş ışınları dallar arasından sızar, karlı tepeleri farklı beyaz ve mavi tonlarla boyar.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 32000,
+        damageBonus: 0.24,
+        luckyBonusX5: 0.007,
+        coinsPerSecondBonus: 1.7,
     },
     {
         id: 40,
@@ -150,11 +143,10 @@ export const backgrounds: BackgroundType[] = [
             'The oak in the winter forest stands as a mighty guardian, its bare branches protruding against the bright winter sky. Around the oak, traces of animals can be seen, which have found their home and source of food in it. Despite the harshness of winter, the oak emits an aura of strength and resilience.',
             "Kış ormanındaki meşe, kuvvetli bir koruyucu gibi durur, çıplak dalları parlak kış gökyüzüne karşı belirir. Meşe etrafında, onun ev ve yiyecek kaynağını bulmuş olan hayvan izleri görülür. Kışın sertliğine rağmen, meşe güç ve direnişin bir atmosferi yayar.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 64000,
+        damageBonus: 0.27,
+        luckyBonusX5: 0.008,
+        coinsPerSecondBonus: 1.8,
     },
     {
         id: 45,
@@ -166,13 +158,10 @@ export const backgrounds: BackgroundType[] = [
             'The dense autumn forest resembles a living carpet of colorful leaves. The air is filled with the scent of fallen leaves and earth. The trees rustle, shaking their branches, as if bidding farewell to the departing summer and preparing for winter rest.',
             "Yoğun sonbahar ormanı, renkli yaprakların yaşayan bir halısına benzer. Hava, dökülen yaprakların ve toprağın kokusuyla dolar. Ağaçlar, dallarını sallayarak, ayrılan yazı uğurlamak ve kış dinlenmesine hazırlanmak gibi bir hissiyat oluşturur.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
-
-
+        price: 128000,
+        damageBonus: 0.3,
+        luckyBonusX5: 0.009,
+        coinsPerSecondBonus: 1.9,
     },
     {
         id: 50,
@@ -184,11 +173,10 @@ export const backgrounds: BackgroundType[] = [
             'The autumn forest in the morning is shrouded in mist, like a curtain blurring the outlines of trees and creating a mysterious atmosphere. Morning light filters through the veil of mist, giving the surrounding world soft and gentle shades. Leaves fall from the trees, like a slow dance bidding farewell to the departing season.',
             "Sonbahar ormanı sabahları sisle sarılır, ağaçların sınırlarını belirsizleştiren bir perde gibi. Sabah ışığı sis perdesinden süzülerek etrafındaki dünyaya yumuşak ve nazik tonlar kazandırır. Yapraklar ağaçlardan düşer, sanki mevsimin sona ermesine veda eden yavaş bir dans gibi.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 256000,
+        damageBonus: 0.33,
+        luckyBonusX5: 0.01,
+        coinsPerSecondBonus: 2,
     },
     {
         id: 55,
@@ -200,10 +188,9 @@ export const backgrounds: BackgroundType[] = [
             'The spring forest welcomes its visitors with a sea of greenery and flowers. Tree branches are adorned with fresh buds, and beneath them lies a blooming carpet of wildflowers and green grass. The air is filled with the scent of spring freshness, and birds fill the forest with their songs, creating a melodious concert of nature.',
             "İlkbahar ormanı, ziyaretçilerini yeşillik ve çiçeklerle dolu bir denizle karşılıyor. Ağaç dalları taze tomurcuklarla süslenmiş, altında vahşi çiçekler ve yeşil çimenlerin çiçek açan bir halısı serilmiştir. Hava, ilkbahar tazeliği kokusuyla doludur ve kuşlar şarkılarıyla ormanı doldurarak doğanın melodik bir konseri oluştururlar.",
         ],
-        price: 100,
-
-        coinsPerSecondBonus: 1.2,
-        luckyBonusX5: 0.05,
-        damageBonus: 0.05,
+        price: 512000,
+        damageBonus: 0.36,
+        luckyBonusX5: 0.011,
+        coinsPerSecondBonus: 2.1,
     },
 ];
