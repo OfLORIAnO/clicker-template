@@ -4,6 +4,8 @@ import { Button, Icons, Img } from '@/shared/ui';
 import { usePlayerStore, useShopStore } from '@/stores';
 import { BackgroundType, CharacterType, ItemType } from '@settings/index';
 import classNames from 'classnames';
+import { shortNumber } from '@/shared/helper';
+
 
 interface IProps {
     item: CharacterType | BackgroundType | null;
@@ -132,7 +134,7 @@ export const ShopDescription = ({ item, itemType }: IProps) => {
                         disabled={balance < item.price}
                         onClick={handleBuyItem}
                     >
-                        {item.price}
+                        {shortNumber(item.price)}
                         <Img src={Icons.balanceWhite} />
                     </Button>
                 )}
