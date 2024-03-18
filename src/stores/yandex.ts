@@ -76,15 +76,15 @@ const createYandexSlice: StateCreator<
         const ysdk = get().ysdk;
         if (!ysdk) return null;
 
-        const data: IYandexData | null = (await ysdk
+        const data: IYandexData | undefined = await ysdk
             .getPlayer({ signed: false })
             .then((player) => {
                 if (player.getMode() !== 'lite') {
                     return player.getData<IYandexData>();
                 }
-            })) as IYandexData | null;
+            });
 
-        return data;
+        return data ? data : null;
     },
 
     isAvailableFullScreenAdvert: true,
