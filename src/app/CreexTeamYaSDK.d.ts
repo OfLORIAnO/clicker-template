@@ -5,7 +5,7 @@ declare module 'CreexTeamYaSDK' {
                 screen: {
                     fullscreen?: boolean;
                     orientation?: {
-                        value: 'portrait' | 'landscape';
+                        value: string;
                         lock?: boolean;
                     };
                 };

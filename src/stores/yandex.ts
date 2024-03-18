@@ -78,7 +78,10 @@ const createYandexSlice: StateCreator<
 
         const data: IYandexData | null =
             (await ysdk.getPlayer({ signed: false }).then((player) => {
-                return player.getData<IYandexData>();
+                if (player.getMode() !== 'lite'){
+                    return player.getData<IYandexData>();
+                }
+
             })) ?? null;
 
         return data;

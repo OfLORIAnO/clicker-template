@@ -1,5 +1,5 @@
-import LoadingBackgroundImage from '@assets/bg-1.jpg';
+import LoadingBackgroundImage from '@assets/BGloading.jpg';
 import { colors } from '.';
 
 export const loadingBackgroundImage = LoadingBackgroundImage;
-export const loadingTextColor = colors.primaryDisabled;
+export const loadingTextColor = colors.active;
