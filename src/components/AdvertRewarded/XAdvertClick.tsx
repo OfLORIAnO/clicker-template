@@ -17,7 +17,7 @@ export const XAdvertClick = () => {
             setIsDoubledClick(false);
         });
     };
-    const buttonText = useLanguage('x2ForSecond');
+    const buttonText = useLanguage('x2ForClick');
 
     if (!isAvailableRewardedAdvert) return null;
 

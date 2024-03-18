@@ -76,13 +76,13 @@ const createYandexSlice: StateCreator<
         const ysdk = get().ysdk;
         if (!ysdk) return null;
 
-        const data: IYandexData | null =
-            (await ysdk.getPlayer({ signed: false }).then((player) => {
-                if (player.getMode() !== 'lite'){
+        const data: IYandexData | null = (await ysdk
+            .getPlayer({ signed: false })
+            .then((player) => {
+                if (player.getMode() !== 'lite') {
                     return player.getData<IYandexData>();
                 }
-
-            })) ?? null;
+            })) as IYandexData | null;
 
         return data;
     },
@@ -163,8 +163,6 @@ const createYandexSlice: StateCreator<
                     pauseAllSounds();
                 },
                 onRewarded: () => {
-                    turnOnMusic();
-
                     get().setIsAvailableRewardedAdvert(true, timeSec);
                     onCloseFunc();
                 },

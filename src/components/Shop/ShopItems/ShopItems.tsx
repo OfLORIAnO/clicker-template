@@ -48,7 +48,10 @@ export const ShopItems = ({ selectedItem, handleClick, itemType }: IProps) => {
                                 !!activeCharacter &&
                                 character.id === activeCharacter.id
                             }
-                            isSelected={selectedItem?.id === character.id}
+                            isSelected={
+                                (selectedItem ? selectedItem.id : -1) ===
+                                character.id
+                            }
                             isLocked={checkIsLocked(character.id)}
                         />
                     );
@@ -63,7 +66,10 @@ export const ShopItems = ({ selectedItem, handleClick, itemType }: IProps) => {
                             itemType={ItemType.background}
                             image={background.image}
                             isActive={background.id === activeBackground.id}
-                            isSelected={selectedItem?.id === background.id}
+                            isSelected={
+                                (selectedItem ? selectedItem.id : -1) ===
+                                background.id
+                            }
                             isLocked={checkIsLocked(background.id)}
                         />
                     );

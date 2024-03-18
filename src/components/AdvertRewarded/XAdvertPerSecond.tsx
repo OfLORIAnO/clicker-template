@@ -26,7 +26,7 @@ export const XAdvertPerSecond = () => {
         });
     };
 
-    const buttonText = useLanguage('x2ForClick');
+    const buttonText = useLanguage('x2ForSecond');
 
     if (!isAvailableRewardedAdvert) return null;
 

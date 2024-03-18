@@ -3,8 +3,15 @@
     align-items: center;
     gap: 8px;
     padding: 0 5px;
+    max-width: 235px;
 }
 
 .advertImage {
     width: 64px;
+}
+
+@media screen and (max-width: 1100px) {
+    .advertImage {
+        width: 32px;
+    }
 }
