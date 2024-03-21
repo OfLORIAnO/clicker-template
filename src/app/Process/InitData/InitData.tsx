@@ -40,12 +40,12 @@ export const InitData = ({ children, setIsLoading, isLoading }: IProps) => {
         const YaOptions = {
             screen: {
                 fullscreen: true,
-                orientation:{
+                orientation: {
                     value: 'landscape',
                     lock: true,
-                }
-            }
-        }
+                },
+            },
+        };
         YaGames.init(YaOptions)
             .then((ysdk: YandexGames.sdk) => {
                 window.ysdk = ysdk;

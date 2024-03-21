@@ -128,6 +128,7 @@ const createYandexSlice: StateCreator<
                 },
                 onOffline: () => {
                     startSounds();
+                    get().setIsAvailableFullScreenAdvert(true, timeSec);
                     onClose && onClose();
                 },
             },
