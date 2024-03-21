@@ -1,6 +1,6 @@
 import { SoundDataInit, musicPath, soundOfClickPath } from '@settings/index';
 import { StateCreator, create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { useYandexStore } from '.';
 
 interface SoundState {
@@ -114,9 +114,7 @@ const createSoundSlice: StateCreator<
     },
 });
 export const useSoundController = create<SoundState>()(
-    devtools(
-        persist((...args) => ({ ...createSoundSlice(...args) }), {
-            name: 'Sound',
-        }),
-    ),
+    devtools((...args) => ({ ...createSoundSlice(...args) }), {
+        name: 'Sound',
+    }),
 );
