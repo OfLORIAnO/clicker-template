@@ -1,5 +1,5 @@
 import { StateCreator, create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 import {
     clickCalc,
     perSecondCalc,
@@ -223,7 +223,9 @@ const createPlayerSlice: StateCreator<
 // export const usePlayerStore
 
 export const usePlayerStore = create<PlayerState>()(
-    devtools((...args) => ({ ...createPlayerSlice(...args) }), {
-        name: 'player',
-    }),
+    devtools(
+        persist((...args) => ({ ...createPlayerSlice(...args) }), {
+            name: 'player',
+        }),
+    ),
 );

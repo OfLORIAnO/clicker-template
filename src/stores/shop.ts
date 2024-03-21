@@ -7,7 +7,7 @@ import {
     ShopDataInit,
 } from '@settings/index';
 import { StateCreator, create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 import { useYandexStore } from '.';
 import {
     getActiveBackground,
@@ -132,7 +132,9 @@ const createShopSlice: StateCreator<
     };
 };
 export const useShopStore = create<ShopState>()(
-    devtools((...args) => ({ ...createShopSlice(...args) }), {
-        name: 'shop',
-    }),
+    devtools(
+        persist((...args) => ({ ...createShopSlice(...args) }), {
+            name: 'shop',
+        }),
+    ),
 );

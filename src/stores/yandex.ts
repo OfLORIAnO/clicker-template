@@ -72,6 +72,7 @@ const createYandexSlice: StateCreator<
             player.setData<IYandexData>(data, true);
         });
     },
+
     getDataFromYsdk: async () => {
         const ysdk = get().ysdk;
         if (!ysdk) return null;
@@ -82,9 +83,13 @@ const createYandexSlice: StateCreator<
                 if (player.getMode() !== 'lite') {
                     return player.getData<IYandexData>();
                 }
+                return undefined;
             });
 
-        return data ? data : null;
+        if (data && Object.keys(data).length > 0) {
+            return data;
+        }
+        return null;
     },
 
     isAvailableFullScreenAdvert: true,
@@ -169,14 +174,12 @@ const createYandexSlice: StateCreator<
                 onClose: () => {
                     turnOnMusic();
 
-                    // get().setIsAvailableRewardedAdvert(true, timeSec);
-
                     onCloseFunc();
                 },
                 onError: () => {
                     turnOnMusic();
 
-                    // get().setIsAvailableRewardedAdvert(true, timeSec);
+                    get().setIsAvailableRewardedAdvert(true, timeSec);
 
                     onCloseFunc();
                 },

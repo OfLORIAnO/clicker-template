@@ -16,13 +16,13 @@ import {
 const generateRandomNumber = (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
 };
-const ciel = (number: number) => Math.ceil(number);
+const ceil = (number: number) => Math.ceil(number);
 const floor = (number: number) => Math.floor(number);
 const testIndexes = (minIndex: number, maxIndex: number) => {
     // ? Тест коэффициентов
     let temp = 1;
     for (let i = 0; i < 10; i++) {
-        temp = ciel(generateRandomNumber(temp * minIndex, temp * maxIndex));
+        temp = ceil(generateRandomNumber(temp * minIndex, temp * maxIndex));
         console.log(temp);
     }
     console.log('------------------------');
@@ -35,20 +35,26 @@ const addSpace = (number: string): string => {
 };
 
 export const shortNumber = (number: number): string => {
-    if (number < 1e3 * 10) return addSpace(number.toString());
+    try {
+        if (number < 1e3 * 10) return addSpace(number.toString());
 
-    if (number >= 1e3 * 10 && number < 1e6 * 10)
-        return addSpace(+(number / 1e3).toFixed(1) + 'K');
+        if (number >= 1e3 * 10 && number < 1e6 * 10)
+            return addSpace(+(number / 1e3).toFixed(1) + 'K');
 
-    if (number >= 1e6 * 10 && number < 1e9 * 10)
-        return addSpace(+(number / 1e6).toFixed(1) + 'M');
+        if (number >= 1e6 * 10 && number < 1e9 * 10)
+            return addSpace(+(number / 1e6).toFixed(1) + 'M');
 
-    if (number >= 1e9 * 10 && number < 1e12 * 10)
-        return addSpace(+(number / 1e9).toFixed(1) + 'B');
+        if (number >= 1e9 * 10 && number < 1e12 * 10)
+            return addSpace(+(number / 1e9).toFixed(1) + 'B');
 
-    if (number >= 1e12 * 10) return addSpace(+(number / 1e12).toFixed(1) + 'T');
+        if (number >= 1e12 * 10)
+            return addSpace(+(number / 1e12).toFixed(1) + 'T');
 
-    return addSpace(number.toString());
+        return addSpace(number.toString());
+    } catch (error) {
+        console.error(error);
+        return `${number}`;
+    }
 };
 
 // ?
@@ -122,13 +128,13 @@ export const upgradeCoinsPerClickCalc = (current: number): [number, number] => {
     const logoutData = false;
     logoutData && testIndexes(upgradeClickDamageMin, upgradeClickDamageMax);
 
-    const newCoinsPerClick = ciel(
+    const newCoinsPerClick = ceil(
         generateRandomNumber(
             current * upgradeClickDamageMin,
             current * upgradeClickDamageMax,
         ),
     );
-    const newPrice = ciel(
+    const newPrice = ceil(
         generateRandomNumber(
             newCoinsPerClick * clicksForNextUpgradeMin,
             newCoinsPerClick * clicksForNextUpgradeMax,
@@ -178,13 +184,13 @@ export const upgradeCoinsPerSecondCalc = (
     logoutData &&
         testIndexes(upgradeCoinsPerSecondMin, upgradeCoinsPerSecondMax);
 
-    const newCoinsPerSecond = ciel(
+    const newCoinsPerSecond = ceil(
         generateRandomNumber(
             current * upgradeCoinsPerSecondMin,
             current * upgradeCoinsPerSecondMax,
         ),
     );
-    const newPrice = ciel(
+    const newPrice = ceil(
         generateRandomNumber(
             newCoinsPerSecond * secondsForNextUpgradeCoinsPerSecondMin,
             newCoinsPerSecond * secondsForNextUpgradeCoinsPerSecondMax,
